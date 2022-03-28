@@ -1,7 +1,8 @@
-package com.food_on.app;
+package com.AgriBuhayProj.app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,8 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.food_on.app.R;
-import com.food_on.app.ReusableCode.ReusableCodeForAll;
+import com.AgriBuhayProj.app.R;
+import com.AgriBuhayProj.app.ReusableCode.ReusableCodeForAll;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -35,6 +36,12 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Login As Retailer");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         try {
             email = (TextInputLayout) findViewById(R.id.Lemail);
             pass = (TextInputLayout) findViewById(R.id.Lpassword);
