@@ -73,11 +73,11 @@ public class Delivery_ShippingOrder extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 DeliveryShipFinalOrders1 deliveryShipFinalOrders1 = dataSnapshot.getValue(DeliveryShipFinalOrders1.class);
-                grandtotal.setText("₹ " + deliveryShipFinalOrders1.getGrandTotalPrice());
+                grandtotal.setText("₱ " + deliveryShipFinalOrders1.getGrandTotalPrice());
                 Address.setText(deliveryShipFinalOrders1.getAddress());
                 Custname.setText(deliveryShipFinalOrders1.getName());
-                MobileNumber.setText("+91" + deliveryShipFinalOrders1.getMobileNumber());
-                ChefName.setText("Chef " + deliveryShipFinalOrders1.getChefName());
+                MobileNumber.setText("+63" + deliveryShipFinalOrders1.getMobileNumber());
+                ChefName.setText("Producer " + deliveryShipFinalOrders1.getChefName());
                 userid = deliveryShipFinalOrders1.getUserId();
                 Chefid = deliveryShipFinalOrders1.getChefId();
                 Shipped.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class Delivery_ShippingOrder extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         String usertoken = dataSnapshot.getValue(String.class);
-                                        sendNotifications(usertoken, "Home Chef", "Thank you for Ordering", "ThankYou");
+                                        sendNotifications(usertoken, "Home Producer", "Thank you for Ordering", "ThankYou");
                                     }
 
                                     @Override
@@ -106,7 +106,7 @@ public class Delivery_ShippingOrder extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         String usertoken = dataSnapshot.getValue(String.class);
-                                        sendNotifications(usertoken, "Order Placed", "Your food has been delivered to Customer's Doorstep", "Delivered");
+                                        sendNotifications(usertoken, "Order Placed", "The product of your choice has been delivered to Customer's Doorstep", "Delivered");
                                     }
 
                                     @Override

@@ -15,48 +15,49 @@
     <string-array name="shipper">
         <item>Shipper 1</item>
         <item>Shipper 2</item>
+        <item>Shipper 3</item>
     </string-array>
 
     <string-array name="DishName">
-        <item>Thepla</item>
-        <item>Dal Rice</item>
-        <item>Dhokla</item>
-        <item>Sabji Roti</item>
-        <item>Kadhi Khichdi</item>
-        <item>Puri bhaji</item>
-        <item>Dal Dhokdi</item>
-        <item>Undhiyu</item>
-        <item>Aloo Paratha</item>
-        <item>Patra</item>
-        <item>Khandvi</item>
-        <item>Gulab Jamun</item>
-        <item>SevTomato bhakri</item>
-        <item>Shrikhand</item>
-        <item>Palak Paneer</item>
-        <item>Khulcha</item>
-        <item>Makki di roti</item>
-        <item>Gobi Partha</item>
-        <item>Biryani</item>
-        <item>Rajma</item>
-        <item>Bhindi Fry</item>
-        <item>Dum Biryani</item>
-        <item>Rumali roti</item>
-        <item>Dal Makhni</item>
-        <item>Samosa</item>
-        <item>Kachori</item>
-        <item>Menduwada</item>
-        <item>Pulav</item>
-        <item>Pav Bhaji</item>
-        <item>Misal Pav</item>
-        <item>Mix Vegetable</item>
-        <item>Muffins</item>
-        <item>DalFry JerraRice</item>
-        <item>Bengali sweet</item>
-        <item>Puranpoli</item>
-        <item>Egg Curry</item>
-        <item>Pomfret Fish</item>
-        <item>Egg Bhurji</item>
-        <item>Dum chicken</item>
-        <item>Hyderabadi Chicken Biryni</item>
+        <item>Potato</item>
+        <item>Mango</item>
+        <item>Green Onions</item>
+        <item>Onions</item>
+        <item>Watermelon</item>
+        <item>Coconut</item>
+        <item>Papaya</item>
+        <item>Cucumber</item>
+        <item>Radish</item>
+        <item>Okra</item>
+        <item>Sweet Potato</item>
+        <item>Garlic</item>
+        <item>Tomato</item>
+        <item>Ginger</item>
+        <item>Cabbage</item>
+        <item>Pechay</item>
+        <item>Chinese Pechay</item>
+        <item>Lemon</item>
+        <item>Carrots</item>
+        <item>Bell Pepper</item>
+        <item>Lanzones</item>
+        <item>Rambutan</item>
+        <item>Kalabasa</item>
+        <item>Apple</item>
+        <item>Orange</item>
+        <item>Pineapple</item>
+        <item>Banana</item>
+        <item>Ampalaya</item>
+        <item>Eggplant</item>
+        <item>Alogbate</item>
+        <item>Sayote</item>
+        <item>Upo</item>
+        <item>KangKong</item>
+        <item>String Beans (Batong)</item>
+        <item>Baguio Beans</item>
+        <item>Avocado</item>
+        <item>Grapes</item>
+        <item>Durian</item>
+        <item>Sili</item>
+        <item>Kolikot</item>
     </string-array>
 </resources>

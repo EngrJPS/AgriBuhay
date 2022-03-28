@@ -82,7 +82,7 @@ public class OrderDish extends AppCompatActivity {
                         FoodQuantity.setText(Html.fromHtml(qua));
                         String ss = "<b>" + "Description: " + "</b>" + updateDishModel.getDescription();
                         FoodDescription.setText(Html.fromHtml(ss));
-                        String pri = "<b>" + "Price: ₹ " + "</b>" + updateDishModel.getPrice();
+                        String pri = "<b>" + "Price/kg: ₱ " + "</b>" + updateDishModel.getPrice();
                         FoodPrice.setText(Html.fromHtml(pri));
                         Glide.with(OrderDish.this).load(updateDishModel.getImageURL()).into(imageView);
 
@@ -92,7 +92,7 @@ public class OrderDish extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Chef chef = dataSnapshot.getValue(Chef.class);
 
-                                String name = "<b>" + "Chef Name: " + "</b>" + chef.getFname() + " " + chef.getLname();
+                                String name = "<b>" + "Producer Name: " + "</b>" + chef.getFname() + " " + chef.getLname();
                                 ChefName.setText(Html.fromHtml(name));
                                 String loc = "<b>" + "Location: " + "</b>" + chef.getSuburban();
                                 ChefLoaction.setText(Html.fromHtml(loc));
@@ -192,7 +192,7 @@ public class OrderDish extends AppCompatActivity {
                                     else
                                     {
                                         AlertDialog.Builder builder = new AlertDialog.Builder(OrderDish.this);
-                                        builder.setMessage("You can't add food items of multiple chef at a time. Try to add items of same chef");
+                                        builder.setMessage("You can't add product items of multiple producers at a time. Try to add items of same producers");
                                         builder.setCancelable(false);
                                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override

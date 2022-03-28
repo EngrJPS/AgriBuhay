@@ -266,10 +266,10 @@ public class ChefPreparedOrderView extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ChefFinalOrders1 chefFinalOrders1 = dataSnapshot.getValue(ChefFinalOrders1.class);
-                grandtotal.setText("₹ " + chefFinalOrders1.getGrandTotalPrice());
+                grandtotal.setText("₱ " + chefFinalOrders1.getGrandTotalPrice());
                 address.setText(chefFinalOrders1.getAddress());
                 name.setText(chefFinalOrders1.getName());
-                number.setText("+91" + chefFinalOrders1.getMobileNumber());
+                number.setText("+63" + chefFinalOrders1.getMobileNumber());
 
             }
 

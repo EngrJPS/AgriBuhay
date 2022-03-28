@@ -48,7 +48,7 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
         holder.Dishname.setText(updateDishModel.getDishes());
         updateDishModel.getRandomUID();
         updateDishModel.getChefId();
-        holder.price.setText("Price: ₹ " + updateDishModel.getPrice());
+        holder.price.setText("Price: ₱ " + updateDishModel.getPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

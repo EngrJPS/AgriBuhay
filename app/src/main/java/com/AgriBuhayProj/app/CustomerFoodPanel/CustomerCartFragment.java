@@ -274,7 +274,7 @@ public class CustomerCartFragment extends Fragment {
                                                                                                                                         String usertoken = dataSnapshot.getValue(String.class);
                                                                                                                                         sendNotifications(usertoken, "New Order", "You have a new Order", "Order");
                                                                                                                                         progressDialog.dismiss();
-                                                                                                                                        ReusableCodeForAll.ShowAlert(getContext(), "", "Your Order has been shifted to Pending state, please wait until the Chef accept your order.");
+                                                                                                                                        ReusableCodeForAll.ShowAlert(getContext(), "", "Your Order has been shifted to Pending state, please wait until the Farmer accept your order.");
                                                                                                                                     }
 
                                                                                                                                     @Override

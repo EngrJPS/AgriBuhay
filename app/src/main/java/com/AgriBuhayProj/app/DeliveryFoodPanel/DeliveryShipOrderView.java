@@ -82,11 +82,11 @@ public class DeliveryShipOrderView extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 DeliveryShipFinalOrders1 deliveryShipFinalOrders1 = dataSnapshot.getValue(DeliveryShipFinalOrders1.class);
-                grandtotal.setText("₹ " + deliveryShipFinalOrders1.getGrandTotalPrice());
+                grandtotal.setText("₱ " + deliveryShipFinalOrders1.getGrandTotalPrice());
                 address.setText(deliveryShipFinalOrders1.getAddress());
                 name.setText(deliveryShipFinalOrders1.getName());
-                number.setText("+91" + deliveryShipFinalOrders1.getMobileNumber());
-                ChefName.setText("Chef " + deliveryShipFinalOrders1.getChefName());
+                number.setText("+63" + deliveryShipFinalOrders1.getMobileNumber());
+                ChefName.setText("Producer " + deliveryShipFinalOrders1.getChefName());
 
             }
 

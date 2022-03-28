@@ -184,7 +184,7 @@ public class Chef_PostDish extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     progressDialog.dismiss();
-                                    Toast.makeText(Chef_PostDish.this, "Dish posted successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Chef_PostDish.this, "Product posted successfully", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

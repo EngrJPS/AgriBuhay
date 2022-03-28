@@ -35,9 +35,9 @@ public class DeliveryPendingOrderViewAdapter extends RecyclerView.Adapter<Delive
 
         final DeliveryShipOrders deliveryShipOrders = deliveryShipOrderslist.get(position);
         holder.dishname.setText(deliveryShipOrders.getDishName());
-        holder.price.setText("Price: ₹ " + deliveryShipOrders.getDishPrice());
+        holder.price.setText("Price: ₱ " + deliveryShipOrders.getDishPrice());
         holder.quantity.setText("× " + deliveryShipOrders.getDishQuantity());
-        holder.totalprice.setText("Total: ₹ " + deliveryShipOrders.getTotalPrice());
+        holder.totalprice.setText("Total: ₱ " + deliveryShipOrders.getTotalPrice());
     }
 
     @Override

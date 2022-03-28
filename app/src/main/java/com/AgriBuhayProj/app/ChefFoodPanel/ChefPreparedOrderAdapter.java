@@ -35,7 +35,7 @@ public class ChefPreparedOrderAdapter extends RecyclerView.Adapter<ChefPreparedO
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final ChefFinalOrders1 chefFinalOrders1 = chefFinalOrders1list.get(position);
         holder.Address.setText(chefFinalOrders1.getAddress());
-        holder.grandtotalprice.setText("Grand Total: ₹ " + chefFinalOrders1.getGrandTotalPrice());
+        holder.grandtotalprice.setText("Grand Total: ₱ " + chefFinalOrders1.getGrandTotalPrice());
         final String random = chefFinalOrders1.getRandomUID();
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
             @Override

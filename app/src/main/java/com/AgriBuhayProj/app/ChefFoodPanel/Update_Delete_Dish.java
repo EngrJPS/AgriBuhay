@@ -162,7 +162,7 @@ public class Update_Delete_Dish extends AppCompatActivity {
 
                         desc.getEditText().setText(updateDishModel.getDescription());
                         qty.getEditText().setText(updateDishModel.getQuantity());
-                        Dishname.setText("Dish name: " + updateDishModel.getDishes());
+                        Dishname.setText("Product name: " + updateDishModel.getDishes());
                         dishes = updateDishModel.getDishes();
                         pri.getEditText().setText(updateDishModel.getPrice());
                         Glide.with(Update_Delete_Dish.this).load(updateDishModel.getImageURL()).into(imageButton);

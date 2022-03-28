@@ -56,8 +56,8 @@ public class DeliveryShipOrderFragmentAdapter extends RecyclerView.Adapter<Deliv
 
         final DeliveryShipFinalOrders1 deliveryShipFinalOrders1 = deliveryShipFinalOrders1list.get(position);
         holder.Address.setText(deliveryShipFinalOrders1.getAddress());
-        holder.grandtotalprice.setText("Grand Total: ₹ " + deliveryShipFinalOrders1.getGrandTotalPrice());
-        holder.mobilenumber.setText("+91" + deliveryShipFinalOrders1.getMobileNumber());
+        holder.grandtotalprice.setText("Grand Total: ₱ " + deliveryShipFinalOrders1.getGrandTotalPrice());
+        holder.mobilenumber.setText("+63" + deliveryShipFinalOrders1.getMobileNumber());
         final String random = deliveryShipFinalOrders1.getRandomUID();
         final String userid = deliveryShipFinalOrders1.getUserId();
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +80,7 @@ public class DeliveryShipOrderFragmentAdapter extends RecyclerView.Adapter<Deliv
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String usertoken = dataSnapshot.getValue(String.class);
-                                sendNotifications(usertoken, "Estimated Time", "Your Order has been collected by Delivery Person, He is on the way", "DeliverOrder");
+                                sendNotifications(usertoken, "Estimated Time", "Your Order has been collected by Delivery Person, your product is on the way", "DeliverOrder");
                             }
 
                             @Override

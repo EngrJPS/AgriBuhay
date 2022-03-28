@@ -64,7 +64,7 @@ public class DeliveryPendingOrderFragmentAdapter extends RecyclerView.Adapter<De
         DeliveryShipOrders1 deliveryShipOrders1 = deliveryShipOrders1list.get(position);
         holder.Address.setText(deliveryShipOrders1.getAddress());
         holder.mobilenumber.setText("+63" + deliveryShipOrders1.getMobileNumber());
-        holder.grandtotalprice.setText("Grand Total: ₹ " + deliveryShipOrders1.getGrandTotalPrice());
+        holder.grandtotalprice.setText("Grand Total: ₱ " + deliveryShipOrders1.getGrandTotalPrice());
         final String randomuid = deliveryShipOrders1.getRandomUID();
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,7 +189,7 @@ public class DeliveryPendingOrderFragmentAdapter extends RecyclerView.Adapter<De
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String usertoken = dataSnapshot.getValue(String.class);
-                                sendNotifications(usertoken, "Order Rejected", "Your Order has been Rejected by the Delivery person", "RejectOrder");
+                                sendNotifications(usertoken, "Order Rejected", "Your Order has been Rejected by the Delivery person due to some unfortunate circumstances", "RejectOrder");
                                 FirebaseDatabase.getInstance().getReference("DeliveryShipOrders").child(deliveryId).child(randomuid).child("Dishes").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {

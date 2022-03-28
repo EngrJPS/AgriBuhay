@@ -35,9 +35,9 @@ public class ChefOrderDishesAdapter extends RecyclerView.Adapter<ChefOrderDishes
 
         final ChefPendingOrders chefPendingOrders = chefPendingOrderslist.get(position);
         holder.dishname.setText(chefPendingOrders.getDishName());
-        holder.price.setText("Price: ₹ " + chefPendingOrders.getPrice());
+        holder.price.setText("Price: ₱ " + chefPendingOrders.getPrice());
         holder.quantity.setText("× " + chefPendingOrders.getDishQuantity());
-        holder.totalprice.setText("Total: ₹ " + chefPendingOrders.getTotalPrice());
+        holder.totalprice.setText("Total: ₱ " + chefPendingOrders.getTotalPrice());
 
 
     }

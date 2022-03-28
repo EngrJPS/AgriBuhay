@@ -96,7 +96,7 @@ public class CustomerPayment extends AppCompatActivity {
                                 hashMap1.put("Name", customerPaymentOrders1.getName());
                                 hashMap1.put("Note", customerPaymentOrders1.getNote());
                                 hashMap1.put("RandomUID", RandomUID);
-                                hashMap1.put("Status", "Your order is waiting to be prepared by Chef...");
+                                hashMap1.put("Status", "Your order is waiting to be prepared by Farmers...");
                                 FirebaseDatabase.getInstance().getReference("CustomerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation").setValue(hashMap1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -132,7 +132,7 @@ public class CustomerPayment extends AppCompatActivity {
                                                         hashMap3.put("Name", customerPaymentOrders11.getName());
                                                         hashMap3.put("Note", customerPaymentOrders11.getNote());
                                                         hashMap3.put("RandomUID", RandomUID);
-                                                        hashMap3.put("Status", "Your order is waiting to be prepared by Chef...");
+                                                        hashMap3.put("Status", "Your order is waiting to be prepared by Farmers...");
                                                         FirebaseDatabase.getInstance().getReference("ChefWaitingOrders").child(ChefID).child(RandomUID).child("OtherInformation").setValue(hashMap3).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {

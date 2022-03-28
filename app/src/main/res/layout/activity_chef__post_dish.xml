@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="my.food_on.app.ChefFoodPanel.Chef_PostDish"
+    tools:context=".ChefFoodPanel.Chef_PostDish"
     android:background="@drawable/pic14">
 
 
@@ -25,7 +25,7 @@
             android:layout_width="105dp"
             android:layout_height="30dp"
             android:layout_marginLeft="5dp"
-            android:text="Dish Name"
+            android:text="Product "
             android:textColor="@color/white"
             android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"

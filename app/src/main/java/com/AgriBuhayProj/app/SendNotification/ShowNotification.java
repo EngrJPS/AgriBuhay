@@ -87,7 +87,7 @@ public class ShowNotification {
         }
 
 
-        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context, CHANNEL_ID).setSmallIcon(R.drawable.ic_chef_hat_and_fork)
+        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context, CHANNEL_ID).setSmallIcon(R.drawable.ic_baseline_agriculture_24)
                 .setColor(ContextCompat.getColor(context,R.color.Red))
                 .setContentTitle(title)
                 .setContentText(message)
