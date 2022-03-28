@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "653970606470",
-    "firebase_url": "https://home-food-d1480.firebaseio.com",
-    "project_id": "home-food-d1480",
-    "storage_bucket": "home-food-d1480.appspot.com"
+    "project_number": "549492874861",
+    "firebase_url": "https://agribuhaydatabase-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "agribuhaydatabase",
+    "storage_bucket": "agribuhaydatabase.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:653970606470:android:cc796d987750f5dd854407",
+        "mobilesdk_app_id": "1:549492874861:android:da023800c2f3cbacc0e964",
         "android_client_info": {
-          "package_name": "com.food_on.app"
+          "package_name": "com.AgriBuhayProj.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "653970606470-3b1j10tljjgkteb3u24a2ll6f04vnknr.apps.googleusercontent.com",
+          "client_id": "549492874861-e40nla8kt2dl0nj392j3srgsinp0fko2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.food_on.app",
-            "certificate_hash": "296b111eedc4be4b20e4e00844b78232cf55d6f6"
+            "package_name": "com.AgriBuhayProj.app",
+            "certificate_hash": "d544975fad3000fb6b411c7944220f4d9f970bd5"
           }
         },
         {
-          "client_id": "653970606470-ic15kn8imut1u1r27kbm9nqsuejuqkgu.apps.googleusercontent.com",
+          "client_id": "549492874861-dierbde4un4a9f3o69nuqiv4m1n0n28g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAMIth1iLHCqXEOap_y3yOZtqYe8LVaIow"
+          "current_key": "AIzaSyDicz8IHyIAu4xhmjzc-f3GNIfjnx4NY44"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "653970606470-ic15kn8imut1u1r27kbm9nqsuejuqkgu.apps.googleusercontent.com",
+              "client_id": "549492874861-dierbde4un4a9f3o69nuqiv4m1n0n28g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

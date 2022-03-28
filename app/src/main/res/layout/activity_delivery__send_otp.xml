@@ -4,12 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pic9"
-    tools:context="my.food_on.app.Delivery_SendOtp">
+    tools:context=".Delivery_SendOtp">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/bar_layout" />
+
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="246dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/top_prod_verify_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="57dp"/>
 
     <LinearLayout
         android:id="@+id/linearlayout"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="380dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -17,11 +30,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="60dp"
         android:layout_marginTop="228dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginBottom="228dp"
-        android:background="@drawable/background_shape"
+        android:background="@drawable/background_shape1"
         android:orientation="vertical"
         android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,6 +40,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/txt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enter OTP"
@@ -45,7 +56,6 @@
             android:id="@+id/ed1"
             android:layout_width="match_parent"
             android:layout_height="71dp"
-            android:layout_marginTop="15dp"
             android:ems="10"
             android:inputType="number"
             android:hint="OTP"
@@ -63,14 +73,14 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/btnblueish"
             android:text="Verify"
-            android:textSize="18sp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Lpassword"
-            app:layout_constraintVertical_bias="0.174" />
+            app:layout_constraintVertical_bias="0.174"
+            android:textSize="18sp"/>
 
         <Button
             android:id="@+id/btn2"
@@ -80,16 +90,16 @@
             android:background="@drawable/btnred"
             android:text="Resend"
             android:textColor="@color/white"
-            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Verify"
-            app:layout_constraintVertical_bias="0.174" />
+            app:layout_constraintVertical_bias="0.174"
+            android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/txt1"
+            android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -97,7 +107,7 @@
             android:text=""
             android:textAlignment="center"
             android:textColor="@color/gray"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
 
     </LinearLayout>

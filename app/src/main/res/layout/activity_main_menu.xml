@@ -4,25 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="my.food_on.app.MainMenu">
-
+    tools:context=".MainMenu">
 
     <ImageView
         android:id="@+id/back2"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/pic18"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background1"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="204dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearlayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="cursive"
+            android:gravity="center"
+            android:text="Welcome to AgriBuhay \nSoftware"
+            android:textColor="@color/Black"
+            android:textSize="50dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearlayout"
-        android:layout_width="275dp"
-        android:layout_height="390dp"
+        android:layout_width="match_parent"
+        android:layout_height="827dp"
+        android:layout_marginTop="600dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -31,29 +48,26 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/background_shape"
         android:orientation="vertical"
-        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/back2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.498">
 
-
         <ImageView
-            android:layout_width="157dp"
-            android:layout_height="65dp"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
             android:layout_gravity="center"
-            android:src="@drawable/titleimg4" />
+            android:src="@drawable/background" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="cursive"
-            android:text="Eat Homemade Anywhere !"
-            android:textAlignment="center"
-            android:textColor="@color/Blacklogo"
-            android:textSize="18dp" />
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/caudex"
+            android:text="Continue with: "
+            android:textColor="@color/white"
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/SignwithEmail"
@@ -100,7 +114,7 @@
                 android:layout_marginTop="7dp"
                 android:text="OR"
                 android:textAlignment="center"
-                android:textColor="@color/Black"
+                android:textColor="@color/white"
                 android:textSize="17dp" />
 
             <TableRow

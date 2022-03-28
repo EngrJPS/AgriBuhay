@@ -4,12 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pic11"
-    tools:context="my.food_on.app.Chefloginphone">
+    tools:context=".Chefloginphone">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/bar_layout" />
+
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="280dp"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/top_prod_send_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearlayout"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -17,11 +30,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="60dp"
         android:layout_marginTop="228dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginBottom="228dp"
-        android:background="@drawable/background_shape"
+        android:background="@drawable/background_shape1"
         android:orientation="vertical"
         android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +44,8 @@
             android:layout_height="wrap_content"
             android:text="Verify Phone Number"
             android:layout_gravity="center"
-            android:textSize="20sp"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:textColor="#090909"
             android:layout_marginTop="20dp"/>
 
@@ -46,12 +57,14 @@
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/CountryCode"
-                android:layout_width="120dp"
-                android:layout_height="match_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                app:ccp_defaultNameCode="PH"/>
 
             <EditText
                 android:id="@+id/number"
-                android:layout_width="132dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:inputType="number" />
@@ -78,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Do not have an account? SignUp"
+            android:text="Don't have an account yet? SignUp"
             android:textAlignment="center"
             android:textColor="@color/Black"
             android:textSize="15dp" />
@@ -122,7 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="SignIn with"
+            android:text="Continue with: "
             android:textAlignment="center"
             android:textColor="@color/Black"
             android:textSize="15dp" />

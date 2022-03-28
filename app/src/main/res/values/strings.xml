@@ -1,12 +1,15 @@
 <resources>
-    <string name="app_name">Food On</string>
+    <string name="app_name">AgriBuhay</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
     <string-array name="State">
-        <item>Maharashtra</item>
-        <item>Gujarat</item>
+        <item>Davao de Oro</item>
+        <item>Davao del Sur</item>
+        <item>Davao del Norte</item>
+        <item>Davao Oriental</item>
+        <item>Davao Occidental</item>
     </string-array>
 
     <string-array name="shipper">

@@ -16,4 +16,10 @@
         <item name="android:windowDisablePreview">true</item>
     </style>
 
+    <style name="menuStyle"
+        parent="Theme.AppCompat.Light">
+
+        <item name="android:background">@android:color/white</item>
+    </style>
+
 </resources>

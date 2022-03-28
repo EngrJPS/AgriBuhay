@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.food_on.app">
+    package="com.AgriBuhayProj.app">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
 
     <application xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
@@ -11,135 +19,143 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+
+        <activity android:name="com.AgriBuhayProj.app.Printer.ProducerPrintOrder"
+            android:theme="@style/AppTheme"></activity>
+
         <activity
-            android:name="com.food_on.app.DeliveryFoodPanel.Delivery_ShippingOrder"
+            android:name="com.AgriBuhayProj.app.DeliveryFoodPanel.Delivery_ShippingOrder"
             android:label="Ship Orders"></activity>
         <activity
-            android:name="com.food_on.app.DeliveryFoodPanel.DeliveryShipOrderView"
+            android:name="com.AgriBuhayProj.app.DeliveryFoodPanel.DeliveryShipOrderView"
             android:label="Ship Orders" />
         <activity
-            android:name="com.food_on.app.DeliveryFoodPanel.DeliveryPendingOrderView"
+            android:name="com.AgriBuhayProj.app.DeliveryFoodPanel.DeliveryPendingOrderView"
             android:label="Pending Orders" />
-        <activity android:name="com.food_on.app.Delivery_FoodPanelBottomNavigation" />
+        <activity android:name="com.AgriBuhayProj.app.Delivery_FoodPanelBottomNavigation" />
         <activity
-            android:name="com.food_on.app.Delivery_SendOtp"
+            android:name="com.AgriBuhayProj.app.Delivery_SendOtp"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.Delivery_ForgotPassword"
+            android:name="com.AgriBuhayProj.app.Delivery_ForgotPassword"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.Delivery_Login"
+            android:name="com.AgriBuhayProj.app.Delivery_Login"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.Delivery_LoginPhone"
+            android:name="com.AgriBuhayProj.app.Delivery_LoginPhone"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.Delivery_VerifyPhone"
+            android:name="com.AgriBuhayProj.app.Delivery_VerifyPhone"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.Delivery_registeration"
+            android:name="com.AgriBuhayProj.app.Delivery_registeration"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.ChefFoodPanel.ChefPreparedOrderView"
+            android:name="com.AgriBuhayProj.app.ChefFoodPanel.ChefPreparedOrderView"
             android:label="Prepared Orders" />
         <activity
-            android:name="com.food_on.app.ChefFoodPanel.ChefPreparedOrder"
+            android:name="com.AgriBuhayProj.app.ChefFoodPanel.ChefPreparedOrder"
             android:label="Prepared Orders" />
         <activity
-            android:name="com.food_on.app.ChefFoodPanel.ChefOrdertobePrepareView"
+            android:name="com.AgriBuhayProj.app.ChefFoodPanel.ChefOrdertobePrepareView"
             android:label="Orders to be Prepared" />
         <activity
-            android:name="com.food_on.app.ChefFoodPanel.ChefOrderTobePrepared"
+            android:name="com.AgriBuhayProj.app.ChefFoodPanel.ChefOrderTobePrepared"
             android:label="Orders to be Prepared" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel.CustomerPaymentOTP"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPaymentOTP"
             android:label="Online Payment" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel.CustomerOnlinePayment"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerOnlinePayment"
             android:label="Online Payment" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel.CustomerPayment"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPayment"
             android:label="Payable Orders" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel.PayableOrders"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.PayableOrders"
             android:label="Payable Orders" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel.PendingOrders"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.PendingOrders"
             android:label="Pending Orders" />
         <activity
-            android:name="com.food_on.app.ChefFoodPanel.Chef_order_dishes"
+            android:name="com.AgriBuhayProj.app.ChefFoodPanel.Chef_order_dishes"
             android:label="Orders" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel.CustomerPhoneSendOTP"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPhoneSendOTP"
             android:label="Mobile Number" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel.CustomerPhonenumber"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPhonenumber"
             android:label="Mobile Number" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel.CustomerForgotpassword"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerForgotpassword"
             android:label="Password" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel.CustomerPassword"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPassword"
             android:label="Password" />
-        <activity android:name="com.food_on.app.CustomerFoodPanel.OrderDish" />
+        <activity android:name="com.AgriBuhayProj.app.CustomerFoodPanel.OrderDish" />
         <activity
-            android:name="com.food_on.app.ChefFoodPanel.Update_Delete_Dish"
+            android:name="com.AgriBuhayProj.app.ChefFoodPanel.Update_Delete_Dish"
             android:label="Home" />
         <activity
-            android:name="com.food_on.app.ChefFoodPanel.Chef_PostDish"
+            android:name="com.AgriBuhayProj.app.ChefFoodPanel.Chef_PostDish"
             android:label="Post Dish" />
         <activity
-            android:name="com.food_on.app.ChefFoodPanel_BottomNavigation"
+            android:name="com.AgriBuhayProj.app.ChefFoodPanel_BottomNavigation"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name="com.food_on.app.CustomerFoodPanel_BottomNavigation"
+            android:name="com.AgriBuhayProj.app.CustomerFoodPanel_BottomNavigation"
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity
-            android:name="com.food_on.app.MainMenu"
+            android:name="com.AgriBuhayProj.app.MainMenu"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.Chefsendotp"
+            android:name="com.AgriBuhayProj.app.Chefsendotp"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.Chefloginphone"
+            android:name="com.AgriBuhayProj.app.Chefloginphone"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.sendotp"
+            android:name="com.AgriBuhayProj.app.sendotp"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.LoginPhone"
+            android:name="com.AgriBuhayProj.app.LoginPhone"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.ChefVerifyPhone"
+            android:name="com.AgriBuhayProj.app.ChefVerifyPhone"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.VerifyPhone"
+            android:name="com.AgriBuhayProj.app.VerifyPhone"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.ChefForgotPassword"
+            android:name="com.AgriBuhayProj.app.ChefForgotPassword"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.ChefLogin"
+            android:name="com.AgriBuhayProj.app.ChefLogin"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.ChooseOne"
+            android:name="com.AgriBuhayProj.app.ChooseOne"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.ChefRegisteration"
+            android:name="com.AgriBuhayProj.app.Producer_Registration"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.ForgotPassword"
+            android:name="com.AgriBuhayProj.app.ForgotPassword"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.Login"
+            android:name="com.AgriBuhayProj.app.Login"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.Registeration"
+            android:name="com.AgriBuhayProj.app.Registeration"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.food_on.app.MainActivity"
-            android:theme="@style/AppThemeNoActionbar">
+            android:name=".Printer.DeviceListActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"></activity>
+        <activity
+            android:name="com.AgriBuhayProj.app.MainActivity"
+            android:theme="@style/AppThemeNoActionbar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -148,7 +164,7 @@
         </activity>
 
         <service
-            android:name="com.food_on.app.SendNotification.MyFirebaseMessagingService"
+            android:name="com.AgriBuhayProj.app.SendNotification.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -156,7 +172,7 @@
             </intent-filter>
         </service>
         <service
-            android:name="com.food_on.app.SendNotification.MyFirebaseIdService"
+            android:name="com.AgriBuhayProj.app.SendNotification.MyFirebaseIdService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
