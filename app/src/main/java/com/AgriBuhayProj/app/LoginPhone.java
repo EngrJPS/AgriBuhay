@@ -1,4 +1,4 @@
-package com.food_on.app;
+package com.AgriBuhayProj.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.food_on.app.R;
+import com.AgriBuhayProj.app.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hbb20.CountryCodePicker;
 
