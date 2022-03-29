@@ -23,6 +23,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.auth.PhoneAuthOptions;
 
 import java.util.concurrent.TimeUnit;
 
@@ -155,13 +156,8 @@ public class Chefsendotp extends AppCompatActivity {
     private  void sendverificationcode(String number)
     {
 
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                number,
-                60,
-                TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
-                mCallBack
-        );
+        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(FAuth).setPhoneNumber(phonenumber).setTimeout(60L,TimeUnit.SECONDS).setActivity(this).setCallbacks(mCallBack).build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks

@@ -22,6 +22,7 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
@@ -153,19 +154,19 @@ public class sendotp extends AppCompatActivity {
 
     private void sendverificationcode(String number) {
 
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                number,
-                60,
-                TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
-                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                    @Override
-                    public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        super.onCodeSent(s, forceResendingToken);
+        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(FAuth).setPhoneNumber(phonenumber).setTimeout(60L, TimeUnit.SECONDS).setActivity(this).setCallbacks(mCallBack).build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
+    }
 
-                        verificationId = s;
+        private PhoneAuthProvider.OnVerificationStateChangedCallbacks
+                mCallBack=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            @Override
+            public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                super.onCodeSent(s, forceResendingToken);
 
-                    }
+                verificationId=s;
+
+            }
 
                     @Override
                     public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
@@ -183,7 +184,6 @@ public class sendotp extends AppCompatActivity {
 
                         Toast.makeText(sendotp.this, "THis 2:" + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                }
-        );
+                };
     }
-}
+
