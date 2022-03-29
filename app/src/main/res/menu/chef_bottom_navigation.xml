@@ -21,8 +21,8 @@
 
     <item
         android:id="@+id/chefProfile"
-        android:icon="@drawable/ic_dish_spoon_knife"
-        android:title="Post Dish" />
+        android:icon="@drawable/ic_baseline_agriculture_24"
+        android:title="Post Products" />
 
 
 </menu>

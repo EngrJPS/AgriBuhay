@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="my.food_on.app.CustomerFoodPanel.CustomerPayment">
+    tools:context=".CustomerFoodPanel.CustomerPayment">
 
     <TextView
         android:id="@+id/pyy"
@@ -92,7 +92,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
-            android:drawableLeft="@drawable/ic_rupee"
+            android:drawableLeft="@drawable/baseline_payments_24"
             android:drawablePadding="8dp"
             android:text="Cash on Delivery"
             android:textColor="@color/Blacklogo"

@@ -23,7 +23,7 @@ public class ChefProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chef_profile, container, false);
-        getActivity().setTitle("Post Dish");
+        getActivity().setTitle("Post Product");
         AnimationDrawable animationDrawable = new AnimationDrawable();
         animationDrawable.addFrame(getResources().getDrawable(R.drawable.bghome2), 3000);
         animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic2), 3000);

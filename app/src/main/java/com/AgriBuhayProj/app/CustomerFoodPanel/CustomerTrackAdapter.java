@@ -35,7 +35,7 @@ public class CustomerTrackAdapter extends RecyclerView.Adapter<CustomerTrackAdap
         final CustomerFinalOrders customerFinalOrders = customerFinalOrderslist.get(position);
         holder.Dishname.setText(customerFinalOrders.getDishName());
         holder.Quantity.setText(customerFinalOrders.getDishQuantity() + "× ");
-        holder.Totalprice.setText("₹ " + customerFinalOrders.getTotalPrice());
+        holder.Totalprice.setText("₱ " + customerFinalOrders.getTotalPrice());
 
     }
 

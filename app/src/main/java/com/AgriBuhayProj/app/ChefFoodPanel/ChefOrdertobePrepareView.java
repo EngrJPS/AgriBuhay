@@ -157,7 +157,7 @@ public class ChefOrdertobePrepareView extends AppCompatActivity {
                                                                                 @Override
                                                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                                                     String usertoken = dataSnapshot.getValue(String.class);
-                                                                                    sendNotifications(usertoken, "Estimated Time", "Chef is Preparing your Order", "Preparing");
+                                                                                    sendNotifications(usertoken, "Estimated Time", "Producer is Preparing your Order", "Preparing");
                                                                                     progressDialog.dismiss();
                                                                                     AlertDialog.Builder builder = new AlertDialog.Builder(ChefOrdertobePrepareView.this);
                                                                                     builder.setMessage("See Orders which are Prepared");
@@ -227,11 +227,11 @@ public class ChefOrdertobePrepareView extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ChefWaitingOrders1 chefWaitingOrders1 = dataSnapshot.getValue(ChefWaitingOrders1.class);
-                grandtotal.setText("₹ " + chefWaitingOrders1.getGrandTotalPrice());
+                grandtotal.setText("₱ " + chefWaitingOrders1.getGrandTotalPrice());
                 note.setText(chefWaitingOrders1.getNote());
                 address.setText(chefWaitingOrders1.getAddress());
                 name.setText(chefWaitingOrders1.getName());
-                number.setText("+91" + chefWaitingOrders1.getMobileNumber());
+                number.setText("+63" + chefWaitingOrders1.getMobileNumber());
 
             }
 

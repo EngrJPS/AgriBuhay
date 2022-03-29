@@ -67,7 +67,7 @@ public class CustomerCartAdapter extends RecyclerView.Adapter<CustomerCartAdapte
                 }
             }
         });
-        CustomerCartFragment.grandt.setText("Grand Total: ₹ " + total);
+        CustomerCartFragment.grandt.setText("Grand Total: ₱ " + total);
         FirebaseDatabase.getInstance().getReference("Cart").child("GrandTotal").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("GrandTotal").setValue(String.valueOf(total));
 
     }

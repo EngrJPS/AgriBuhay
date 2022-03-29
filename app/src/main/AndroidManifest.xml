@@ -99,7 +99,7 @@
             android:label="Home" />
         <activity
             android:name="com.AgriBuhayProj.app.ChefFoodPanel.Chef_PostDish"
-            android:label="Post Dish" />
+            android:label="Post Product" />
         <activity
             android:name="com.AgriBuhayProj.app.ChefFoodPanel_BottomNavigation"
             android:windowSoftInputMode="adjustNothing" />
