@@ -7,12 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.AgriBuhayProj.app.ChefFoodPanel.ChefHomeFragment;
-import com.AgriBuhayProj.app.ChefFoodPanel.ChefPendingOrdersFragment;
-import com.AgriBuhayProj.app.ChefFoodPanel.ChefProfileFragment;
-import com.AgriBuhayProj.app.ChefFoodPanel.ChefOrderFragment;
-
-import com.AgriBuhayProj.app.R;
+import com.AgriBuhayProj.app.ProducerPanel.ChefHomeFragment;
+import com.AgriBuhayProj.app.ProducerPanel.ChefPendingOrdersFragment;
+import com.AgriBuhayProj.app.ProducerPanel.ChefProfileFragment;
+import com.AgriBuhayProj.app.ProducerPanel.ChefOrderFragment;
 
 import com.AgriBuhayProj.app.SendNotification.Token;
 

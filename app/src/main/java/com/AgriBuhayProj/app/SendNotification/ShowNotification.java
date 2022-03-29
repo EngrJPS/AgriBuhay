@@ -12,9 +12,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
-import com.AgriBuhayProj.app.ChefFoodPanel.ChefPreparedOrderView;
+import com.AgriBuhayProj.app.ProducerPanel.ChefPreparedOrderView;
 import com.AgriBuhayProj.app.ChefFoodPanel_BottomNavigation;
-import com.AgriBuhayProj.app.CustomerFoodPanel.PayableOrders;
+import com.AgriBuhayProj.app.RetailerPanel.PayableOrders;
 import com.AgriBuhayProj.app.CustomerFoodPanel_BottomNavigation;
 import com.AgriBuhayProj.app.Delivery_FoodPanelBottomNavigation;
 import com.AgriBuhayProj.app.MainActivity;

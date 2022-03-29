@@ -24,13 +24,13 @@
             android:theme="@style/AppTheme"></activity>
 
         <activity
-            android:name="com.AgriBuhayProj.app.DeliveryFoodPanel.Delivery_ShippingOrder"
+            android:name="com.AgriBuhayProj.app.LogisiticsPanel.Delivery_ShippingOrder"
             android:label="Ship Orders"></activity>
         <activity
-            android:name="com.AgriBuhayProj.app.DeliveryFoodPanel.DeliveryShipOrderView"
+            android:name="com.AgriBuhayProj.app.LogisiticsPanel.DeliveryShipOrderView"
             android:label="Ship Orders" />
         <activity
-            android:name="com.AgriBuhayProj.app.DeliveryFoodPanel.DeliveryPendingOrderView"
+            android:name="com.AgriBuhayProj.app.LogisiticsPanel.DeliveryPendingOrderView"
             android:label="Pending Orders" />
         <activity android:name="com.AgriBuhayProj.app.Delivery_FoodPanelBottomNavigation" />
         <activity
@@ -52,53 +52,53 @@
             android:name="com.AgriBuhayProj.app.Delivery_registeration"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.AgriBuhayProj.app.ChefFoodPanel.ChefPreparedOrderView"
+            android:name="com.AgriBuhayProj.app.ProducerPanel.ChefPreparedOrderView"
             android:label="Prepared Orders" />
         <activity
-            android:name="com.AgriBuhayProj.app.ChefFoodPanel.ChefPreparedOrder"
+            android:name="com.AgriBuhayProj.app.ProducerPanel.ChefPreparedOrder"
             android:label="Prepared Orders" />
         <activity
-            android:name="com.AgriBuhayProj.app.ChefFoodPanel.ChefOrdertobePrepareView"
+            android:name="com.AgriBuhayProj.app.ProducerPanel.ChefOrdertobePrepareView"
             android:label="Orders to be Prepared" />
         <activity
-            android:name="com.AgriBuhayProj.app.ChefFoodPanel.ChefOrderTobePrepared"
+            android:name="com.AgriBuhayProj.app.ProducerPanel.ChefOrderTobePrepared"
             android:label="Orders to be Prepared" />
         <activity
-            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPaymentOTP"
+            android:name="com.AgriBuhayProj.app.RetailerPanel.CustomerPaymentOTP"
             android:label="Online Payment" />
         <activity
-            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerOnlinePayment"
+            android:name="com.AgriBuhayProj.app.RetailerPanel.CustomerOnlinePayment"
             android:label="Online Payment" />
         <activity
-            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPayment"
+            android:name="com.AgriBuhayProj.app.RetailerPanel.CustomerPayment"
             android:label="Payable Orders" />
         <activity
-            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.PayableOrders"
+            android:name="com.AgriBuhayProj.app.RetailerPanel.PayableOrders"
             android:label="Payable Orders" />
         <activity
-            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.PendingOrders"
+            android:name="com.AgriBuhayProj.app.RetailerPanel.PendingOrders"
             android:label="Pending Orders" />
         <activity
-            android:name="com.AgriBuhayProj.app.ChefFoodPanel.Chef_order_dishes"
+            android:name="com.AgriBuhayProj.app.ProducerPanel.Chef_order_dishes"
             android:label="Orders" />
         <activity
-            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPhoneSendOTP"
+            android:name="com.AgriBuhayProj.app.RetailerPanel.CustomerPhoneSendOTP"
             android:label="Mobile Number" />
         <activity
-            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPhonenumber"
+            android:name="com.AgriBuhayProj.app.RetailerPanel.CustomerPhonenumber"
             android:label="Mobile Number" />
         <activity
-            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerForgotpassword"
+            android:name="com.AgriBuhayProj.app.RetailerPanel.CustomerForgotpassword"
             android:label="Password" />
         <activity
-            android:name="com.AgriBuhayProj.app.CustomerFoodPanel.CustomerPassword"
+            android:name="com.AgriBuhayProj.app.RetailerPanel.CustomerPassword"
             android:label="Password" />
-        <activity android:name="com.AgriBuhayProj.app.CustomerFoodPanel.OrderDish" />
+        <activity android:name="com.AgriBuhayProj.app.RetailerPanel.OrderDish" />
         <activity
-            android:name="com.AgriBuhayProj.app.ChefFoodPanel.Update_Delete_Dish"
+            android:name="com.AgriBuhayProj.app.ProducerPanel.Update_Delete_Dish"
             android:label="Home" />
         <activity
-            android:name="com.AgriBuhayProj.app.ChefFoodPanel.Chef_PostDish"
+            android:name="com.AgriBuhayProj.app.ProducerPanel.Chef_PostDish"
             android:label="Post Product" />
         <activity
             android:name="com.AgriBuhayProj.app.ChefFoodPanel_BottomNavigation"

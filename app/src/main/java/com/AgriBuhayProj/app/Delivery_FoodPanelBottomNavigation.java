@@ -7,10 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.AgriBuhayProj.app.DeliveryFoodPanel.DeliveryPendingOrderFragment;
-import com.AgriBuhayProj.app.DeliveryFoodPanel.DeliveryShipOrderFragment;
+import com.AgriBuhayProj.app.LogisiticsPanel.DeliveryPendingOrderFragment;
+import com.AgriBuhayProj.app.LogisiticsPanel.DeliveryShipOrderFragment;
 
-import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.SendNotification.Token;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;

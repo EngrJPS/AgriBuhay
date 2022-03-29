@@ -9,13 +9,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.AgriBuhayProj.app.CustomerFoodPanel.CustomerCartFragment;
-import com.AgriBuhayProj.app.CustomerFoodPanel.CustomerHomeFragment;
-import com.AgriBuhayProj.app.CustomerFoodPanel.CustomerOrderFragment;
-import com.AgriBuhayProj.app.CustomerFoodPanel.CustomerProfileFragment;
-import com.AgriBuhayProj.app.CustomerFoodPanel.CustomerTrackFragment;
+import com.AgriBuhayProj.app.RetailerPanel.CustomerCartFragment;
+import com.AgriBuhayProj.app.RetailerPanel.CustomerHomeFragment;
+import com.AgriBuhayProj.app.RetailerPanel.CustomerOrderFragment;
+import com.AgriBuhayProj.app.RetailerPanel.CustomerProfileFragment;
+import com.AgriBuhayProj.app.RetailerPanel.CustomerTrackFragment;
 
-import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.SendNotification.Token;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
