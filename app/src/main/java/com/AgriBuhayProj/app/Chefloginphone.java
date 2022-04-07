@@ -24,7 +24,7 @@ public class Chefloginphone extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chefloginphone);
+        setContentView(R.layout.login_phone_producer);
 
         num=(EditText)findViewById(R.id.number);
         sendotp=(Button)findViewById(R.id.otp);
@@ -52,7 +52,7 @@ public class Chefloginphone extends AppCompatActivity {
         txtsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a=new Intent(Chefloginphone.this, Producer_Registration.class);
+                Intent a=new Intent(Chefloginphone.this, RegistrationProducer.class);
                 startActivity(a);
                 finish();
             }

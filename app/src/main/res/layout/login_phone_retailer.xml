@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chefloginphone">
+    tools:context="LoginPhone">
+
 
     <include
         android:id="@+id/toolbar"
@@ -14,11 +15,11 @@
         android:layout_width="500dp"
         android:layout_height="280dp"
         android:scaleType="fitCenter"
-        android:layout_marginTop="56dp"
         android:src="@drawable/top_prod_send_phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="57dp"/>
 
     <LinearLayout
         android:id="@+id/linearlayout"
@@ -67,7 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="10"/>
         </LinearLayout>
 
 
@@ -153,6 +155,5 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

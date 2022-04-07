@@ -1,29 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:background="@color/peach">
 
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/Scan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Scan"></Button>
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Print Receipt"
+            android:textAlignment="center"
+            android:textColor="@color/darkgray"
+            android:textSize="40sp"
+            android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/mPrint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Print"></Button>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edtNetWt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Enter Total Net Wt."
+            app:suffixText="kg">
 
-    <Button
-        android:id="@+id/dis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Dissable"></Button>
-</LinearLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:textColor="@color/darkgray"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/Scan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/layout_button_green"
+            android:text="Scan"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/mPrint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/layout_button_red"
+            android:text="Print"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:drawableBottom="@drawable/ic_baseline_print_black"/>
+
+        <Button
+            android:id="@+id/dis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/layout_button_disabled"
+            android:text="Disable"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

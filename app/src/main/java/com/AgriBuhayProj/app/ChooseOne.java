@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +18,7 @@ public class ChooseOne extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_one);
+        setContentView(R.layout.menu_choose_role);
         Chef = (Button) findViewById(R.id.chef);
         DeliveryPerson = (Button) findViewById(R.id.delivery);
         Customer = (Button) findViewById(R.id.customer);
@@ -41,7 +40,7 @@ public class ChooseOne extends AppCompatActivity {
                     finish();
                 }
                 if (type.equals("SignUp")) {
-                    Intent Register = new Intent(ChooseOne.this, Producer_Registration.class);
+                    Intent Register = new Intent(ChooseOne.this, RegistrationProducer.class);
                     startActivity(Register);
 
 
@@ -64,7 +63,7 @@ public class ChooseOne extends AppCompatActivity {
                     finish();
                 }
                 if (type.equals("SignUp")) {
-                    Intent Registercust = new Intent(ChooseOne.this, Registeration.class);
+                    Intent Registercust = new Intent(ChooseOne.this, RegistrationRetailer.class);
                     startActivity(Registercust);
                 }
             }
@@ -74,7 +73,7 @@ public class ChooseOne extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (type.equals("SignUp")) {
-                    Intent Registerdelivery = new Intent(ChooseOne.this, Delivery_registeration.class);
+                    Intent Registerdelivery = new Intent(ChooseOne.this, RegistrationDelivery.class);
                     startActivity(Registerdelivery);
                 }
                 if (type.equals("Phone")) {

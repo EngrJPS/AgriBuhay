@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="LoginPhone">
-
+    tools:context=".Delivery_LoginPhone">
 
     <include
         android:id="@+id/toolbar"
@@ -57,23 +56,24 @@
             android:orientation="horizontal">
 
             <com.hbb20.CountryCodePicker
-                android:id="@+id/CountryCode"
+                android:id="@+id/countrycode"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 app:ccp_defaultNameCode="PH"/>
 
             <EditText
-                android:id="@+id/number"
+                android:id="@+id/Dphonenumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="10"/>
         </LinearLayout>
 
 
         <Button
-            android:id="@+id/otp"
+            android:id="@+id/Sendotp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="30dp"
@@ -132,7 +132,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/signphone"
+            android:id="@+id/Signupif"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -142,7 +142,7 @@
             android:textSize="15dp" />
 
         <Button
-            android:id="@+id/btnEmail"
+            android:id="@+id/DbtnEmail"
             android:layout_width="105dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -154,5 +154,6 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -49,7 +49,7 @@
             android:name="com.AgriBuhayProj.app.Delivery_VerifyPhone"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.AgriBuhayProj.app.Delivery_registeration"
+            android:name="com.AgriBuhayProj.app.RegistrationDelivery"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
             android:name="com.AgriBuhayProj.app.ProducerPanel.ChefPreparedOrderView"
@@ -138,7 +138,7 @@
             android:name="com.AgriBuhayProj.app.ChooseOne"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.AgriBuhayProj.app.Producer_Registration"
+            android:name="com.AgriBuhayProj.app.RegistrationProducer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
             android:name="com.AgriBuhayProj.app.ForgotPassword"
@@ -147,21 +147,11 @@
             android:name="com.AgriBuhayProj.app.Login"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name="com.AgriBuhayProj.app.Registeration"
+            android:name="com.AgriBuhayProj.app.RegistrationRetailer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
             android:name=".Printer.DeviceListActivity"
             android:theme="@android:style/Theme.DeviceDefault.Dialog"></activity>
-        <activity
-            android:name="com.AgriBuhayProj.app.MainActivity"
-            android:theme="@style/AppThemeNoActionbar"
-            android:exported="true">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppThemeNoActionbar"
