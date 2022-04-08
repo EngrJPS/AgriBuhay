@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Delivery_registeration">
+    tools:context=".RegistrationDelivery">
 
 <!--    <ScrollView-->
 <!--        android:layout_width="match_parent"-->
@@ -421,7 +421,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:maxLength="16"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -435,7 +436,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Confirm Password"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:maxLength="16"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
@@ -461,7 +463,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Mobile number"
-                            android:inputType="number" />
+                            android:inputType="phone"
+                            android:maxLength="10"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>

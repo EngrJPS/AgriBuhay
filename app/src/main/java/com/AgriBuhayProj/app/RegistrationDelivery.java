@@ -29,8 +29,9 @@ import com.hbb20.CountryCodePicker;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Producer_Registration extends AppCompatActivity {
+public class RegistrationDelivery extends AppCompatActivity {
 
+    //TODO change the string names to the barangay names
     //This strings will be the province of Davao
     String [] Davao_de_Oro = {"Compostela", "Laak", "Mabini", "Maco", "Maragusan", "Mawab"
             , "Monkayo", "Montivista", "Nabunturan", "New Bataan", "Pantukan"};
@@ -76,61 +77,49 @@ public class Producer_Registration extends AppCompatActivity {
             , "Mana", "Manuel Peralta", "New Argao", "Pangian", "Pinalpalan", "Poblacion", "Sangay", "Talogoy", "Tical"
             , "Ticulon", "Tingolo", "Tubalan", "Pangaleon"};
 
-    TextInputLayout Fname, Lname, Email, Pass, cfpass, mobileno, houseno, area, postcode;
+
+    TextInputLayout Fname, Lname, Pass, cfpass, mobileno, houseno, area, postcode, Email;
     Spinner statespin, Cityspin, Suburban;
     Button signup, Emaill, Phone;
     CountryCodePicker Cpp;
-    FirebaseAuth FAuth;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
-    String fname;
-    String lname;
-    String emailid;
-    String password;
-    String confirmpassword;
-    String mobile;
-    String house;
-    String Area;
-    String Postcode;
-    String role = "Chef";
-    String statee;
-    String cityy;
-    String suburban;
+    FirebaseAuth FAuth;
+    String role = "DeliveryPerson";
+    String statee, cityy, suburban, fname, lname, mobile, confirmpassword, password, Area, Postcode, house, emailid;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chef_registeration);
+        setContentView(R.layout.registration_delivery);
+
+        Fname = (TextInputLayout) findViewById(R.id.fname);
+        Lname = (TextInputLayout) findViewById(R.id.lname);
+        Pass = (TextInputLayout) findViewById(R.id.password);
+        Email = (TextInputLayout) findViewById(R.id.Emailid);
+        cfpass = (TextInputLayout) findViewById(R.id.confirmpassword);
+        mobileno = (TextInputLayout) findViewById(R.id.mobileno);
+        houseno = (TextInputLayout) findViewById(R.id.Houseno);
+        area = (TextInputLayout) findViewById(R.id.Areaa);
+        postcode = (TextInputLayout) findViewById(R.id.Postcodee);
+        statespin = (Spinner) findViewById(R.id.State);
+        Cityspin = (Spinner) findViewById(R.id.City);
+        Emaill = (Button) findViewById(R.id.emaillid);
+        Suburban = (Spinner) findViewById(R.id.suburban);
+        signup = (Button) findViewById(R.id.Signupp);
+        Phone = (Button) findViewById(R.id.Phonenumber);
+        Cpp = (CountryCodePicker) findViewById(R.id.ctrycode);
+        final ProgressDialog mDialog = new ProgressDialog(RegistrationDelivery.this);
+        mDialog.setCancelable(false);
+        mDialog.setCanceledOnTouchOutside(false);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Register As Producer");
+        getSupportActionBar().setTitle("Register As Logistics");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Producer_Registration.this, ChooseOne.class));
-            }
-        });
 
-        Fname = (TextInputLayout) findViewById(R.id.Firstname);
-        Lname = (TextInputLayout) findViewById(R.id.Lastname);
-        Email = (TextInputLayout) findViewById(R.id.Email);
-        Pass = (TextInputLayout) findViewById(R.id.Pwd);
-        cfpass = (TextInputLayout) findViewById(R.id.Cpass);
-        mobileno = (TextInputLayout) findViewById(R.id.Mobileno);
-        houseno = (TextInputLayout) findViewById(R.id.houseNo);
-        area = (TextInputLayout) findViewById(R.id.Area);
-        postcode = (TextInputLayout) findViewById(R.id.Postcode);
-        statespin = (Spinner) findViewById(R.id.Statee);
-        Cityspin = (Spinner) findViewById(R.id.Citys);
-        Suburban = (Spinner) findViewById(R.id.Suburban);
-        signup = (Button) findViewById(R.id.Signup);
-        Emaill = (Button) findViewById(R.id.emaill);
-        Phone = (Button) findViewById(R.id.phone);
-        Cpp = (CountryCodePicker) findViewById(R.id.CountryCode);
-
+        //TODO change the statespin names to the maco barangay names
         statespin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -141,7 +130,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Davao_de_Oro) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Cityspin.setAdapter(arrayAdapter);
                 }
@@ -151,7 +140,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Davao_del_Sur) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Cityspin.setAdapter(arrayAdapter);
                 }
@@ -161,7 +150,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Davao_del_Norte) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Cityspin.setAdapter(arrayAdapter);
                 }
@@ -171,7 +160,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Davao_Oriental) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Cityspin.setAdapter(arrayAdapter);
                 }
@@ -181,11 +170,13 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Davao_Occidental) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Cityspin.setAdapter(arrayAdapter);
                 }
+
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -204,7 +195,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Maco) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Suburban.setAdapter(arrayAdapter);
                 }
@@ -214,7 +205,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Nabunturan) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Suburban.setAdapter(arrayAdapter);
                 }
@@ -224,7 +215,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Digos) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Suburban.setAdapter(arrayAdapter);
                 }
@@ -234,7 +225,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Tagum) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Suburban.setAdapter(arrayAdapter);
                 }
@@ -244,7 +235,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Mati) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Suburban.setAdapter(arrayAdapter);
                 }
@@ -254,7 +245,7 @@ public class Producer_Registration extends AppCompatActivity {
                     for (String text : Malita) {
                         list.add(text);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Producer_Registration.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationDelivery.this, android.R.layout.simple_spinner_item, list);
 
                     Suburban.setAdapter(arrayAdapter);
                 }
@@ -279,10 +270,10 @@ public class Producer_Registration extends AppCompatActivity {
             }
         });
 
-        //This line will create a database to the firebase
-        databaseReference = firebaseDatabase.getInstance().getReference("Chef");
-        FAuth = FirebaseAuth.getInstance();
 
+        //TODO change the reference name to Logistics
+        databaseReference = firebaseDatabase.getInstance().getReference("DeliveryPerson");
+        FAuth = FirebaseAuth.getInstance();
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,20 +281,17 @@ public class Producer_Registration extends AppCompatActivity {
 
                 fname = Fname.getEditText().getText().toString().trim();
                 lname = Lname.getEditText().getText().toString().trim();
-                emailid = Email.getEditText().getText().toString().trim();
                 mobile = mobileno.getEditText().getText().toString().trim();
+                emailid = Email.getEditText().getText().toString().trim();
                 password = Pass.getEditText().getText().toString().trim();
                 confirmpassword = cfpass.getEditText().getText().toString().trim();
                 Area = area.getEditText().getText().toString().trim();
                 house = houseno.getEditText().getText().toString().trim();
                 Postcode = postcode.getEditText().getText().toString().trim();
 
-
                 if (isValid()) {
 
-                    final ProgressDialog mDialog = new ProgressDialog(Producer_Registration.this);
-                    mDialog.setCancelable(false);
-                    mDialog.setCanceledOnTouchOutside(false);
+
                     mDialog.setMessage("Registering please wait...");
                     mDialog.show();
 
@@ -313,9 +301,9 @@ public class Producer_Registration extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
-                                final HashMap<String,String> hashMap = new HashMap<>();
+                                final HashMap<String, String> hashMap = new HashMap<>();
                                 hashMap.put("Role", role);
-                                //TODO this is the database for the chef
+                                //TODO this is the database for the DeliveryPerson
                                 databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                                     @Override
@@ -333,9 +321,8 @@ public class Producer_Registration extends AppCompatActivity {
                                         hashMappp.put("Postcode", Postcode);
                                         hashMappp.put("State", statee);
                                         hashMappp.put("Suburban", suburban);
-                                        firebaseDatabase.getInstance().getReference("Chef")
-                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                .setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        //Todo change the deliveryperson to Logistics
+                                        firebaseDatabase.getInstance().getReference("DeliverPerson").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -345,7 +332,7 @@ public class Producer_Registration extends AppCompatActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
-                                                            AlertDialog.Builder builder = new AlertDialog.Builder(Producer_Registration.this);
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationDelivery.this);
                                                             builder.setMessage("Registered Successfully,Please Verify your Email");
                                                             builder.setCancelable(false);
                                                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -354,8 +341,8 @@ public class Producer_Registration extends AppCompatActivity {
 
                                                                     dialog.dismiss();
 
-                                                                    String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile; //Error
-                                                                    Intent b = new Intent(Producer_Registration.this, ChefVerifyPhone.class);
+                                                                    String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
+                                                                    Intent b = new Intent(RegistrationDelivery.this, Delivery_VerifyPhone.class);
                                                                     b.putExtra("phonenumber", phonenumber);
                                                                     startActivity(b);
 
@@ -366,7 +353,7 @@ public class Producer_Registration extends AppCompatActivity {
 
                                                         } else {
                                                             mDialog.dismiss();
-                                                            ReusableCodeForAll.ShowAlert(Producer_Registration.this, "Error", task.getException().getMessage());
+                                                            ReusableCodeForAll.ShowAlert(RegistrationDelivery.this, "Error", task.getException().getMessage());
 
                                                         }
                                                     }
@@ -379,25 +366,14 @@ public class Producer_Registration extends AppCompatActivity {
 
                             } else {
                                 mDialog.dismiss();
-                                ReusableCodeForAll.ShowAlert(Producer_Registration.this, "Error", task.getException().getMessage());
+                                ReusableCodeForAll.ShowAlert(RegistrationDelivery.this, "Error", task.getException().getMessage());
                             }
 
                         }
                     });
 
+
                 }
-
-            }
-
-        });
-
-        Emaill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent i = new Intent(Producer_Registration.this, ChefLogin.class);
-                startActivity(i);
-                finish();
             }
         });
 
@@ -405,8 +381,17 @@ public class Producer_Registration extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent e = new Intent(Producer_Registration.this, Chefloginphone.class);
+                Intent e = new Intent(RegistrationDelivery.this, Delivery_LoginPhone.class);
                 startActivity(e);
+                finish();
+            }
+        });
+
+        Emaill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(RegistrationDelivery.this, Delivery_Login.class);
+                startActivity(a);
                 finish();
             }
         });
@@ -417,10 +402,10 @@ public class Producer_Registration extends AppCompatActivity {
     String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     public boolean isValid() {
-        Email.setErrorEnabled(false);
-        Email.setError("");
         Fname.setErrorEnabled(false);
         Fname.setError("");
+        Email.setErrorEnabled(false);
+        Email.setError("");
         Lname.setErrorEnabled(false);
         Lname.setError("");
         Pass.setErrorEnabled(false);
@@ -436,7 +421,7 @@ public class Producer_Registration extends AppCompatActivity {
         postcode.setErrorEnabled(false);
         postcode.setError("");
 
-        boolean isValidname = false, isValidemail = false, isvalidpassword = false, isvalidconfirmpassword = false, isvalid = false, isvalidmobileno = false, isvalidlname = false, isvalidhousestreetno = false, isvalidarea = false, isvalidpostcode = false;
+        boolean isValidname = false, isvalidpassword = false, isValidemail = false, isvalidconfirmpassword = false, isvalid = false, isvalidmobileno = false, isvalidlname = false, isvalidhousestreetno = false, isvalidarea = false, isvalidpostcode = false;
         if (TextUtils.isEmpty(fname)) {
             Fname.setErrorEnabled(true);
             Fname.setError("Firstname is required");
@@ -461,6 +446,7 @@ public class Producer_Registration extends AppCompatActivity {
             }
 
         }
+
         if (TextUtils.isEmpty(password)) {
             Pass.setErrorEnabled(true);
             Pass.setError("Password is required");
@@ -513,7 +499,7 @@ public class Producer_Registration extends AppCompatActivity {
             isvalidpostcode = true;
         }
 
-        isvalid = (isValidname && isvalidpostcode && isvalidlname && isValidemail && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isvalidarea && isvalidhousestreetno) ? true : false;
+        isvalid = (isValidname && isvalidpostcode && isValidemail && isvalidlname && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isvalidarea && isvalidhousestreetno) ? true : false;
         return isvalid;
     }
 }

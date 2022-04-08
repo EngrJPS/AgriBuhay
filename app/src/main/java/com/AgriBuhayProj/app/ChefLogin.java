@@ -34,7 +34,7 @@ public class ChefLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chef_login);
+        setContentView(R.layout.login_email_producer);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -100,7 +100,7 @@ public class ChefLogin extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent Register = new Intent(ChefLogin.this, Producer_Registration.class);
+                    Intent Register = new Intent(ChefLogin.this, RegistrationProducer.class);
                     startActivity(Register);
                     finish();
 

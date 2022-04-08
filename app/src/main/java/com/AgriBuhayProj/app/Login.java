@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.ReusableCode.ReusableCodeForAll;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,7 +34,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_email_retailer);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,7 +95,7 @@ public class Login extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent Register = new Intent(Login.this, Registeration.class);
+                    Intent Register = new Intent(Login.this, RegistrationRetailer.class);
                     startActivity(Register);
 
                 }

@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.AgriBuhayProj.app.R;
 public class MainMenu extends AppCompatActivity {
 
     Button signinemail, signinphone, signup;
@@ -20,7 +19,7 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.menu_main);
         final Animation zoomin = AnimationUtils.loadAnimation(this, R.anim.zoomin);
         final Animation zoomout = AnimationUtils.loadAnimation(this, R.anim.zoomout);
         bgimage = findViewById(R.id.back2);

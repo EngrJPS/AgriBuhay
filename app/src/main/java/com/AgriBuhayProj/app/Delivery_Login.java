@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.ReusableCode.ReusableCodeForAll;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +33,7 @@ public class Delivery_Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delivery__login);
+        setContentView(R.layout.login_email_delivery);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,7 +94,7 @@ public class Delivery_Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent Register = new Intent(Delivery_Login.this, Delivery_registeration.class);
+                Intent Register = new Intent(Delivery_Login.this, RegistrationDelivery.class);
                 startActivity(Register);
                 finish();
 

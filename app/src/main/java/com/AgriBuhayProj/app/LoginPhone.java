@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.AgriBuhayProj.app.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hbb20.CountryCodePicker;
 
@@ -26,7 +25,7 @@ public class LoginPhone extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_phone);
+        setContentView(R.layout.login_phone_retailer);
 
         num=(EditText)findViewById(R.id.number);
         sendotp=(Button)findViewById(R.id.otp);
@@ -53,7 +52,7 @@ public class LoginPhone extends AppCompatActivity {
         txtsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a=new Intent(LoginPhone.this,Registeration.class);
+                Intent a=new Intent(LoginPhone.this, RegistrationRetailer.class);
                 startActivity(a);
                 finish();
             }

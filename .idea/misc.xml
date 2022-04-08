@@ -103,19 +103,41 @@
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1795" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1795" />
         <entry key="..\:/Users/Ismael/AppData/Local/Android/Sdk/platforms/android-29/data/res/layout/simple_spinner_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/drawable/ic_baseline_print_black.xml" value="0.269" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/drawable/layout_button_disabled.xml" value="0.198" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/drawable/layout_button_green.xml" value="0.198" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/drawable/layout_button_red.xml" value="0.198" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_chef__post_dish.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_chef_food_panel__bottom_navigation.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_chef_registeration.xml" value="0.25" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_chefloginphone.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_choose_one.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_customer_forgotpassword.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_customer_password.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_delivery__forgot_password.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_delivery__login.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_delivery__login_phone.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_delivery__verify_phone.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_delivery_registeration.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_forgot_password.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_login.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_login_phone.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_main.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_main_menu.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_registeration.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/activity_update__delete__dish.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/bar_layout.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/chef_finalorder.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/device_name.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/devices.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/main_printer.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/enter_address.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/main_printer.xml" value="0.5" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/menu_main.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/registration_delivery.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/registration_producer.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/registration_retailer.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/layout/splash_screen.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/Thesis/AgriBuhay/app/src/main/res/menu/chef_bottom_navigation.xml" value="0.2598958333333333" />
       </map>
     </option>
   </component>

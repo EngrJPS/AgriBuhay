@@ -24,6 +24,7 @@ import com.AgriBuhayProj.app.Chef;
 import com.AgriBuhayProj.app.ProducerPanel.ChefFinalOrders;
 import com.AgriBuhayProj.app.R;
 import com.bumptech.glide.util.Util;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +46,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
     private static final int REQUEST_ENABLE_BT = 2;
     protected static final int BT_ON = 3;
 
+    TextInputEditText inputTotal;
     Button mScan, mPrint, mDisc;
     BluetoothAdapter mBluetoothAdapter;
     private UUID applicationUUID = UUID
@@ -65,6 +67,9 @@ public class ProducerPrintOrder extends Activity implements Runnable {
     public void onCreate(Bundle mSavedInstanceState) {
         super.onCreate(mSavedInstanceState);
         setContentView(R.layout.main_printer);
+
+        //edit text xml
+        inputTotal = findViewById(R.id.edtNetWt);
 
         isChangingName = false;
 //        isTestingPrinter = true;
@@ -419,7 +424,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     closeSocket(mBluetoothSocket); //close the connection
 
                 } catch (Exception e) {
-                    Log.e("MainActivity", "Exe ", e);
+                    Log.e("SplashScreen", "Exe ", e);
                 }
             }
         }.start();

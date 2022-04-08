@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.ReusableCode.ReusableCodeForAll;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +30,7 @@ import com.hbb20.CountryCodePicker;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Registeration extends AppCompatActivity {
+public class RegistrationRetailer extends AppCompatActivity {
 
     //This strings will be the province of Davao
     String [] Davao_de_Oro = {"Compostela", "Laak", "Mabini", "Maco", "Maragusan", "Mawab"
@@ -101,7 +100,7 @@ public class Registeration extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registeration);
+        setContentView(R.layout.registration_retailer);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -110,12 +109,12 @@ public class Registeration extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Registeration.this, ChooseOne.class));
+                startActivity(new Intent(RegistrationRetailer.this, ChooseOne.class));
             }
         });
 
         try {
-            mDialog = new ProgressDialog(Registeration.this);
+            mDialog = new ProgressDialog(RegistrationRetailer.this);
             mDialog.setMessage("Registering please wait...");
             mDialog.setCancelable(false);
             mDialog.setCanceledOnTouchOutside(false);
@@ -145,7 +144,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Davao_de_Oro) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Cityspin.setAdapter(arrayAdapter);
                     }
@@ -155,7 +154,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Davao_del_Sur) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Cityspin.setAdapter(arrayAdapter);
                     }
@@ -165,7 +164,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Davao_del_Norte) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Cityspin.setAdapter(arrayAdapter);
                     }
@@ -175,7 +174,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Davao_Oriental) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Cityspin.setAdapter(arrayAdapter);
                     }
@@ -185,7 +184,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Davao_Occidental) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Cityspin.setAdapter(arrayAdapter);
                     }
@@ -208,7 +207,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Maco) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Suburban.setAdapter(arrayAdapter);
                     }
@@ -218,7 +217,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Nabunturan) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Suburban.setAdapter(arrayAdapter);
                     }
@@ -228,7 +227,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Digos) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Suburban.setAdapter(arrayAdapter);
                     }
@@ -238,7 +237,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Tagum) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Suburban.setAdapter(arrayAdapter);
                     }
@@ -248,7 +247,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Mati) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Suburban.setAdapter(arrayAdapter);
                     }
@@ -258,7 +257,7 @@ public class Registeration extends AppCompatActivity {
                         for (String text : Malita) {
                             list.add(text);
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registeration.this, android.R.layout.simple_spinner_item, list);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationRetailer.this, android.R.layout.simple_spinner_item, list);
 
                         Suburban.setAdapter(arrayAdapter);
                     }
@@ -340,7 +339,7 @@ public class Registeration extends AppCompatActivity {
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
                                                                 mDialog.dismiss();
-                                                                AlertDialog.Builder builder = new AlertDialog.Builder(Registeration.this);
+                                                                AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationRetailer.this);
                                                                 builder.setMessage("Registered Successfully,Please Verify your Email");
                                                                 builder.setCancelable(false);
                                                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -349,7 +348,7 @@ public class Registeration extends AppCompatActivity {
 
                                                                         dialog.dismiss();
                                                                         String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobileno;
-                                                                        Intent b = new Intent(Registeration.this, VerifyPhone.class);
+                                                                        Intent b = new Intent(RegistrationRetailer.this, VerifyPhone.class);
                                                                         b.putExtra("phonenumber", phonenumber);
                                                                         startActivity(b);
 
@@ -360,7 +359,7 @@ public class Registeration extends AppCompatActivity {
 
                                                             } else {
                                                                 mDialog.dismiss();
-                                                                ReusableCodeForAll.ShowAlert(Registeration.this,"Error",task.getException().getMessage());
+                                                                ReusableCodeForAll.ShowAlert(RegistrationRetailer.this,"Error",task.getException().getMessage());
 
                                                             }
                                                         }
@@ -372,7 +371,7 @@ public class Registeration extends AppCompatActivity {
 
                                 } else {
                                     mDialog.dismiss();
-                                    ReusableCodeForAll.ShowAlert(Registeration.this,"Error",task.getException().getMessage());
+                                    ReusableCodeForAll.ShowAlert(RegistrationRetailer.this,"Error",task.getException().getMessage());
                                 }
                             }
                         });
@@ -391,7 +390,7 @@ public class Registeration extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(Registeration.this, Login.class);
+                Intent i = new Intent(RegistrationRetailer.this, Login.class);
                 startActivity(i);
                 finish();
             }
@@ -401,7 +400,7 @@ public class Registeration extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent e = new Intent(Registeration.this, LoginPhone.class);
+                Intent e = new Intent(RegistrationRetailer.this, LoginPhone.class);
                 startActivity(e);
                 finish();
             }

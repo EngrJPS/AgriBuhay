@@ -17,8 +17,9 @@ import com.AgriBuhayProj.app.ChefFoodPanel_BottomNavigation;
 import com.AgriBuhayProj.app.RetailerPanel.PayableOrders;
 import com.AgriBuhayProj.app.CustomerFoodPanel_BottomNavigation;
 import com.AgriBuhayProj.app.Delivery_FoodPanelBottomNavigation;
-import com.AgriBuhayProj.app.MainActivity;
 import com.AgriBuhayProj.app.R;
+import com.AgriBuhayProj.app.SplashScreen;
+
 import java.util.Random;
 
 public class ShowNotification {
@@ -34,7 +35,7 @@ public class ShowNotification {
             NotificationManager manager = context.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-        Intent acIntent = new Intent(context, MainActivity.class);
+        Intent acIntent = new Intent(context, SplashScreen.class);
         acIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         if (page.trim().equalsIgnoreCase("Order")) {
