@@ -24,7 +24,6 @@ import com.AgriBuhayProj.app.Chef;
 import com.AgriBuhayProj.app.ProducerPanel.ChefFinalOrders;
 import com.AgriBuhayProj.app.R;
 import com.bumptech.glide.util.Util;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,101 +43,50 @@ public class ProducerPrintOrder extends Activity implements Runnable {
     protected static final String TAG = "TAG";
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
-    protected static final int BT_ON = 3;
-
-    TextInputEditText inputTotal;
     Button mScan, mPrint, mDisc;
     BluetoothAdapter mBluetoothAdapter;
     private UUID applicationUUID = UUID
             .fromString("00001101-0000-1000-8000-00805F9B34FB");
     private ProgressDialog mBluetoothConnectProgressDialog;
     private BluetoothSocket mBluetoothSocket;
-    protected BluetoothDevice mBluetoothDevice;
-    protected OutputStream outputStream;
-
-    public String BILL = "";
-    protected String printerName = "";
-    protected boolean isChangingName = false;
-    protected boolean isTestingPrinter = false;
-
-    private String RandomUID;
+    BluetoothDevice mBluetoothDevice;
+    private String producerID = "tFHeG3JY4DbOld2kNqISYw3C4ZJ3";
+    private String randomId = "1fbf53c1-d360-4760-9d25-17d063ddbeb0";
+    private String randomId1 = "f711dfc3-a0ef-4e07-b53c-c1504e852780";
 
     @Override
     public void onCreate(Bundle mSavedInstanceState) {
         super.onCreate(mSavedInstanceState);
         setContentView(R.layout.main_printer);
-
-        //edit text xml
-        inputTotal = findViewById(R.id.edtNetWt);
-
-        isChangingName = false;
-//        isTestingPrinter = true;
-//        String test = "This is a test for the printer";
-//        doPrint(test);
+        mScan = (Button) findViewById(R.id.Scan);
+        mScan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View mView) {
+                mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if (mBluetoothAdapter == null) {
+                    Toast.makeText(ProducerPrintOrder.this, "Message1", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (!mBluetoothAdapter.isEnabled()) {
+                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                    } else {
+                        ListPairedDevices();
+                        Intent connectIntent = new Intent(ProducerPrintOrder.this,
+                                DeviceListActivity.class);
+                        startActivityForResult(connectIntent,
+                                REQUEST_CONNECT_DEVICE);
+                    }
+                }
+            }
+        });
 
         mPrint = (Button) findViewById(R.id.mPrint);
         mPrint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                isTestingPrinter = true;
-                isChangingName = false;
-                String test = "This is a test for the printer"+ "\n";
-                String test1 = "Please work"+ "\n";
-                doPrint(test);
-                doPrint(test1);
-
-//                printText(test);
-//                doPrint("This");
-//                printingProcess(test, "PT-210");
-//                RandomUID = getIntent().getStringExtra("RandomUID");
-//                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Chef").child(FirebaseAuth.getInstance().getUid());
-//                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        Chef chef = snapshot.getValue(Chef.class);
-//                        String ProducerName = chef.getFname() + " " + chef.getLname();
-//                        DatabaseReference data = FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
-//                        data.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                final ChefFinalOrders chefFinalOrders1 = snapshot.getValue(ChefFinalOrders.class);
-//                                String ProducerId = chefFinalOrders1.getChefId();
-//                                String Product = chefFinalOrders1.getDishName();
-//                                String Price = "₱ " + chefFinalOrders1.getDishPrice();
-//                                String RandomUID = chefFinalOrders1.getRandomUID();
-//                                printingProcess("--------------------------------", "PT-210");
-//                                printNewLine();
-//                                printingProcess(RandomUID, "PT-210");
-//                                printNewLine();
-//                                printingProcess(ProducerName, "PT-210");
-//                                printNewLine();
-//                                printingProcess(ProducerId, "PT-210");
-//                                printNewLine();
-//                                printingProcess(Product, "PT-210");
-//                                printNewLine();
-//                                printingProcess(Price,"PT-210");
-//                                printingProcess("--------------------------------", "PT-210");
-//                                printNewLine();
-//
-//
-//
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
+            public void onClick(View mView) {
+                p1();
+                p2();
             }
         });
+
         mDisc = (Button) findViewById(R.id.dis);
         mDisc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {
@@ -147,51 +95,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
             }
         });
 
-
     }// onCreate
-
-    public void doPrint(final String job){
-        String name = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("bluetooth_printer", "");
-        printerName = name;
-        this.BILL = job;
-        this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (name.equalsIgnoreCase(""))
-        {
-
-            if (this.mBluetoothAdapter == null)
-            {
-                Toast.makeText(getApplicationContext(), "Your Bluetooth adapter has issues", Toast.LENGTH_LONG).show();
-                return;
-            } else if (!this.mBluetoothAdapter.isEnabled())
-            {
-                //put on the bluetooth
-                Intent enableBtIntent = new Intent(
-                        BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent,
-                        REQUEST_ENABLE_BT);
-                return;
-            } else
-            {
-                introduceNewDevice();
-                return;
-            }
-        }else
-        {
-            Intent enableBtIntent = new Intent(
-                    BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent,
-                    BT_ON);
-            return;
-        }
-    }
-
-    private void introduceNewDevice() {
-        ListPairedDevices();
-        Intent connectIntent = new Intent(ProducerPrintOrder.this,
-                DeviceListActivity.class);
-        startActivityForResult(connectIntent, REQUEST_CONNECT_DEVICE);
-    }
 
     @Override
     protected void onDestroy() {
@@ -221,54 +125,34 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                                  Intent mDataIntent) {
         super.onActivityResult(mRequestCode, mResultCode, mDataIntent);
 
-        try {
-            switch (mRequestCode) {
-                case REQUEST_CONNECT_DEVICE:
-                    if (mResultCode == Activity.RESULT_OK) {
-                        Bundle mExtra = mDataIntent.getExtras();
-                        String mDeviceAddress = mExtra.getString("DeviceAddress");
-                        Log.e(TAG, "Coming incoming address " + mDeviceAddress);
-                        mBluetoothDevice = mBluetoothAdapter
-                                .getRemoteDevice(mDeviceAddress);
+        switch (mRequestCode) {
+            case REQUEST_CONNECT_DEVICE:
+                if (mResultCode == Activity.RESULT_OK) {
+                    Bundle mExtra = mDataIntent.getExtras();
+                    String mDeviceAddress = mExtra.getString("DeviceAddress");
+                    Log.v(TAG, "Coming incoming address " + mDeviceAddress);
+                    mBluetoothDevice = mBluetoothAdapter
+                            .getRemoteDevice(mDeviceAddress);
+                    mBluetoothConnectProgressDialog = ProgressDialog.show(this,
+                            "Connecting...", mBluetoothDevice.getName() + " : "
+                                    + mBluetoothDevice.getAddress(), true, false);
+                    Thread mBlutoothConnectThread = new Thread(this);
+                    mBlutoothConnectThread.start();
+                    // pairToDevice(mBluetoothDevice); This method is replaced by
+                    // progress dialog with thread
+                }
+                break;
 
-                        mBluetoothConnectProgressDialog = ProgressDialog.show(this,
-                                "Connecting...", mBluetoothDevice.getName() + " : "
-                                        + mBluetoothDevice.getAddress(), true, false);
-
-                        mBluetoothAdapter.cancelDiscovery();
-                        mHandler.sendEmptyMessage(0);
-
-                        //don't print if we are just changing name
-                        if (!isChangingName)
-                            printingProcess(BILL, mDeviceAddress);
-                        else {
-                            Toast.makeText(ProducerPrintOrder.this, "Printer selected successfully!", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                    break;
-
-                case REQUEST_ENABLE_BT:
-                    if (mResultCode == Activity.RESULT_OK) {
-                        introduceNewDevice();
-                    } else {
-                        Toast.makeText(ProducerPrintOrder.this, "Request denied", Toast.LENGTH_SHORT).show();
-                    }
-                    break; //BT_ON
-                case BT_ON:
-                    if (mResultCode == Activity.RESULT_OK) {
-                        if (isChangingName) {
-                            introduceNewDevice();
-                        } else {
-                            printingProcess(BILL, printerName);
-                        }
-                    } else {
-                        Toast.makeText(ProducerPrintOrder.this, "Request denied", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-            }
-        }catch(Exception ex){
-            Log.e(TAG, ex.toString());
+            case REQUEST_ENABLE_BT:
+                if (mResultCode == Activity.RESULT_OK) {
+                    ListPairedDevices();
+                    Intent connectIntent = new Intent(ProducerPrintOrder.this,
+                            DeviceListActivity.class);
+                    startActivityForResult(connectIntent, REQUEST_CONNECT_DEVICE);
+                } else {
+                    Toast.makeText(ProducerPrintOrder.this, "Message", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
@@ -287,7 +171,6 @@ public class ProducerPrintOrder extends Activity implements Runnable {
             mBluetoothAdapter.cancelDiscovery();
             mBluetoothSocket.connect();
             mHandler.sendEmptyMessage(0);
-            Log.e("main run","inside the main run");
         } catch (IOException eConnectException) {
             Log.d(TAG, "CouldNotConnectToSocket", eConnectException);
             closeSocket(mBluetoothSocket);
@@ -317,7 +200,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
 
         for (int k = 0; k < b.length; k++) {
             System.out.println("Selva  [" + k + "] = " + "0x"
-                    + com.AgriBuhayProj.app.Printer.UnicodeFormatter.byteToHex(b[k]));
+                    + UnicodeFormatter.byteToHex(b[k]));
         }
 
         return b[3];
@@ -330,277 +213,155 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         return buffer.array();
     }
 
-    public void printPhoto(int img) {
-        try{
-            Bitmap imge = BitmapFactory.decodeResource(getResources(), img);
-            if(imge != null){
-                byte[] command = Utils.decodeBitmap(imge);
-                outputStream.write(PrinterCommands.ESC_ALIGN_CENTER);
-                printText(command);
-            }else{
-                Log.e("Print Photo error", "the file isn't exists");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            Log.e("PrintTools", "the file isn't exists");
-        }
-    }
-
-    public void printUnicode(){
-        try {
-            outputStream.write(PrinterCommands.ESC_ALIGN_CENTER);
-            printText(Utils.UNICODE_TEXT);
-        } catch (UnsupportedEncodingException e) {
-            Log.e("printUnicodeProblem", e.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void printNewLine() {
-        try {
-            outputStream.write(PrinterCommands.FEED_LINE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void printText(String msg) {
-        try {
-            // Print normal text
-            outputStream.write(msg.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    protected void printText(byte[] msg) {
-        try {
-            // Print normal text
-            outputStream.write(msg);
-            // printNewLine();
-        } catch (IOException e) {
-            Log.e("printTextError",e.toString());
-        }
-    }
-
-
-    public  void resetPrint() {
-        try {
-            outputStream.write(PrinterCommands.ESC_FONT_COLOR_DEFAULT);
-            outputStream.write(PrinterCommands.FS_FONT_ALIGN);
-            outputStream.write(PrinterCommands.ESC_ALIGN_LEFT);
-            outputStream.write(PrinterCommands.ESC_CANCEL_BOLD);
-            outputStream.write(PrinterCommands.LF);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    protected void printingProcess(final String BILL, String name) {
-        this.mBluetoothDevice = this.mBluetoothAdapter.getRemoteDevice(name);
-
-        try {
-            this.mBluetoothSocket = this.mBluetoothDevice.createRfcommSocketToServiceRecord(this.applicationUUID);
-            this.mBluetoothSocket.connect();
-        } catch (IOException eConnectException) {
-            Toast.makeText(ProducerPrintOrder.this, "The printer is not available. Check if it is on", Toast.LENGTH_SHORT).show();
-
-        }
-
-        new Thread() {
+    public void p1() {
+        Thread t = new Thread() {
             public void run() {
-                try { //outputStream
-                    outputStream = mBluetoothSocket.getOutputStream();
+                try {
+                    DatabaseReference data = FirebaseDatabase.getInstance().getReference("Chef").child(producerID);
+                    data.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            final Chef chef = snapshot.getValue(Chef.class);
+                            String producerName = chef.getFname() + " " + chef.getLname();
+                            String province = chef.getState();
+                            String address = chef.getCity() + " " + chef.getSuburban();
+                            String num = "+63" + chef.getMobile();
+                            try {
+                                OutputStream os = mBluetoothSocket
+                                        .getOutputStream();
+                                String BILL = "";
+                                BILL = BILL
+                                        + "================================\n";
 
 
-                    if(isTestingPrinter){
-                        //invoice details
-                        printConfig(BILL, 2, 1,1);//align 1=center
-                        printNewLine();
-                    }
-                    closeSocket(mBluetoothSocket); //close the connection
+                                BILL = BILL + String.format("%1$-10s %2$10s", "Producer name: ", producerName);
+                                BILL = BILL + "\n";
+                                BILL = BILL + String.format("%1$-10s %2$10s", "Province: ", province);
+                                BILL = BILL + "\n";
+                                BILL = BILL + String.format("%1$-10s %2$10s", "Address: ", address);
+                                BILL = BILL + "\n";
+                                BILL = BILL + String.format("%1$-10s %2$10s", "MobileNo.: ", num);
+                                BILL = BILL + "\n";
+                                os.write(BILL.getBytes());
+                                //This is printer specific code you can comment ==== > Start
 
+                                // Setting height
+                                int gs = 29;
+                                os.write(intToByteArray(gs));
+                                int h = 104;
+                                os.write(intToByteArray(h));
+                                int n = 162;
+                                os.write(intToByteArray(n));
+
+                                // Setting Width
+                                int gs_width = 29;
+                                os.write(intToByteArray(gs_width));
+                                int w = 119;
+                                os.write(intToByteArray(w));
+                                int n_width = 2;
+                                os.write(intToByteArray(n_width));
+
+                            } catch (Exception e) {
+                                Log.e("MainActivity", "Exe ", e);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 } catch (Exception e) {
-                    Log.e("SplashScreen", "Exe ", e);
+                    Log.e("MainActivity", "Exe ", e);
                 }
             }
-        }.start();
+        };
+        t.start();
     }
 
-    protected void printConfig(String bill, int size, int style, int align)
-    {
-        //size 1 = large, size 2 = medium, size 3 = small
-        //style 1 = Regular, style 2 = Bold
-        //align 0 = left, align 1 = center, align 2 = right
+    public void p2() {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    DatabaseReference dataa = FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(producerID).child(randomId).child("OtherInformation");
+                    dataa.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            final ChefFinalOrders chefFinalOrder = snapshot.getValue(ChefFinalOrders.class);
+                            String retailerName = chefFinalOrder.getName();
+                            String retailerAds = chefFinalOrder.getAddress();
+                            DatabaseReference dataaa = FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(producerID).child(randomId).child("Dishes").child(randomId1);
+                            dataaa.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    final OtherInformation otherInformation = snapshot.getValue(OtherInformation.class);
+                                    String productName = otherInformation.getDishName();
+                                    String price = otherInformation.getDishQuantity() + "kg " + otherInformation.getDishPrice();
+                                    String totalPrice = otherInformation.getTotalPrice();
+                                    try {
+                                        OutputStream os = mBluetoothSocket
+                                                .getOutputStream();
+                                        String BILL = "";
+                                        BILL = BILL
+                                                + "================================\n";
 
-        try{
 
-            byte[] format = new byte[]{27,33, 0};
-            byte[] change = new byte[]{27,33, 0};
+                                        BILL = BILL + String.format("%1$-10s %2$10s", "Retailer name: ", retailerName);
+                                        BILL = BILL + "\n";
+                                        BILL = BILL + String.format("%1$-10s %2$10s", "Retailer Address: ", retailerAds);
+                                        BILL = BILL + "\n";
+                                        BILL = BILL + String.format("%1$-10s %2$10s", "Product name: ", productName);
+                                        BILL = BILL + "\n";
+                                        BILL = BILL + String.format("%1$-10s %2$10s", "Price/kg: ", price);
+                                        BILL = BILL + "\n";
+                                        BILL = BILL + String.format("%1$-10s %2$10s", "GrandTotal: ", totalPrice);
+                                        BILL = BILL + "\n";
+                                        BILL = BILL
+                                                + "================================\n";
+                                        BILL = BILL + "\n\n ";
+                                        os.write(BILL.getBytes());
+                                        //This is printer specific code you can comment ==== > Start
 
-            outputStream.write(format);
+                                        // Setting height
+                                        int gs = 29;
+                                        os.write(intToByteArray(gs));
+                                        int h = 104;
+                                        os.write(intToByteArray(h));
+                                        int n = 162;
+                                        os.write(intToByteArray(n));
 
-            //different sizes, same style Regular
-            if (size==1 && style==1)  //large
-            {
-                change[2] = (byte) (0x10); //large
-                outputStream.write(change);
-            }else if(size==2 && style==1) //medium
-            {
-                //nothing to change, uses the default settings
-            }else if(size==3 && style==1) //small
-            {
-                change[2] = (byte) (0x3); //small
-                outputStream.write(change);
+                                        // Setting Width
+                                        int gs_width = 29;
+                                        os.write(intToByteArray(gs_width));
+                                        int w = 119;
+                                        os.write(intToByteArray(w));
+                                        int n_width = 2;
+                                        os.write(intToByteArray(n_width));
+
+                                    } catch (Exception e) {
+                                        Log.e("MainActivity", "Exe ", e);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e("MainActivity", "Exe ", e);
+                }
             }
-
-            //different sizes, same style Bold
-            if (size==1 && style==2)  //large
-            {
-                change[2] = (byte) (0x10 | 0x8); //large
-                outputStream.write(change);
-            }else if(size==2 && style==2) //medium
-            {
-                change[2] = (byte) (0x8);
-                outputStream.write(change);
-            }else if(size==3 && style==2) //small
-            {
-                change[2] = (byte) (0x3 | 0x8); //small
-                outputStream.write(change);
-            }
-
-
-            switch (align) {
-                case 0:
-                    //left align
-                    outputStream.write(PrinterCommands.ESC_ALIGN_LEFT);
-                    break;
-                case 1:
-                    //center align
-                    outputStream.write(PrinterCommands.ESC_ALIGN_CENTER);
-                    break;
-                case 2:
-                    //right align
-                    outputStream.write(PrinterCommands.ESC_ALIGN_RIGHT);
-                    break;
-            }
-            outputStream.write(bill.getBytes());
-            outputStream.write(PrinterCommands.LF);
-        }catch(Exception ex){
-            Log.e("error", ex.toString());
-        }
+        };
+        t.start();
     }
-
 }
-
-//mScan = (Button) findViewById(R.id.Scan);
-//        mScan.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View mView) {
-//                mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//                if (mBluetoothAdapter == null) {
-//                    Toast.makeText(ProducerPrintOrder.this, "Message1", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    if (!mBluetoothAdapter.isEnabled()) {
-//                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-//                    } else {
-//                        ListPairedDevices();
-//                        Intent connectIntent = new Intent(ProducerPrintOrder.this,
-//                                com.AgriBuhayProj.app.Printer.DeviceListActivity.class);
-//                        startActivityForResult(connectIntent,
-//                                REQUEST_CONNECT_DEVICE);
-//                    }
-//                }
-//            }
-//        });
-//
-//        mPrint = (Button) findViewById(R.id.mPrint);
-//        mPrint.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View mView) {
-//                Thread t = new Thread() {
-//                    public void run() {
-//                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Chef").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                final Chef chef = snapshot.getValue(Chef.class);
-//                                final String ProducerName  = chef.getFname() + " " + chef.getLname();
-//                                try {
-//                                    OutputStream os = mBluetoothSocket
-//                                            .getOutputStream();
-//                                    String BILL = "";
-//
-//                                    BILL = "                   XXXX MART    \n"
-//                                            + "                   XX.AA.BB.CC.     \n " +
-//                                            "                 NO 25 ABC ABCDE    \n" +
-//                                            "                  XXXXX YYYYYY      \n" +
-//                                            "                   MMM 590019091      \n";
-//                                    BILL = BILL
-//                                            + "-----------------------------------------------\n";
-//
-//
-//                                    BILL = BILL + String.format("%1$-10s %2$10s %3$13s %4$10s", "Item", "Qty", "Rate", "Totel");
-//                                    BILL = BILL + "\n";
-//                                    BILL = BILL
-//                                            + "-----------------------------------------------";
-//                                    BILL = BILL + "\n " + String.format("%1$-10s %2$10s %3$11s %4$10s", ProducerName, "5", "10", "50.00");
-//                                    BILL = BILL + "\n " + String.format("%1$-10s %2$10s %3$11s %4$10s", "item-002", "10", "5", "50.00");
-//                                    BILL = BILL + "\n " + String.format("%1$-10s %2$10s %3$11s %4$10s", "item-003", "20", "10", "200.00");
-//                                    BILL = BILL + "\n " + String.format("%1$-10s %2$10s %3$11s %4$10s", "item-004", "50", "10", "500.00");
-//
-//                                    BILL = BILL
-//                                            + "\n-----------------------------------------------";
-//                                    BILL = BILL + "\n\n ";
-//
-//                                    BILL = BILL + "                   Total Qty:" + "      " + "85" + "\n";
-//                                    BILL = BILL + "                   Total Value:" + "     " + "700.00" + "\n";
-//
-//                                    BILL = BILL
-//                                            + "-----------------------------------------------\n";
-//                                    BILL = BILL + "\n\n ";
-//                                    os.write(BILL.getBytes());
-//                                    //This is printer specific code you can comment ==== > Start
-//
-//                                    // Setting height
-//                                    int gs = 29;
-//                                    os.write(intToByteArray(gs));
-//                                    int h = 104;
-//                                    os.write(intToByteArray(h));
-//                                    int n = 162;
-//                                    os.write(intToByteArray(n));
-//
-//                                    // Setting Width
-//                                    int gs_width = 29;
-//                                    os.write(intToByteArray(gs_width));
-//                                    int w = 119;
-//                                    os.write(intToByteArray(w));
-//                                    int n_width = 2;
-//                                    os.write(intToByteArray(n_width));
-//
-//
-//                                } catch (Exception e) {
-//                                    Log.e("ProducerPrintOrder", "Exe ", e);
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                            }
-//                        });
-//                    }
-//                };
-//                t.start();
-//            }
-//        });
-//
-//        mDisc = (Button) findViewById(R.id.dis);
-//        mDisc.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View mView) {
-//                if (mBluetoothAdapter != null)
-//                    mBluetoothAdapter.disable();
-//            }
-//        });
