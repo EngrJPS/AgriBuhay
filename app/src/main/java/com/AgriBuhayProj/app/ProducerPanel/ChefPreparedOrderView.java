@@ -245,7 +245,9 @@ public class ChefPreparedOrderView extends AppCompatActivity {
                     printOrder.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            startActivity(new Intent(getApplicationContext(), ProducerPrintOrder.class));
+                            Intent intent = new Intent(getApplicationContext(), ProducerPrintOrder.class);
+                            intent.putExtra("RandomUID", RandomUID);
+                            startActivity(intent);
                         }
                     });
 

@@ -48,6 +48,7 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
         holder.Dishname.setText(updateDishModel.getDishes());
         updateDishModel.getRandomUID();
         updateDishModel.getChefId();
+        updateDishModel.getMobile();
         holder.price.setText("Price: ₱ " + updateDishModel.getPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,9 +56,10 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
 
                 Intent intent=new Intent(mcontext,OrderDish.class);
                 intent.putExtra("FoodMenu",updateDishModel.getRandomUID());
+                //TODO putExtra chef ID
                 intent.putExtra("ChefId",updateDishModel.getChefId());
-
-
+                //TODO putExtra phonenum here
+                intent.putExtra("ProducerPhoneNum", updateDishModel.getMobile());
                 mcontext.startActivity(intent);
             }
         });

@@ -2,6 +2,7 @@ package com.AgriBuhayProj.app.RetailerPanel;
 
 public class Cart {
 
+    //TODO add mobile number in this model
     private String ChefId,DishID,DishName,DishQuantity,Price,Totalprice;
 
     public Cart(String chefId, String dishID, String dishName, String dishQuantity, String price, String totalprice) {

@@ -60,6 +60,7 @@ public class CustomerCartAdapter extends RecyclerView.Adapter<CustomerCartAdapte
                     hashMap.put("Price", String.valueOf(dishprice));
                     hashMap.put("Totalprice", String.valueOf(totalprice));
                     hashMap.put("ChefId",cart.getChefId());
+                    //TODO put ChefPhoneNum
 
                     FirebaseDatabase.getInstance().getReference("Cart").child("CartItems").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(cart.getDishID()).setValue(hashMap);
                 } else {

@@ -48,8 +48,8 @@ public class Chef_PostDish extends AppCompatActivity {
     ImageButton imageButton;
     Button post_dish;
     Spinner Dishes;
-    TextInputLayout desc, qty, pri;
-    String description, quantity, price, dishes;
+    TextInputLayout desc, qty, pri, num;
+    String description, quantity, price, dishes, mobile;
     Uri imageuri;
     private Uri mCropimageuri;
     FirebaseStorage storage;
@@ -62,6 +62,7 @@ public class Chef_PostDish extends AppCompatActivity {
     String ChefId;
     String RandomUId;
     String State, City, sub;
+    String Mobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class Chef_PostDish extends AppCompatActivity {
         desc = (TextInputLayout) findViewById(R.id.description);
         qty = (TextInputLayout) findViewById(R.id.quantity);
         pri = (TextInputLayout) findViewById(R.id.price);
+        num = (TextInputLayout) findViewById(R.id.mobile);
         post_dish = (Button) findViewById(R.id.post);
         FAuth = FirebaseAuth.getInstance();
         //TODO this is the database for the FoodSupplyDetails
@@ -106,6 +108,7 @@ public class Chef_PostDish extends AppCompatActivity {
                             description = desc.getEditText().getText().toString().trim();
                             quantity = qty.getEditText().getText().toString().trim();
                             price = pri.getEditText().getText().toString().trim();
+                            mobile = num.getEditText().getText().toString().trim();
 
                             if (isValid()) {
                                 uploadImage();
@@ -177,7 +180,8 @@ public class Chef_PostDish extends AppCompatActivity {
                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            FoodSupplyDetails info = new FoodSupplyDetails(dishes, quantity, price, description, String.valueOf(uri), RandomUId, ChefId);
+                            //Added Mobile
+                            FoodSupplyDetails info = new FoodSupplyDetails(dishes, quantity, price, description, String.valueOf(uri), RandomUId, ChefId, mobile);
                             //TODO this is the database for the FoodSupplyDetails
                             firebaseDatabase.getInstance().getReference("FoodSupplyDetails").child(State).child(City).child(sub).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUId)
                                     .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {

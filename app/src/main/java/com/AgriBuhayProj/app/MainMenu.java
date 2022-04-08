@@ -10,54 +10,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.AgriBuhayProj.app.R;
 public class MainMenu extends AppCompatActivity {
 
     Button signinemail, signinphone, signup;
-    ImageView bgimage;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_main);
-        final Animation zoomin = AnimationUtils.loadAnimation(this, R.anim.zoomin);
-        final Animation zoomout = AnimationUtils.loadAnimation(this, R.anim.zoomout);
-        bgimage = findViewById(R.id.back2);
-        bgimage.setAnimation(zoomin);
-        bgimage.setAnimation(zoomout);
-
-        zoomout.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                bgimage.startAnimation(zoomin);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        zoomin.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                bgimage.startAnimation(zoomout);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
+        setContentView(R.layout.activity_main_menu);
         signinemail = (Button) findViewById(R.id.SignwithEmail);
         signinphone = (Button) findViewById(R.id.SignwithPhone);
         signup = (Button) findViewById(R.id.SignUp);

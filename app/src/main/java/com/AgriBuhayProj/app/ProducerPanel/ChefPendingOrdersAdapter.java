@@ -252,7 +252,7 @@ public class ChefPendingOrdersAdapter extends RecyclerView.Adapter<ChefPendingOr
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String usertoken = dataSnapshot.getValue(String.class);
-                                sendNotifications(usertoken, "Order Rejected", "Your Order has been Rejected by the Chef due to some Circumstances", "Home");
+                                sendNotifications(usertoken, "Order Rejected", "Your Order has been Rejected by the producer due to some Circumstances", "Home");
                                 //TODO this is the database for the CustomerPendingOrders
                                 FirebaseDatabase.getInstance().getReference("CustomerPendingOrders").child(userid).child(random).child("Dishes").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

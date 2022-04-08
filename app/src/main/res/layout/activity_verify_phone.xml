@@ -14,7 +14,7 @@
         android:layout_width="500dp"
         android:layout_height="246dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/top_prod_verify_phone"
+        android:src="@drawable/retailer_login_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

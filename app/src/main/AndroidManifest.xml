@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
@@ -19,9 +20,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-
-        <activity android:name="com.AgriBuhayProj.app.Printer.ProducerPrintOrder"
-            android:theme="@style/AppTheme"></activity>
 
         <activity
             android:name="com.AgriBuhayProj.app.LogisiticsPanel.Delivery_ShippingOrder"
@@ -149,9 +147,6 @@
         <activity
             android:name="com.AgriBuhayProj.app.RegistrationRetailer"
             android:theme="@style/AppThemeNoActionbar" />
-        <activity
-            android:name=".Printer.DeviceListActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog"></activity>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppThemeNoActionbar"

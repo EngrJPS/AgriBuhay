@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProducerPanel.Chef_PostDish"
-    android:background="@drawable/pic14">
+    tools:context=".ProducerPanel.Chef_PostDish">
 
 
     <LinearLayout
@@ -26,7 +25,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="5dp"
             android:text="Product "
-            android:textColor="@color/white"
+            android:textColor="@color/Black"
             android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +40,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="12dp"
             android:entries="@array/DishName"
-            android:background="@color/white"
+            android:background="@color/green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +53,7 @@
         android:id="@+id/description"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/Black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.525"
@@ -66,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Description"
-            android:textColor="@color/white"
+            android:textColor="@color/Black"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,7 +73,7 @@
         android:id="@+id/quantity"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/Black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.53"
@@ -86,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Quantity"
-            android:textColor="@color/white"
+            android:textColor="@color/Black"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +93,7 @@
         android:id="@+id/price"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/Black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.53"
@@ -106,7 +105,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Price"
-            android:textColor="@color/white"
+            android:textColor="@color/Black"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mobile"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/Black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.53"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price"
+        app:layout_constraintVertical_bias="0.093">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mobile Number"
+            android:textColor="@color/Black"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,13 +136,13 @@
         android:background="@drawable/btnred"
         android:text="Post"
         android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price"
-        app:layout_constraintVertical_bias="0.348"
-        android:textSize="20sp"/>
+        app:layout_constraintTop_toBottomOf="@+id/mobile"
+        app:layout_constraintVertical_bias="0.13" />
 
     <ImageButton
         android:id="@+id/imageupload"
@@ -136,8 +155,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.363"
-        app:srcCompat="@drawable/ic_camera_alt_black_24dp"
+        app:srcCompat="@drawable/ic_baseline_camera_24"
         android:layout_marginTop="30dp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/ic_wave">
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

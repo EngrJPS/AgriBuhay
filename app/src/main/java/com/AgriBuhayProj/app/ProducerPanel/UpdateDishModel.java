@@ -2,12 +2,29 @@ package com.AgriBuhayProj.app.ProducerPanel;
 
 public class UpdateDishModel {
 
-    String Dishes,RandomUID,Description,Quantity,Price,ImageURL,ChefId;
+    //TODO add phonenum here
+    String Dishes,RandomUID,Description,Quantity,Price,ImageURL,ChefId, Mobile;
 
 
     public UpdateDishModel()
     {
 
+    }
+
+    public String getDishes() {
+        return Dishes;
+    }
+
+    public void setDishes(String dishes) {
+        Dishes = dishes;
+    }
+
+    public String getRandomUID() {
+        return RandomUID;
+    }
+
+    public void setRandomUID(String randomUID) {
+        RandomUID = randomUID;
     }
 
     public String getDescription() {
@@ -26,14 +43,6 @@ public class UpdateDishModel {
         Quantity = quantity;
     }
 
-    public String getImageURL() {
-        return ImageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        ImageURL = imageURL;
-    }
-
     public String getPrice() {
         return Price;
     }
@@ -42,24 +51,12 @@ public class UpdateDishModel {
         Price = price;
     }
 
-    public String getRandomUID() {
-
-        return RandomUID;
+    public String getImageURL() {
+        return ImageURL;
     }
 
-    public void setRandomUID(String randomUID) {
-
-        RandomUID = randomUID;
-    }
-
-    public String getDishes()
-    {
-        return Dishes;
-    }
-
-    public void setDishes(String dishes) {
-
-        Dishes = dishes;
+    public void setImageURL(String imageURL) {
+        ImageURL = imageURL;
     }
 
     public String getChefId() {
@@ -68,5 +65,13 @@ public class UpdateDishModel {
 
     public void setChefId(String chefId) {
         ChefId = chefId;
+    }
+
+    public String getMobile() {
+        return Mobile;
+    }
+
+    public void setMobile(String mobile) {
+        Mobile = mobile;
     }
 }

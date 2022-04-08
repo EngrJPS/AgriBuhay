@@ -18,7 +18,7 @@ public class ChooseOne extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_choose_role);
+        setContentView(R.layout.activity_choose_one);
         Chef = (Button) findViewById(R.id.chef);
         DeliveryPerson = (Button) findViewById(R.id.delivery);
         Customer = (Button) findViewById(R.id.customer);

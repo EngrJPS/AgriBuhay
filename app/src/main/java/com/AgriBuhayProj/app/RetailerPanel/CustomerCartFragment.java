@@ -63,6 +63,7 @@ public class CustomerCartFragment extends Fragment {
     String DishId, RandomUId, ChefId;
     private ProgressDialog progressDialog;
     private APIService apiService;
+    String ProducerMobileNum;
 
     @Nullable
     @Override
@@ -70,6 +71,7 @@ public class CustomerCartFragment extends Fragment {
         getActivity().setTitle("Cart");
         View v = inflater.inflate(R.layout.fragment_customercart, null);
         recyclecart = v.findViewById(R.id.recyclecart);
+        //TODO phonenum getStringExtra
         recyclecart.setHasFixedSize(true);
         recyclecart.setLayoutManager(new LinearLayoutManager(getContext()));
         progressDialog = new ProgressDialog(getContext());
@@ -96,7 +98,6 @@ public class CustomerCartFragment extends Fragment {
                 cartModelList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Cart cart = snapshot.getValue(Cart.class);
-
                     cartModelList.add(cart);
                 }
                 if (cartModelList.size() == 0) {
@@ -108,7 +109,7 @@ public class CustomerCartFragment extends Fragment {
                         public void onClick(View v) {
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setMessage("Are you sure you want to remove Dish");
+                            builder.setMessage("Are you sure you want to remove the orders?");
                             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -274,7 +275,7 @@ public class CustomerCartFragment extends Fragment {
                                                                                                                                         String usertoken = dataSnapshot.getValue(String.class);
                                                                                                                                         sendNotifications(usertoken, "New Order", "You have a new Order", "Order");
                                                                                                                                         progressDialog.dismiss();
-                                                                                                                                        ReusableCodeForAll.ShowAlert(getContext(), "", "Your Order has been shifted to Pending state, please wait until the Farmer accept your order.");
+                                                                                                                                        ReusableCodeForAll.ShowAlert(getContext(), "", "Your Order has been shifted to Pending state, please wait until the producer accepts your order.");
                                                                                                                                     }
 
                                                                                                                                     @Override

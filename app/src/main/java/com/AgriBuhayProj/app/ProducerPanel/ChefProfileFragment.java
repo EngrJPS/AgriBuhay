@@ -24,28 +24,6 @@ public class ChefProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chef_profile, container, false);
         getActivity().setTitle("Post Product");
-        AnimationDrawable animationDrawable = new AnimationDrawable();
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bghome2), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic2), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic3), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic5), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic6), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bggg), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic9), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic10), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic11), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic12), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic13), 3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.pic14), 3000);
-
-
-
-        animationDrawable.setOneShot(false);
-        animationDrawable.setEnterFadeDuration(850);
-        animationDrawable.setExitFadeDuration(1600);
-        bgimage = v.findViewById(R.id.back1);
-        bgimage.setBackgroundDrawable(animationDrawable);
-        animationDrawable.start();
 
         post = (Button) v.findViewById(R.id.post_dish);
         post.setOnClickListener(new View.OnClickListener() {

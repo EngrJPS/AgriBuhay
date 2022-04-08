@@ -3,12 +3,18 @@ package com.AgriBuhayProj.app.RetailerPanel;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.Html;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +40,7 @@ import java.util.HashMap;
 public class OrderDish extends AppCompatActivity {
 
 
-    String RandomId, ChefID;
+    String RandomId, ChefID, ProducerMobileNum;
     ImageView imageView;
     ElegantNumberButton additem;
     TextView Foodname, ChefName, ChefLoaction, FoodQuantity, FoodPrice, FoodDescription;
@@ -43,6 +49,7 @@ public class OrderDish extends AppCompatActivity {
     int dishprice;
     String custID;
     FirebaseDatabase firebaseDatabase;
+    Button textMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,7 @@ public class OrderDish extends AppCompatActivity {
         FoodDescription = (TextView) findViewById(R.id.food_description);
         imageView = (ImageView) findViewById(R.id.image);
         additem = (ElegantNumberButton) findViewById(R.id.number_btn);
+        textMessage = (Button) findViewById(R.id.sendText);
 
         final String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         dataaa = FirebaseDatabase.getInstance().getReference("Customer").child(userid);
@@ -70,7 +78,11 @@ public class OrderDish extends AppCompatActivity {
                 Sub = cust.getSuburban();
 
                 RandomId = getIntent().getStringExtra("FoodMenu");
+                //TODO ChefID getStringExtra
                 ChefID = getIntent().getStringExtra("ChefId");
+                //TODO Added getIntent Here
+                ProducerMobileNum = getIntent().getStringExtra("ProducerPhoneNum");
+
 
                 databaseReference = FirebaseDatabase.getInstance().getReference("FoodSupplyDetails").child(State).child(City).child(Sub).child(ChefID).child(RandomId);
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -167,12 +179,13 @@ public class OrderDish extends AppCompatActivity {
                                                     hashMap.put("Price", String.valueOf(dishprice));
                                                     hashMap.put("Totalprice", String.valueOf(totalprice));
                                                     hashMap.put("ChefId", ChefID);
+                                                    hashMap.put("ProducerPhone", ProducerMobileNum);
+                                                    //TODO Add Mobile number here
                                                     custID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                                     reference = FirebaseDatabase.getInstance().getReference("Cart").child("CartItems").child(custID).child(RandomId);
                                                     reference.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-
                                                             Toast.makeText(OrderDish.this, "Added to cart", Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
@@ -226,6 +239,8 @@ public class OrderDish extends AppCompatActivity {
                                             hashMap.put("Price", String.valueOf(dishprice));
                                             hashMap.put("Totalprice", String.valueOf(totalprice));
                                             hashMap.put("ChefId", ChefID);
+                                            hashMap.put("ProducerPhone", ProducerMobileNum);
+                                            //TODO Add Mobile number here
                                             custID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                             reference = FirebaseDatabase.getInstance().getReference("Cart").child("CartItems").child(custID).child(RandomId);
                                             reference.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -264,6 +279,27 @@ public class OrderDish extends AppCompatActivity {
 
             }
         });
+        textMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SEND_SMS) ==
+                        PackageManager.PERMISSION_GRANTED){
+                    sendSMS();
+                }else{
+                    ActivityCompat.requestPermissions(OrderDish.this, new String[]{Manifest.permission.SEND_SMS}, 100);
+                }
+            }
+        });
+    }
+
+    private void sendSMS() {
+        try{
+            SmsManager smgr = SmsManager.getDefault();
+            smgr.sendTextMessage(ProducerMobileNum, null, "A customer has sent you an order please check your application", null,null);
+            Toast.makeText(getApplicationContext(), "The message sent successfully", Toast.LENGTH_SHORT).show();
+        }catch(Exception ex){
+            Toast.makeText(getApplicationContext(), "SMS Failed to send. Please try again", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

@@ -23,7 +23,7 @@ public class ChefForgotPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.forgot_password_producer);
+        setContentView(R.layout.activity_chef_forgot_password);
 
         forgetpassword = (TextInputLayout) findViewById(R.id.Emailid);
         Reset = (Button) findViewById(R.id.button2);

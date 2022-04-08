@@ -67,6 +67,8 @@ public class Update_Delete_Dish extends AppCompatActivity {
     private ProgressDialog progressDialog;
     DatabaseReference dataaa;
     String State, City, Sub;
+    //Added mobile
+    String Mobile;
 
 
     @Override
@@ -117,7 +119,7 @@ public class Update_Delete_Dish extends AppCompatActivity {
 
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(Update_Delete_Dish.this);
-                        builder.setMessage("Are you sure you want to Delete Dish");
+                        builder.setMessage("Are you sure you want to Delete product");
                         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -125,7 +127,7 @@ public class Update_Delete_Dish extends AppCompatActivity {
                                 firebaseDatabase.getInstance().getReference("FoodSupplyDetails").child(State).child(City).child(Sub).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(ID).removeValue();
 
                                 AlertDialog.Builder food = new AlertDialog.Builder(Update_Delete_Dish.this);
-                                food.setMessage("Your Dish has been Deleted");
+                                food.setMessage("Your Product has been Deleted");
                                 food.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -273,7 +275,8 @@ public class Update_Delete_Dish extends AppCompatActivity {
 
     private void updatedesc(String uri) {
         ChefId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FoodSupplyDetails info = new FoodSupplyDetails(dishes, quantity, price, description, uri, ID, ChefId);
+        //Added Mobile
+        FoodSupplyDetails info = new FoodSupplyDetails(dishes, quantity, price, description, uri, ID, ChefId, Mobile);
         firebaseDatabase.getInstance().getReference("FoodSupplyDetails").child(State).child(City).child(Sub)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(ID)
                 .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
