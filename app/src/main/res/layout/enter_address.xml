@@ -30,9 +30,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="20dp"
-                android:text="home address"/>
+                android:layout_marginRight="30dp"
+                android:text="Home address" />
 
             <RadioButton
                 android:id="@+id/OA"
@@ -51,7 +51,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="8dp"
             android:gravity="center_vertical"
-            android:text="Add a Note (Extra Onion,sauce...)"
+            android:text="Add a Note (Stall #, Delivery time...)"
             android:textAllCaps="false"
             android:textColor="#FA3E03"
             android:textSize="17sp" />
