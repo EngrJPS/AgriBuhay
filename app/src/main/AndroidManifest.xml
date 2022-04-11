@@ -22,6 +22,12 @@
         tools:replace="android:icon">
 
         <activity
+            android:name=".Printer.DeviceListActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" />
+        <activity
+            android:name="com.AgriBuhayProj.app.Printer.ProducerPrintOrder"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name="com.AgriBuhayProj.app.LogisiticsPanel.Delivery_ShippingOrder"
             android:label="Ship Orders"></activity>
         <activity

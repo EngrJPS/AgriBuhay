@@ -1,10 +1,12 @@
 package com.AgriBuhayProj.app.Printer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +25,11 @@ import androidx.annotation.NonNull;
 
 import com.AgriBuhayProj.app.Chef;
 import com.AgriBuhayProj.app.ProducerPanel.ChefFinalOrders;
+import com.AgriBuhayProj.app.ProducerPanel.ChefFinalOrders1;
 import com.AgriBuhayProj.app.R;
 import com.bumptech.glide.util.Util;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,14 +56,21 @@ public class ProducerPrintOrder extends Activity implements Runnable {
     private ProgressDialog mBluetoothConnectProgressDialog;
     private BluetoothSocket mBluetoothSocket;
     BluetoothDevice mBluetoothDevice;
-    private String producerID = "tFHeG3JY4DbOld2kNqISYw3C4ZJ3";
-    private String randomId = "1fbf53c1-d360-4760-9d25-17d063ddbeb0";
-    private String randomId1 = "f711dfc3-a0ef-4e07-b53c-c1504e852780";
+    private String randomUIID;
+    private TextInputLayout prodName, totalWeight, totalTemp, totalHumid, totalCO2;
+    private String prod, weight, temp, humid, co2;
 
     @Override
     public void onCreate(Bundle mSavedInstanceState) {
         super.onCreate(mSavedInstanceState);
         setContentView(R.layout.main_printer);
+
+        prodName = (TextInputLayout) findViewById(R.id.edtNameProduct);
+        totalWeight = (TextInputLayout) findViewById(R.id.edtNetWt);
+        totalTemp = (TextInputLayout) findViewById(R.id.edtTemperature);
+        totalHumid = (TextInputLayout) findViewById(R.id.edtHumidity);
+        totalCO2 = (TextInputLayout) findViewById(R.id.edtCO2);
+
         mScan = (Button) findViewById(R.id.Scan);
         mScan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {
@@ -82,8 +95,9 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         mPrint = (Button) findViewById(R.id.mPrint);
         mPrint.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {
-                p1();
                 p2();
+                p1();
+                p3();
             }
         });
 
@@ -217,7 +231,72 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         Thread t = new Thread() {
             public void run() {
                 try {
-                    DatabaseReference data = FirebaseDatabase.getInstance().getReference("Chef").child(producerID);
+                    randomUIID = getIntent().getStringExtra("RandomUIID");
+                    DatabaseReference dataa = FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(randomUIID).child("OtherInformation");
+                    dataa.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            final ChefFinalOrders1 chefFinalOrders1 = snapshot.getValue(ChefFinalOrders1.class);
+                            String retailerName = chefFinalOrders1.getName();
+                            String retailerAds = chefFinalOrders1.getAddress();
+                            String totalPrice = chefFinalOrders1.getGrandTotalPrice();
+                            try {
+                                OutputStream os = mBluetoothSocket
+                                        .getOutputStream();
+                                String BILL = "";
+                                BILL = BILL
+                                        + "================================\n";
+                                BILL = BILL + String.format("%1$-10s %2$10s", "Retailer name: ", retailerName);
+                                BILL = BILL + "\n";
+                                BILL = BILL + String.format("%1$-10s %2$10s", "Retailer Address: ", retailerAds);
+                                BILL = BILL + "\n";
+                                BILL = BILL + String.format("%1$-10s %2$10s", "GrandTotal: ", totalPrice);
+                                BILL = BILL + "\n";
+                                BILL = BILL
+                                        + "================================\n";
+                                BILL = BILL + "\n\n";
+                                os.write(BILL.getBytes());
+                                //This is printer specific code you can comment ==== > Start
+
+                                // Setting height
+                                int gs = 29;
+                                os.write(intToByteArray(gs));
+                                int h = 104;
+                                os.write(intToByteArray(h));
+                                int n = 162;
+                                os.write(intToByteArray(n));
+
+                                // Setting Width
+                                int gs_width = 29;
+                                os.write(intToByteArray(gs_width));
+                                int w = 119;
+                                os.write(intToByteArray(w));
+                                int n_width = 2;
+                                os.write(intToByteArray(n_width));
+
+                            } catch (Exception e) {
+                                Log.e("MainActivity", "Exe ", e);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e("MainActivity", "Exe ", e);
+                }
+            }
+        };
+        t.start();
+    }
+
+    public void p2() {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    DatabaseReference data = FirebaseDatabase.getInstance().getReference("Chef").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     data.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -242,6 +321,9 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                                 BILL = BILL + "\n";
                                 BILL = BILL + String.format("%1$-10s %2$10s", "MobileNo.: ", num);
                                 BILL = BILL + "\n";
+                                BILL = BILL
+                                        + "================================\n";
+                                BILL = BILL + "\n\n";
                                 os.write(BILL.getBytes());
                                 //This is printer specific code you can comment ==== > Start
 
@@ -280,88 +362,108 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         t.start();
     }
 
-    public void p2() {
+    public void p3(){
         Thread t = new Thread() {
             public void run() {
                 try {
-                    DatabaseReference dataa = FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(producerID).child(randomId).child("OtherInformation");
-                    dataa.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            final ChefFinalOrders chefFinalOrder = snapshot.getValue(ChefFinalOrders.class);
-                            String retailerName = chefFinalOrder.getName();
-                            String retailerAds = chefFinalOrder.getAddress();
-                            DatabaseReference dataaa = FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(producerID).child(randomId).child("Dishes").child(randomId1);
-                            dataaa.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    final OtherInformation otherInformation = snapshot.getValue(OtherInformation.class);
-                                    String productName = otherInformation.getDishName();
-                                    String price = otherInformation.getDishQuantity() + "kg " + otherInformation.getDishPrice();
-                                    String totalPrice = otherInformation.getTotalPrice();
-                                    try {
-                                        OutputStream os = mBluetoothSocket
-                                                .getOutputStream();
-                                        String BILL = "";
-                                        BILL = BILL
-                                                + "================================\n";
+                    prod = prodName.getEditText().getText().toString().trim();
+                    weight = totalWeight.getEditText().getText().toString().trim();
+                    temp = totalTemp.getEditText().getText().toString().trim();
+                    humid = totalHumid.getEditText().getText().toString().trim();
+                    co2 = totalCO2.getEditText().getText().toString().trim();
+
+                    OutputStream os = mBluetoothSocket
+                            .getOutputStream();
+                    String BILL = "";
+
+                    BILL = BILL
+                            + "================================\n";
+                    BILL = BILL + String.format("%1$-10s %2$10s", "Product name: ", prod);
+                    BILL = BILL + "\n";
+                    BILL = BILL + String.format("%1$-10s %2$10s", "Total Net Weight: ", weight);
+                    BILL = BILL + "\n";
+                    BILL = BILL + String.format("%1$-10s %2$10s", "Temperature value: ", temp);
+                    BILL = BILL + "\n";
+                    BILL = BILL + String.format("%1$-10s %2$10s", "Humidity value: ", humid);
+                    BILL = BILL + "\n";
+                    BILL = BILL + String.format("%1$-10s %2$10s", "CO2 value: ", co2);
+                    BILL = BILL + "\n";
+                    BILL = BILL
+                            + "================================\n";
+                    BILL = BILL + "\n\n";
+                    os.write(BILL.getBytes());
+                    //This is printer specific code you can comment ==== > Start
+
+                    // Setting height
+                    int gs = 29;
+                    os.write(intToByteArray(gs));
+                    int h = 104;
+                    os.write(intToByteArray(h));
+                    int n = 162;
+                    os.write(intToByteArray(n));
+
+                    // Setting Width
+                    int gs_width = 29;
+                    os.write(intToByteArray(gs_width));
+                    int w = 119;
+                    os.write(intToByteArray(w));
+                    int n_width = 2;
+                    os.write(intToByteArray(n_width));
 
 
-                                        BILL = BILL + String.format("%1$-10s %2$10s", "Retailer name: ", retailerName);
-                                        BILL = BILL + "\n";
-                                        BILL = BILL + String.format("%1$-10s %2$10s", "Retailer Address: ", retailerAds);
-                                        BILL = BILL + "\n";
-                                        BILL = BILL + String.format("%1$-10s %2$10s", "Product name: ", productName);
-                                        BILL = BILL + "\n";
-                                        BILL = BILL + String.format("%1$-10s %2$10s", "Price/kg: ", price);
-                                        BILL = BILL + "\n";
-                                        BILL = BILL + String.format("%1$-10s %2$10s", "GrandTotal: ", totalPrice);
-                                        BILL = BILL + "\n";
-                                        BILL = BILL
-                                                + "================================\n";
-                                        BILL = BILL + "\n\n ";
-                                        os.write(BILL.getBytes());
-                                        //This is printer specific code you can comment ==== > Start
-
-                                        // Setting height
-                                        int gs = 29;
-                                        os.write(intToByteArray(gs));
-                                        int h = 104;
-                                        os.write(intToByteArray(h));
-                                        int n = 162;
-                                        os.write(intToByteArray(n));
-
-                                        // Setting Width
-                                        int gs_width = 29;
-                                        os.write(intToByteArray(gs_width));
-                                        int w = 119;
-                                        os.write(intToByteArray(w));
-                                        int n_width = 2;
-                                        os.write(intToByteArray(n_width));
-
-                                    } catch (Exception e) {
-                                        Log.e("MainActivity", "Exe ", e);
-                                    }
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
                 } catch (Exception e) {
                     Log.e("MainActivity", "Exe ", e);
                 }
             }
         };
         t.start();
+    }
+
+    public boolean isValid(){
+
+        prodName.setErrorEnabled(false);
+        prodName.setError("");
+        totalWeight.setErrorEnabled(false);
+        totalWeight.setError("");
+        totalCO2.setErrorEnabled(false);
+        totalCO2.setError("");
+        totalHumid.setErrorEnabled(false);
+        totalHumid.setError("");
+        totalTemp.setErrorEnabled(false);
+        totalTemp.setError("");
+        boolean isValidname = false, isValidWeight = false, isValidHumid = false, isValidTemp = false, isValidCO2 = false, isvalid = false;
+        if(TextUtils.isEmpty(prod)){
+            prodName.setErrorEnabled(true);
+            prodName.setError("Product name is Required");
+        }else{
+            isValidname = true;
+        }
+        if(TextUtils.isEmpty(weight)){
+            totalWeight.setErrorEnabled(true);
+            totalWeight.setError("Total Weight is Required");
+        }else{
+            isValidWeight = true;
+        }
+        if(TextUtils.isEmpty(temp)){
+            totalTemp.setErrorEnabled(true);
+            totalTemp.setError("Temperature is Required");
+        }else{
+            isValidTemp = true;
+        }
+        if(TextUtils.isEmpty(humid)){
+            totalHumid.setErrorEnabled(true);
+            totalHumid.setError("Humidity is Required");
+        }else{
+            isValidHumid = true;
+        }
+        if(TextUtils.isEmpty(co2)){
+            totalCO2.setErrorEnabled(true);
+            totalCO2.setError("CO2 is Required");
+        }else{
+            isValidCO2 = true;
+        }
+
+        isvalid = (isValidname && isValidWeight && isValidHumid && isValidTemp && isValidCO2) ? true : false;
+        return isValid();
     }
 }

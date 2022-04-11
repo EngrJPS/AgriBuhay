@@ -1,33 +1,42 @@
 {
   "project_info": {
-    "project_number": "591712103672",
-    "project_id": "agribuhay-6976d",
-    "storage_bucket": "agribuhay-6976d.appspot.com"
+    "project_number": "549492874861",
+    "firebase_url": "https://agribuhaydatabase-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "agribuhaydatabase",
+    "storage_bucket": "agribuhaydatabase.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:591712103672:android:d2d039995dd3c038ebdf0d",
+        "mobilesdk_app_id": "1:549492874861:android:da023800c2f3cbacc0e964",
         "android_client_info": {
           "package_name": "com.AgriBuhayProj.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "591712103672-h4vseihqabcmvku749vj8dddn6lkrgt3.apps.googleusercontent.com",
+          "client_id": "549492874861-e40nla8kt2dl0nj392j3srgsinp0fko2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.AgriBuhayProj.app",
+            "certificate_hash": "d544975fad3000fb6b411c7944220f4d9f970bd5"
+          }
+        },
+        {
+          "client_id": "549492874861-dierbde4un4a9f3o69nuqiv4m1n0n28g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAAkLvTt2c0ZoeuuBdW06r1q3rtRq3aBd0"
+          "current_key": "AIzaSyDicz8IHyIAu4xhmjzc-f3GNIfjnx4NY44"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "591712103672-h4vseihqabcmvku749vj8dddn6lkrgt3.apps.googleusercontent.com",
+              "client_id": "549492874861-dierbde4un4a9f3o69nuqiv4m1n0n28g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

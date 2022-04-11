@@ -52,7 +52,7 @@ public class ChefPreparedOrderView extends AppCompatActivity {
     private List<ChefFinalOrders> chefFinalOrdersList;
     private ChefPreparedOrderViewAdapter adapter;
     DatabaseReference reference;
-    String RandomUID, userid;
+    String RandomUID, userid, dishid;
     TextView grandtotal, address, name, number;
     LinearLayout l1;
     Button Prepared;
@@ -125,7 +125,7 @@ public class ChefPreparedOrderView extends AppCompatActivity {
                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                                 final ChefFinalOrders chefFinalOrders = dataSnapshot1.getValue(ChefFinalOrders.class);
                                                 HashMap<String, String> hashMap = new HashMap<>();
-                                                String dishid = chefFinalOrders.getDishId();
+                                                dishid = chefFinalOrders.getDishId();
                                                 userid = chefFinalOrders.getUserId();
                                                 hashMap.put("ChefId", chefFinalOrders.getChefId());
                                                 hashMap.put("DishId", chefFinalOrders.getDishId());
@@ -246,7 +246,7 @@ public class ChefPreparedOrderView extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(getApplicationContext(), ProducerPrintOrder.class);
-                            intent.putExtra("RandomUID", RandomUID);
+                            intent.putExtra("RandomUIID", RandomUID);
                             startActivity(intent);
                         }
                     });
