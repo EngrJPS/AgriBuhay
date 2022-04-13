@@ -43,7 +43,6 @@ public class ChooseOne extends AppCompatActivity {
                     Intent Register = new Intent(ChooseOne.this, RegistrationProducer.class);
                     startActivity(Register);
 
-
                 }
 
             }

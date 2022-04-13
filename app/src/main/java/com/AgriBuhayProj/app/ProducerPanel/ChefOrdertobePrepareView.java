@@ -135,7 +135,7 @@ public class ChefOrdertobePrepareView extends AppCompatActivity {
                                             hashMap1.put("MobileNumber", chefWaitingOrders1.getMobileNumber());
                                             hashMap1.put("Name", chefWaitingOrders1.getName());
                                             hashMap1.put("RandomUID", RandomUID);
-                                            hashMap1.put("Status", "Chef is preparing your Order...");
+                                            hashMap1.put("Status", "Producer is preparing your Order...");
                                             //TODO this is the database for the ChefFinalOrders
                                             FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation").setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override

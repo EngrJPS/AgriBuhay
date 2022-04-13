@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,6 +40,7 @@ public class sendotp extends AppCompatActivity {
     TextView txt;
     String phonenumber;
     EditText entercode;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,29 +49,48 @@ public class sendotp extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Register");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(sendotp.this, ChooseOne.class));
-            }
-        });
+        getSupportActionBar().setTitle("Login OTP");
+
+        //PROGRESS DIALOG
+        progress = new ProgressDialog(sendotp.this);
+        progress.setCancelable(false);
+        progress.setCanceledOnTouchOutside(false);
+
         phonenumber = getIntent().getStringExtra("phonenumber").trim();
-        sendverificationcode(phonenumber);
 
         entercode = (EditText) findViewById(R.id.phoneno);
         txt = (TextView) findViewById(R.id.text);
         Resend = (Button) findViewById(R.id.Resendotp);
         FAuth = FirebaseAuth.getInstance();
-        Resend.setVisibility(View.INVISIBLE);
-        txt.setVisibility(View.INVISIBLE);
         verify = (Button) findViewById(R.id.Verify);
+
+        //STARTUP (OTP)
+        //send otp
+        sendVerificationCode(phonenumber);
+        //count down timer
+        new CountDownTimer(60000, 1000) {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //hide resend button
+                Resend.setVisibility(View.INVISIBLE);
+                //show timer
+                txt.setVisibility(View.VISIBLE);
+                txt.setText("Resend Code within " + millisUntilFinished/1000 + " Seconds");
+            }
+            @Override
+            public void onFinish() {
+                //hide
+                txt.setVisibility(View.INVISIBLE);
+                //show resend button
+                Resend.setVisibility(View.VISIBLE);
+            }
+        }.start();
+
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                hideKeyboard();
                 Resend.setVisibility(View.INVISIBLE);
                 String code = entercode.getText().toString().trim();
                 if (code.isEmpty() && code.length() < 6) {
@@ -79,29 +103,16 @@ public class sendotp extends AppCompatActivity {
 
         });
 
-        new CountDownTimer(60000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                txt.setVisibility(View.VISIBLE);
-                txt.setText("Resend Code within " + millisUntilFinished / 1000 + " Seconds");
-            }
-
-            @Override
-            public void onFinish() {
-                Resend.setVisibility(View.VISIBLE);
-                txt.setVisibility(View.INVISIBLE);
-
-            }
-        }.start();
-
         Resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //hide resend button
                 Resend.setVisibility(View.INVISIBLE);
-                Resendotp(phonenumber);
-
+                //resend OTP
+                resendOTP(phonenumber);
+                //timer
                 new CountDownTimer(60000, 1000) {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onTick(long millisUntilFinished) {
                         txt.setVisibility(View.VISIBLE);
@@ -112,20 +123,15 @@ public class sendotp extends AppCompatActivity {
                     public void onFinish() {
                         Resend.setVisibility(View.VISIBLE);
                         txt.setVisibility(View.INVISIBLE);
-
                     }
                 }.start();
-
             }
         });
-
     }
 
-    private void Resendotp(String phonenumber) {
-
-        sendverificationcode(phonenumber);
+    private void resendOTP(String phonenumber) {
+        sendVerificationCode(phonenumber);
     }
-
 
     private void verifyCode(String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
@@ -133,12 +139,15 @@ public class sendotp extends AppCompatActivity {
     }
 
     private void signInwithCredential(PhoneAuthCredential credential) {
-        try {
+        progress.setMessage("Verifying....");
+        progress.show();
             FAuth.signInWithCredential(credential)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                progress.dismiss();
+                                Toast.makeText(sendotp.this, "Logged In", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(sendotp.this, CustomerFoodPanel_BottomNavigation.class);
                                 startActivity(intent);
                                 finish();
@@ -147,14 +156,18 @@ public class sendotp extends AppCompatActivity {
                             }
                         }
                     });
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
+
     }
 
-    private void sendverificationcode(String number) {
-
-        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(FAuth).setPhoneNumber(phonenumber).setTimeout(60L, TimeUnit.SECONDS).setActivity(this).setCallbacks(mCallBack).build();
+    //SEND VERIFICATION CODE
+    private void sendVerificationCode(String number) {
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(FAuth)
+                        .setPhoneNumber(number)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this)                 // Activity (for callback binding)
+                        .setCallbacks(mCallBack)          // OnVerificationStateChangedCallbacks
+                        .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
@@ -175,7 +188,7 @@ public class sendotp extends AppCompatActivity {
                         String code = phoneAuthCredential.getSmsCode();
                         if (code != null) {
                             entercode.setText(code);
-                            verifyCode(code);
+                            /*verifyCode(code);*/
                         }
                     }
 
@@ -185,5 +198,16 @@ public class sendotp extends AppCompatActivity {
                         Toast.makeText(sendotp.this, "THis 2:" + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 };
+
+    //HIDE KEYBOARD
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager hide = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            hide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
+    //DISABLE BACK PRESS
+    public void onBackPressed(){ }
+}
