@@ -45,10 +45,13 @@ public class ChefHomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chef_home, null);
         getActivity().setTitle("AgriBuhay");
+
         setHasOptionsMenu(true);
+
         recyclerView = v.findViewById(R.id.Recycle_menu);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         updateDishModelList = new ArrayList<>();
         String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         dataaa = FirebaseDatabase.getInstance().getReference("Chef").child(userid);
@@ -124,7 +127,4 @@ public class ChefHomeFragment extends Fragment {
         startActivity(intent);
 
     }
-
-
-
 }

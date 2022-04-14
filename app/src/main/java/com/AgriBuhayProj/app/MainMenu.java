@@ -69,7 +69,8 @@ public class MainMenu extends AppCompatActivity {
     //EXIT APP
     public void onBackPressed(){
         if(backPress){
-            super.onBackPressed();
+            /*super.onBackPressed();*/
+            fAuth.signOut();
         }
         Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
         backPress = true;
