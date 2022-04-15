@@ -14,12 +14,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.AgriBuhayProj.app.Chef;
+import com.AgriBuhayProj.app.Models.Crops;
 import com.AgriBuhayProj.app.R;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,6 +42,8 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Chef_PostDish extends AppCompatActivity {
@@ -55,7 +59,7 @@ public class Chef_PostDish extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference storageReference;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,spinRef;
     DatabaseReference dataaa;
     FirebaseAuth FAuth;
     StorageReference ref;
@@ -63,6 +67,9 @@ public class Chef_PostDish extends AppCompatActivity {
     String RandomUId;
     String State, City, sub;
     String Mobile;
+
+    List<Crops> cropList;
+    ArrayAdapter<Crops> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +84,21 @@ public class Chef_PostDish extends AppCompatActivity {
         pri = (TextInputLayout) findViewById(R.id.price);
         num = (TextInputLayout) findViewById(R.id.mobile);
         post_dish = (Button) findViewById(R.id.post);
+
         FAuth = FirebaseAuth.getInstance();
+
         //TODO this is the database for the FoodSupplyDetails
         databaseReference = firebaseDatabase.getInstance().getReference("FoodSupplyDetails");
+
+        //SPINNER LIST
+        //array
+        cropList = new ArrayList<>();
+        //adapter
+        adapter = new ArrayAdapter<>(Chef_PostDish.this, android.R.layout.simple_spinner_dropdown_item, cropList);
+        //firebase
+        spinRef = FirebaseDatabase.getInstance().getReference("Crops");
+        //show data
+        spinnerList();
 
         try {
             String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -165,7 +184,6 @@ public class Chef_PostDish extends AppCompatActivity {
     }
 
     private void uploadImage() {
-
         if (imageuri != null) {
             final ProgressDialog progressDialog = new ProgressDialog(Chef_PostDish.this);
             progressDialog.setTitle("Uploading...");
@@ -212,12 +230,10 @@ public class Chef_PostDish extends AppCompatActivity {
                 }
             });
         }
-
     }
 
 
     private void onSelectImageClick(View v) {
-
         CropImage.startPickImageActivity(this);
     }
 
@@ -266,13 +282,30 @@ public class Chef_PostDish extends AppCompatActivity {
     }
 
     private void startCropImageActivity(Uri imageuri) {
-
         CropImage.activity(imageuri)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setMultiTouchEnabled(true)
                 .start(this);
+    }
 
+    //SPINNER CONTENTS
+    private void spinnerList(){
+        spinRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot item:snapshot.getChildren()){
+                    Crops cropModel = item.getValue(Crops.class);
+                    cropList.add(cropModel);
+                }
+                //set adapter
+                Dishes.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
     }
 }
 

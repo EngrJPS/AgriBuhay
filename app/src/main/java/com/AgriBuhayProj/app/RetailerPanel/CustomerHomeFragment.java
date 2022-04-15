@@ -96,7 +96,6 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
     }
 
     private void customermenu() {
-
         swipeRefreshLayout.setRefreshing(true);
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodSupplyDetails").child(State).child(City).child(Sub);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -117,7 +116,6 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -153,10 +151,8 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.search, menu);
-        MenuItem menuItem = menu.findItem(R.id.Searchdish);
+        MenuItem menuItem = menu.findItem(R.id.searchItem);
         searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Search Dish");
-
-
+        searchView.setQueryHint("Find Product");
     }
 }

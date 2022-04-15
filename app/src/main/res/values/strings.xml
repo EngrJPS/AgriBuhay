@@ -18,46 +18,4 @@
         <item>Shipper 3</item>
     </string-array>
 
-    <string-array name="DishName">
-        <item>Potato</item>
-        <item>Mango</item>
-        <item>Green Onions</item>
-        <item>Onions</item>
-        <item>Watermelon</item>
-        <item>Coconut</item>
-        <item>Papaya</item>
-        <item>Cucumber</item>
-        <item>Radish</item>
-        <item>Okra</item>
-        <item>Sweet Potato</item>
-        <item>Garlic</item>
-        <item>Tomato</item>
-        <item>Ginger</item>
-        <item>Cabbage</item>
-        <item>Pechay</item>
-        <item>Chinese Pechay</item>
-        <item>Lemon</item>
-        <item>Carrots</item>
-        <item>Bell Pepper</item>
-        <item>Lanzones</item>
-        <item>Rambutan</item>
-        <item>Kalabasa</item>
-        <item>Apple</item>
-        <item>Orange</item>
-        <item>Pineapple</item>
-        <item>Banana</item>
-        <item>Ampalaya</item>
-        <item>Eggplant</item>
-        <item>Alogbate</item>
-        <item>Sayote</item>
-        <item>Upo</item>
-        <item>KangKong</item>
-        <item>String Beans (Batong)</item>
-        <item>Baguio Beans</item>
-        <item>Avocado</item>
-        <item>Grapes</item>
-        <item>Durian</item>
-        <item>Sili</item>
-        <item>Kolikot</item>
-    </string-array>
 </resources>

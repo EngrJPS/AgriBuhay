@@ -102,8 +102,8 @@ public class ProducerAddCrop extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             progress.dismiss();
-                                            Toast.makeText(ProducerAddCrop.this, "Success", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(ProducerAddCrop.this, ProducerAddCropList.class));
+                                            Toast.makeText(ProducerAddCrop.this, "Product added successfully", Toast.LENGTH_SHORT).show();
+                                            finish();
                                         }
                                     });
                                 }catch (Exception e){

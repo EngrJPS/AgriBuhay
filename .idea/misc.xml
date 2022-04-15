@@ -124,6 +124,7 @@
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1795" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1795" />
         <entry key="..\:/Users/Ismael/AppData/Local/Android/Sdk/platforms/android-29/data/res/layout/simple_spinner_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/font/caudex.xml" value="0.2537037037037037" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef__post_dish.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_food_panel__bottom_navigation.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_forgot_password.xml" value="0.2598958333333333" />
@@ -168,7 +169,9 @@
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_customertrack.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/pending_order_dishes.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop.xml" value="0.33" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop_adapter.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop_list.xml" value="0.33" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop_update.xml" value="0.25" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_post_product.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_delivery.xml" value="0.5" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_producer.xml" value="0.33" />

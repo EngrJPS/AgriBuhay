@@ -40,7 +40,6 @@
             android:layout_width="162dp"
             android:layout_height="30dp"
             android:layout_marginLeft="12dp"
-            android:entries="@array/DishName"
             android:background="@color/green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

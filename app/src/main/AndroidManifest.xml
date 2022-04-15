@@ -21,13 +21,22 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity
+            android:name=".ProducerPanel.ProducerAddCropUpdate"
+            android:exported="false"
+            android:label="Update Crop"/>
+        <activity
+            android:name=".ProducerPanel.ProducerAddCropAdapter"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
             android:name=".ProducerPanel.ProducerAddCrop"
             android:exported="false"
-            android:label="Add Crop"/>
+            android:label="Add Crop" />
         <activity
             android:name=".ProducerPanel.ProducerAddCropList"
             android:exported="false"
-            android:label="Crop List" />
+            android:label="Crop List"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".Printer.DeviceListActivity"
             android:theme="@android:style/Theme.DeviceDefault.Dialog" />

@@ -58,7 +58,6 @@ public class ChefProfileFragment extends Fragment {
 
     private void addCrop() {
         Intent intent = new Intent(getActivity(), ProducerAddCropList.class);
-        /*intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );*/
         startActivity(intent);
     }
 }
