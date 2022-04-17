@@ -32,12 +32,12 @@ public class ChooseOne extends AppCompatActivity {
                 if (type.equals("Email")) {
                     Intent loginemail = new Intent(ChooseOne.this, ChefLogin.class);
                     startActivity(loginemail);
-                    finish();
+                    /*finish();*/
                 }
                 if (type.equals("Phone")) {
                     Intent loginphone = new Intent(ChooseOne.this, Chefloginphone.class);
                     startActivity(loginphone);
-                    finish();
+                    /*finish();*/
                 }
                 if (type.equals("SignUp")) {
                     Intent Register = new Intent(ChooseOne.this, RegistrationProducer.class);
@@ -54,12 +54,12 @@ public class ChooseOne extends AppCompatActivity {
                 if (type.equals("Email")) {
                     Intent loginemailcust = new Intent(ChooseOne.this, Login.class);
                     startActivity(loginemailcust);
-                    finish();
+                    /*finish();*/
                 }
                 if (type.equals("Phone")) {
                     Intent loginphonecust = new Intent(ChooseOne.this, LoginPhone.class);
                     startActivity(loginphonecust);
-                    finish();
+                    /*finish();*/
                 }
                 if (type.equals("SignUp")) {
                     Intent Registercust = new Intent(ChooseOne.this, RegistrationRetailer.class);
@@ -78,14 +78,18 @@ public class ChooseOne extends AppCompatActivity {
                 if (type.equals("Phone")) {
                     Intent loginphone = new Intent(ChooseOne.this, Delivery_LoginPhone.class);
                     startActivity(loginphone);
-                    finish();
+                    /*finish();*/
                 }
                 if (type.equals("Email")) {
                     Intent loginemail = new Intent(ChooseOne.this, Delivery_Login.class);
                     startActivity(loginemail);
-                    finish();
+                    /*finish();*/
                 }
             }
         });
+    }
+
+    public void onBackPressed(){
+        finish();
     }
 }

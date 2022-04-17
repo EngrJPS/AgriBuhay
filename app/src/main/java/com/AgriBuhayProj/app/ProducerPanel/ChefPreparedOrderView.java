@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,8 +20,10 @@ import android.widget.Toast;
 
 import com.AgriBuhayProj.app.Chef;
 
+import com.AgriBuhayProj.app.Models.Sensors;
 import com.AgriBuhayProj.app.Printer.ProducerPrintOrder;
 import com.AgriBuhayProj.app.R;
+import com.AgriBuhayProj.app.ReusableCode.ReusableCodeForAll;
 import com.AgriBuhayProj.app.SendNotification.APIService;
 import com.AgriBuhayProj.app.SendNotification.Client;
 import com.AgriBuhayProj.app.SendNotification.Data;
@@ -47,11 +50,9 @@ import retrofit2.Response;
 
 public class ChefPreparedOrderView extends AppCompatActivity {
 
-
     RecyclerView recyclerViewdish;
     private List<ChefFinalOrders> chefFinalOrdersList;
     private ChefPreparedOrderViewAdapter adapter;
-    DatabaseReference reference;
     String RandomUID, userid, dishid;
     TextView grandtotal, address, name, number;
     LinearLayout l1;
@@ -60,12 +61,16 @@ public class ChefPreparedOrderView extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private APIService apiService;
     Spinner Shipper;
+
+    DatabaseReference reference;
+
     String deliveryId = "oCpc4SwLVFbKO0fPdtp4R6bmDmI3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chef_prepared_order_view);
+        //XML
         recyclerViewdish = findViewById(R.id.Recycle_viewOrder);
         grandtotal = findViewById(R.id.Gtotal);
         address = findViewById(R.id.Cadress);
@@ -75,6 +80,7 @@ public class ChefPreparedOrderView extends AppCompatActivity {
         Shipper = findViewById(R.id.shipper);
         Prepared = findViewById(R.id.prepared);
         printOrder = findViewById(R.id.print);
+
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         progressDialog = new ProgressDialog(ChefPreparedOrderView.this);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -83,6 +89,7 @@ public class ChefPreparedOrderView extends AppCompatActivity {
         recyclerViewdish.setLayoutManager(new LinearLayoutManager(ChefPreparedOrderView.this));
         chefFinalOrdersList = new ArrayList<>();
         CheforderdishesView();
+
     }
 
     private void CheforderdishesView() {
@@ -125,7 +132,7 @@ public class ChefPreparedOrderView extends AppCompatActivity {
                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                                 final ChefFinalOrders chefFinalOrders = dataSnapshot1.getValue(ChefFinalOrders.class);
                                                 HashMap<String, String> hashMap = new HashMap<>();
-                                                dishid = chefFinalOrders.getDishId();
+                                                dishid  = chefFinalOrders.getDishId();
                                                 userid = chefFinalOrders.getUserId();
                                                 hashMap.put("ChefId", chefFinalOrders.getChefId());
                                                 hashMap.put("DishId", chefFinalOrders.getDishId());
@@ -192,13 +199,10 @@ public class ChefPreparedOrderView extends AppCompatActivity {
                                                                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                                                 @Override
                                                                                 public void onClick(DialogInterface dialog, int which) {
-
                                                                                     dialog.dismiss();
                                                                                     Intent b = new Intent(ChefPreparedOrderView.this, ChefPreparedOrder.class);
                                                                                     startActivity(b);
                                                                                     finish();
-
-
                                                                                 }
                                                                             });
                                                                             AlertDialog alert = builder.create();
@@ -283,7 +287,6 @@ public class ChefPreparedOrderView extends AppCompatActivity {
     }
 
     private void sendNotifications(String usertoken, String title, String message, String prepared) {
-
         Data data = new Data(title, message, prepared);
         NotificationSender sender = new NotificationSender(data, usertoken);
         apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {

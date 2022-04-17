@@ -162,7 +162,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="12dp"
-                android:text="Carbon Emission:"
+                android:text="CO2 Level:"
                 android:textColor="@color/Black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"

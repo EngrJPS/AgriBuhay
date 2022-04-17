@@ -160,5 +160,9 @@ public class ChefLogin extends AppCompatActivity {
         isvalid = (isvalidemail && isvalidpassword) ? true : false;
         return isvalid;
     }
+
+    public void onBackPressed(){
+        finish();
+    }
 }
 

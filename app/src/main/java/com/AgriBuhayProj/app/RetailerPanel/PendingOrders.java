@@ -49,7 +49,6 @@ public class PendingOrders extends AppCompatActivity {
                     data.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                             for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
                                 CustomerPendingOrders customerPendingOrders = snapshot1.getValue(CustomerPendingOrders.class);
                                 customerPendingOrdersList.add(customerPendingOrders);
@@ -71,6 +70,5 @@ public class PendingOrders extends AppCompatActivity {
 
             }
         });
-
     }
 }

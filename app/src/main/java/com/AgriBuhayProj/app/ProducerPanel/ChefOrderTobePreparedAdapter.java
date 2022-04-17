@@ -33,7 +33,6 @@ public class ChefOrderTobePreparedAdapter extends RecyclerView.Adapter<ChefOrder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         ChefWaitingOrders1 chefWaitingOrders1 = chefWaitingOrders1list.get(position);
         holder.Address.setText(chefWaitingOrders1.getAddress());
         holder.grandtotalprice.setText("Grand Total: ₱ " + chefWaitingOrders1.getGrandTotalPrice());

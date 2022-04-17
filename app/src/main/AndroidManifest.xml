@@ -23,7 +23,7 @@
         <activity
             android:name=".ProducerPanel.ProducerAddCropUpdate"
             android:exported="false"
-            android:label="Update Crop"/>
+            android:label="Update Crop" />
         <activity
             android:name=".ProducerPanel.ProducerAddCropAdapter"
             android:exported="false"
@@ -36,7 +36,7 @@
             android:name=".ProducerPanel.ProducerAddCropList"
             android:exported="false"
             android:label="Crop List"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Printer.DeviceListActivity"
             android:theme="@android:style/Theme.DeviceDefault.Dialog" />

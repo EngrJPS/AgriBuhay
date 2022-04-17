@@ -151,4 +151,8 @@ public class Delivery_Login extends AppCompatActivity {
         isvalid = (isvalidemail && isvalidpassword) ? true : false;
         return isvalid;
     }
+
+    public void onBackPressed(){
+        finish();
+    }
 }
