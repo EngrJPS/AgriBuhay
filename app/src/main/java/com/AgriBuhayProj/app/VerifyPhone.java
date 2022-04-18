@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,6 +40,7 @@ public class VerifyPhone extends AppCompatActivity {
     FirebaseAuth FAuth;
     Button verify;
     EditText entercode;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,29 +50,47 @@ public class VerifyPhone extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Verify");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(VerifyPhone.this, ChooseOne.class));
-            }
-        });
+
+        //PROGRESS DIALOG
+        progress = new ProgressDialog(VerifyPhone.this);
+        progress.setCancelable(false);
+        progress.setCanceledOnTouchOutside(false);
 
         phonenumber = getIntent().getStringExtra("phonenumber").trim();
 
-        sendverificationcode(phonenumber);
         entercode = (EditText) findViewById(R.id.phoneno);
         txt = (TextView) findViewById(R.id.text);
         Resend = (Button) findViewById(R.id.Resendotp);
-        Resend.setVisibility(View.INVISIBLE);
-        txt.setVisibility(View.INVISIBLE);
         FAuth = FirebaseAuth.getInstance();
         verify = (Button) findViewById(R.id.Verify);
+
+        //STARTUP (OTP)
+        //send otp
+        sendVerificationCode(phonenumber);
+        //count down timer
+        new CountDownTimer(60000, 1000) {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //hide resend button
+                Resend.setVisibility(View.INVISIBLE);
+                //show timer
+                txt.setVisibility(View.VISIBLE);
+                txt.setText("Resend Code within " + millisUntilFinished/1000 + " Seconds");
+            }
+            @Override
+            public void onFinish() {
+                //hide
+                txt.setVisibility(View.INVISIBLE);
+                //show resend button
+                Resend.setVisibility(View.VISIBLE);
+            }
+        }.start();
+
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                hideKeyboard();
                 String code = entercode.getText().toString().trim();
                 Resend.setVisibility(View.INVISIBLE);
 
@@ -80,51 +103,34 @@ public class VerifyPhone extends AppCompatActivity {
             }
         });
 
-        new CountDownTimer(60000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                txt.setVisibility(View.VISIBLE);
-                txt.setText("Resend Code within " + millisUntilFinished / 1000 + " Seconds");
-            }
-
-            @Override
-            public void onFinish() {
-                Resend.setVisibility(View.VISIBLE);
-                txt.setVisibility(View.INVISIBLE);
-
-            }
-        }.start();
-
         Resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //hide resend button
                 Resend.setVisibility(View.INVISIBLE);
-                Resendotp(phonenumber);
-
+                //resend OTP
+                resendOTP(phonenumber);
+                //timer
                 new CountDownTimer(60000, 1000) {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onTick(long millisUntilFinished) {
                         txt.setVisibility(View.VISIBLE);
                         txt.setText("Resend Code within " + millisUntilFinished / 1000 + " Seconds");
                     }
-
                     @Override
                     public void onFinish() {
                         Resend.setVisibility(View.VISIBLE);
                         txt.setVisibility(View.INVISIBLE);
-
                     }
                 }.start();
-
             }
         });
 
     }
 
-    private void Resendotp(String phonenumber) {
-
-        sendverificationcode(phonenumber);
+    private void resendOTP(String phonenumber) {
+        sendVerificationCode(phonenumber);
     }
 
 
@@ -134,19 +140,19 @@ public class VerifyPhone extends AppCompatActivity {
     }
 
     private void linkCredential(PhoneAuthCredential credential) {
-
+        progress.setMessage("Verifying....");
+        progress.show();
         FAuth.getCurrentUser().linkWithCredential(credential)
                 .addOnCompleteListener(VerifyPhone.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
+                            progress.dismiss();
                             Intent intent = new Intent(VerifyPhone.this, MainMenu.class);
                             startActivity(intent);
                             finish();
-
-
                         } else {
+                            progress.dismiss();
                             ReusableCodeForAll.ShowAlert(VerifyPhone.this,"Error",task.getException().getMessage());
                         }
                     }
@@ -154,11 +160,16 @@ public class VerifyPhone extends AppCompatActivity {
     }
 
 
-    private void sendverificationcode(String number) {
-
-        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(FAuth).setPhoneNumber(phonenumber).setTimeout(60L,TimeUnit.SECONDS).setActivity(this).setCallbacks(mCallBack).build();
+    //SEND VERIFICATION CODE
+    private void sendVerificationCode(String number) {
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(FAuth)
+                        .setPhoneNumber(number)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this)                 // Activity (for callback binding)
+                        .setCallbacks(mCallBack)          // OnVerificationStateChangedCallbacks
+                        .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
-
     }
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -180,7 +191,7 @@ public class VerifyPhone extends AppCompatActivity {
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 entercode.setText(code);
-                verifyCode(code);
+                /*verifyCode(code);*/
 
             }
         }
@@ -191,4 +202,16 @@ public class VerifyPhone extends AppCompatActivity {
             Toast.makeText(VerifyPhone.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };
+
+    //HIDE KEYBOARD
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager hide = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            hide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    //DISABLE BACK PRESS
+    public void onBackPressed(){ }
 }

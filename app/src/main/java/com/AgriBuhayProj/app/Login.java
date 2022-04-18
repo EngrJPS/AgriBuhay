@@ -72,7 +72,7 @@ public class Login extends AppCompatActivity {
                                     mDialog.dismiss();
                                     if (FAuth.getCurrentUser().isEmailVerified()) {
                                         Toast.makeText(Login.this, "You are logged in", Toast.LENGTH_SHORT).show();
-                                        Intent z = new Intent(Login.this, CustomerFoodPanel_BottomNavigation.class);
+                                        Intent z = new Intent(Login.this, RetailerProductPanel_BottomNavigation.class);
                                         startActivity(z);
                                         finish();
                                     } else {
@@ -156,6 +156,10 @@ public class Login extends AppCompatActivity {
          isvalid = (isvalidemail && isvalidpassword) ? true : false;
         return isvalid;
         }
+
+    public void onBackPressed(){
+        finish();
     }
+}
 
 

@@ -1,20 +1,15 @@
 package com.AgriBuhayProj.app.Printer;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageDecoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -23,12 +18,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.AgriBuhayProj.app.Chef;
-import com.AgriBuhayProj.app.ProducerPanel.ChefFinalOrders;
-import com.AgriBuhayProj.app.ProducerPanel.ChefFinalOrders1;
+import com.AgriBuhayProj.app.Producer;
+import com.AgriBuhayProj.app.Models.Crops;
+import com.AgriBuhayProj.app.Models.Sensors;
+import com.AgriBuhayProj.app.ProducerPanel.ProducerFinalOrders;
+import com.AgriBuhayProj.app.ProducerPanel.ProducerFinalOrders1;
 import com.AgriBuhayProj.app.R;
-import com.bumptech.glide.util.Util;
-import com.google.android.material.textfield.TextInputEditText;
+import com.AgriBuhayProj.app.ReusableCode.ReusableCodeForAll;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,8 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.text.DecimalFormat;
 import java.util.Set;
 import java.util.UUID;
 
@@ -57,8 +53,16 @@ public class ProducerPrintOrder extends Activity implements Runnable {
     private BluetoothSocket mBluetoothSocket;
     BluetoothDevice mBluetoothDevice;
     private String randomUIID;
+
     private TextInputLayout prodName, totalWeight, totalTemp, totalHumid, totalCO2;
     private String prod, weight, temp, humid, co2;
+    private Double dW,dT,dH,dC;
+    private DecimalFormat df = new DecimalFormat("#.##");
+
+    FirebaseAuth fbAuth;
+    DatabaseReference dbRef;
+
+    String dishName;
 
     @Override
     public void onCreate(Bundle mSavedInstanceState) {
@@ -70,6 +74,50 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         totalTemp = (TextInputLayout) findViewById(R.id.edtTemperature);
         totalHumid = (TextInputLayout) findViewById(R.id.edtHumidity);
         totalCO2 = (TextInputLayout) findViewById(R.id.edtCO2);
+
+        //DATABASE
+        fbAuth = FirebaseAuth.getInstance();
+        dbRef = FirebaseDatabase.getInstance().getReference();
+
+        //USER ID
+        String uID = fbAuth.getCurrentUser().getUid();
+        //TRANSACTION ID
+        randomUIID = getIntent().getStringExtra("RandomUIID");
+
+        //DISPLAY PRODUCT NAME
+        dbRef.child("ChefFinalOrders").child(uID).child(randomUIID).child("Dishes").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    final ProducerFinalOrders productFinalOrders = dataSnapshot.getValue(ProducerFinalOrders.class);
+                    dishName = productFinalOrders.getProductName();
+                    prodName.getEditText().setText(dishName);
+                }
+                //GET CROP DATA
+                dbRef.child("Crops").child(dishName).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Crops crops = snapshot.getValue(Crops.class);
+                        Double minT = Double.parseDouble(crops.getTempMin());
+                        Double maxT = Double.parseDouble(crops.getTempMax());
+                        Double minH = Double.parseDouble(crops.getHumidMin());
+                        Double maxH = Double.parseDouble(crops.getHumidMax());
+                        Double minC = Double.parseDouble(crops.getCarbonMin());
+                        Double maxC = Double.parseDouble(crops.getCarbonMax());
+
+                        compareData(minT,maxT,minH,maxH,minC,maxC);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         mScan = (Button) findViewById(R.id.Scan);
         mScan.setOnClickListener(new View.OnClickListener() {
@@ -232,14 +280,14 @@ public class ProducerPrintOrder extends Activity implements Runnable {
             public void run() {
                 try {
                     randomUIID = getIntent().getStringExtra("RandomUIID");
-                    DatabaseReference dataa = FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(randomUIID).child("OtherInformation");
+                    DatabaseReference dataa = FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(fbAuth.getCurrentUser().getUid()).child(randomUIID).child("OtherInformation");
                     dataa.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            final ChefFinalOrders1 chefFinalOrders1 = snapshot.getValue(ChefFinalOrders1.class);
-                            String retailerName = chefFinalOrders1.getName();
-                            String retailerAds = chefFinalOrders1.getAddress();
-                            String totalPrice = chefFinalOrders1.getGrandTotalPrice();
+                            final ProducerFinalOrders1 producerFinalOrders1 = snapshot.getValue(ProducerFinalOrders1.class);
+                            String retailerName = producerFinalOrders1.getName();
+                            String retailerAds = producerFinalOrders1.getAddress();
+                            String totalPrice = producerFinalOrders1.getGrandTotalPrice();
                             try {
                                 OutputStream os = mBluetoothSocket
                                         .getOutputStream();
@@ -300,11 +348,11 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     data.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            final Chef chef = snapshot.getValue(Chef.class);
-                            String producerName = chef.getFname() + " " + chef.getLname();
-                            String province = chef.getState();
-                            String address = chef.getCity() + " " + chef.getSuburban();
-                            String num = "+63" + chef.getMobile();
+                            final Producer producer = snapshot.getValue(Producer.class);
+                            String producerName = producer.getFname() + " " + producer.getLname();
+                            String province = producer.getState();
+                            String address = producer.getCity() + " " + producer.getSuburban();
+                            String num = "+63" + producer.getMobile();
                             try {
                                 OutputStream os = mBluetoothSocket
                                         .getOutputStream();
@@ -465,5 +513,112 @@ public class ProducerPrintOrder extends Activity implements Runnable {
 
         isvalid = (isValidname && isValidWeight && isValidHumid && isValidTemp && isValidCO2) ? true : false;
         return isValid();
+    }
+
+    //COMPARE DATA
+    public void compareData(Double minT,Double maxT,Double minH,Double maxH,Double minC, Double maxC){
+        //DISPLAY SENSOR DATA
+        dbRef.child("Sensors").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //get db value
+                Sensors sensors = snapshot.getValue(Sensors.class);
+                assert sensors != null;
+                //double value
+                dW = sensors.getWeight_Value();
+                dT = sensors.getTemp_Value();
+                dH = sensors.getHumid_Value();
+                dC = sensors.getCO2_PPM();
+                //display values
+                totalWeight.getEditText().setText(Double.toString(Double.parseDouble(df.format(dW)))+" kg");
+                totalTemp.getEditText().setText(Double.toString(Double.parseDouble(df.format(dT)))+" °C");
+                totalHumid.getEditText().setText(Double.toString(Double.parseDouble(df.format(dH)))+" %");
+                totalCO2.getEditText().setText(Double.toString(Double.parseDouble(df.format(dC)))+" ppm");
+
+                //check temperature
+                if(dT<minT){
+                    totalTemp.setErrorEnabled(true);
+                    totalTemp.setError("Low Temperature");
+                    totalTemp.setErrorIconDrawable(R.drawable.ic_error_red);
+                    totalTemp.setErrorIconOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred Temperature Level","Minimum: "+minT+"°C"+"\nMaximum: "+maxT+"°C");
+                        }
+                    });
+                }else if(dT>maxT){
+                    totalTemp.setErrorEnabled(true);
+                    totalTemp.setError("High Temperature");
+                    totalTemp.setErrorIconDrawable(R.drawable.ic_error_red);
+                    totalTemp.setErrorIconOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred Temperature Level","Minimum: "+minT+"°C"+"\nMaximum: "+maxT+"°C");
+                        }
+                    });
+                }else{
+                    totalTemp.setErrorEnabled(false);
+                    totalTemp.setErrorIconDrawable(null);
+                    totalTemp.setError("");
+                }
+                //check humidity
+                if(dH<minH){
+                    totalHumid.setErrorEnabled(true);
+                    totalHumid.setError("Low Humidity Percentage");
+                    totalHumid.setErrorIconDrawable(R.drawable.ic_error_red);
+                    totalHumid.setErrorIconOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred Humidity Percentage","Minimum: "+minH+"%"+"\nMaximum: "+maxH+"%");
+                        }
+                    });
+                }else if (dH>maxH){
+                    totalHumid.setErrorEnabled(true);
+                    totalHumid.setError("High Humidity Percentage");
+                    totalHumid.setErrorIconDrawable(R.drawable.ic_error_red);
+                    totalHumid.setErrorIconOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred Humidity Percentage","Minimum: "+minH+"%"+"\nMaximum: "+maxH+"%");
+                        }
+                    });
+                }else{
+                    totalHumid.setErrorEnabled(false);
+                    totalHumid.setErrorIconDrawable(null);
+                    totalHumid.setError("");
+                }
+                //check co2
+                if(dC<minC){
+                    totalCO2.setErrorEnabled(true);
+                    totalCO2.setError("Low CO2 Level");
+                    totalCO2.setErrorIconDrawable(R.drawable.ic_error_red);
+                    totalCO2.setErrorIconOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred CO2 Level","Minimum: "+minC+" ppm"+"\nMaximum: "+maxC+" ppm");
+                        }
+                    });
+                }else if (dC>maxC){
+                    totalCO2.setErrorEnabled(true);
+                    totalCO2.setError("High CO2 Level");
+                    totalCO2.setErrorIconDrawable(R.drawable.ic_error_red);
+                    totalCO2.setErrorIconOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred CO2 Level","Minimum: "+minC+" ppm"+"\nMaximum: "+maxC+" ppm");
+                        }
+                    });
+                }else{
+                    totalCO2.setErrorEnabled(false);
+                    totalCO2.setErrorIconDrawable(null);
+                    totalCO2.setError("");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

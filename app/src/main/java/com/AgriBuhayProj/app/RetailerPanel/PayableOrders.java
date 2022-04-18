@@ -27,7 +27,7 @@ import java.util.List;
 public class PayableOrders extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    private List<CustomerPaymentOrders> customerPaymentOrdersList;
+    private List<RetailerPaymentOrders> retailerPaymentOrdersList;
     private PayableOrderAdapter adapter;
     DatabaseReference databaseReference;
     private LinearLayout pay;
@@ -46,10 +46,10 @@ public class PayableOrders extends AppCompatActivity {
         payment = (Button) findViewById(R.id.paymentmethod);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(PayableOrders.this));
-        customerPaymentOrdersList = new ArrayList<>();
+        retailerPaymentOrdersList = new ArrayList<>();
         swipeRefreshLayout = findViewById(R.id.Swipe2);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.green);
-        adapter = new PayableOrderAdapter(PayableOrders.this, customerPaymentOrdersList);
+        adapter = new PayableOrderAdapter(PayableOrders.this, retailerPaymentOrdersList);
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -57,48 +57,48 @@ public class PayableOrders extends AppCompatActivity {
                 recyclerView = findViewById(R.id.recyclepayableorder);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(PayableOrders.this));
-                customerPaymentOrdersList = new ArrayList<>();
-                CustomerpayableOrders();
+                retailerPaymentOrdersList = new ArrayList<>();
+                RetailerpayableOrders();
             }
         });
-        CustomerpayableOrders();
+        RetailerpayableOrders();
 
     }
 
-    private void CustomerpayableOrders() {
+    private void RetailerpayableOrders() {
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("CustomerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    customerPaymentOrdersList.clear();
+                    retailerPaymentOrdersList.clear();
                     for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         final String randomuid = snapshot.getKey();
-                        DatabaseReference data = FirebaseDatabase.getInstance().getReference("CustomerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("Dishes");
+                        DatabaseReference data = FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("Products");
                         data.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                 for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                    CustomerPaymentOrders customerPaymentOrders = snapshot1.getValue(CustomerPaymentOrders.class);
-                                    customerPaymentOrdersList.add(customerPaymentOrders);
+                                    RetailerPaymentOrders retailerPaymentOrders = snapshot1.getValue(RetailerPaymentOrders.class);
+                                    retailerPaymentOrdersList.add(retailerPaymentOrders);
                                 }
-                                if (customerPaymentOrdersList.size() == 0) {
+                                if (retailerPaymentOrdersList.size() == 0) {
                                     pay.setVisibility(View.INVISIBLE);
                                 } else {
                                     pay.setVisibility(View.VISIBLE);
                                     payment.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Intent intent = new Intent(PayableOrders.this, CustomerPayment.class);
+                                            Intent intent = new Intent(PayableOrders.this, RetailerPayment.class);
                                             intent.putExtra("RandomUID", randomuid);
                                             startActivity(intent);
                                             finish();
                                         }
                                     });
                                 }
-                                adapter = new PayableOrderAdapter(PayableOrders.this, customerPaymentOrdersList);
+                                adapter = new PayableOrderAdapter(PayableOrders.this, retailerPaymentOrdersList);
                                 recyclerView.setAdapter(adapter);
                                 swipeRefreshLayout.setRefreshing(false);
 
@@ -109,13 +109,13 @@ public class PayableOrders extends AppCompatActivity {
 
                             }
                         });
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("CustomerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(randomuid).child("OtherInformation");
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(randomuid).child("OtherInformation");
                         reference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
-                                    CustomerPaymentOrders1 customerPaymentOrders1 = dataSnapshot.getValue(CustomerPaymentOrders1.class);
-                                    grandtotal.setText("₱ " + customerPaymentOrders1.getGrandTotalPrice());
+                                    RetailerPaymentOrders1 retailerPaymentOrders1 = dataSnapshot.getValue(RetailerPaymentOrders1.class);
+                                    grandtotal.setText("₱ " + retailerPaymentOrders1.getGrandTotalPrice());
                                     swipeRefreshLayout.setRefreshing(false);
 
                                 } else {

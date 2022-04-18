@@ -7,130 +7,145 @@
     android:layout_height="fill_parent"
     android:background="@color/peach">
 
-    <LinearLayout
-        android:layout_width="300dp"
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="50dp">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Print Receipt"
-            android:textAlignment="center"
-            android:textColor="@color/darkgray"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtNameProduct"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Enter Product Name">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:id="@+id/textView8"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="textPersonName"
-                android:textColor="@color/darkgray" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Print Receipt"
+                android:textAlignment="center"
+                android:textColor="@color/darkgray"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtNetWt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Enter Total Net Wt."
-            app:suffixText="kg">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtNameProduct"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="numberDecimal"
-                android:textColor="@color/darkgray" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Product Name">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtHumidity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Enter Humidity Value"
-            app:suffixText="%">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/darkgray"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtNetWt"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="numberDecimal"
-                android:textColor="@color/darkgray" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Net Weight">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtTemperature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Enter Temperature Value"
-            app:suffixText="Celsius">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/darkgray"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtHumidity"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="numberDecimal"
-                android:textColor="@color/darkgray"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Humidity Level">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtCO2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Enter CO2 Value"
-            app:suffixText="PPM">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/darkgray"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtTemperature"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="numberDecimal"
-                android:textColor="@color/darkgray"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Temperature Level">
 
-        <Button
-            android:id="@+id/Scan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/layout_button_green"
-            android:text="Scan"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/darkgray"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/mPrint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/layout_button_red"
-            android:drawableBottom="@drawable/ic_baseline_print_black"
-            android:text="Print"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtCO2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="CO2 Level">
 
-        <Button
-            android:id="@+id/dis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/layout_button_disabled"
-            android:text="Disable"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/darkgray"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/Scan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/layout_button_green"
+                android:text="Scan"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/mPrint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/layout_button_red"
+                android:drawableBottom="@drawable/ic_baseline_print_black"
+                android:text="Print"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/dis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/layout_button_disabled"
+                android:text="Disable"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
