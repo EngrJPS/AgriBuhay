@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="my.food_on.app.ChefFoodPanel.Chef_order_dishes">
+    tools:context=".ProducerPanel.ProducerOrderProducts">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Recycle_orders_products"

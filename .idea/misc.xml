@@ -80,14 +80,30 @@
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_forgot_password.xml" value="0.1456752655538695" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_login_phone.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_logistics_product_panel_bottom_navigation.xml" value="0.14871016691957512" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_main_menu.xml" value="0.17" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_order_dish.xml" value="0.1456752655538695" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_payable_orders.xml" value="0.33" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_pending_orders.xml" value="0.1456752655538695" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_producer__post_product.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_producer_forgot_password.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_producer_order_products.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_producer_order_tobe_prepared.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_producer_ordertobe_prepare_view.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_producer_prepared_order.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_producer_sendotp.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_producer_verify_phone.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_product_panel__bottom_navigation.xml" value="0.14871016691957512" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_registeration.xml" value="0.22" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_retailer_forgotpassword.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_retailer_online_payment.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_retailer_password.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_retailer_payment.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_retailer_phonenumber.xml" value="0.14628623188405798" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_sendotp.xml" value="0.2" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_update__delete__dish.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_update__delete__product.xml" value="0.14871016691957512" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/activity_verify_phone.xml" value="0.15" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/bar_layout.xml" value="0.2" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/cart_placeorder.xml" value="0.1456752655538695" />
@@ -114,74 +130,37 @@
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/fragment_customertrack.xml" value="0.1456752655538695" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/fragment_deliverypendingorder.xml" value="0.1456752655538695" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/fragment_deliveryshiporder.xml" value="0.1483308042488619" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/fragment_logisticspendingorder.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/fragment_logisticsshiporder.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/fragment_producer_home.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/fragment_producer_order.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/fragment_producer_pendingorders.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/fragment_producer_profile.xml" value="0.14871016691957512" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/login_phone_retailer.xml" value="0.1483308042488619" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/logistics_shiporders.xml" value="0.14871016691957512" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/main_printer.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/pending_order_dishes.xml" value="0.33" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/pending_order_products.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/producer_add_crop.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/producer_add_crop_adapter.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/producer_finalorder.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/producer_order_products.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/producer_orders.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/producer_ordertobeprepared.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/producer_ordertobeprepared_view.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/producer_preparedorder.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/producer_preparedorderview.xml" value="0.14871016691957512" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/registration_delivery.xml" value="0.1456752655538695" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/registration_producer.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/retailer_payableorder.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/retailer_pendingorders.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/retailer_trackorder.xml" value="0.14871016691957512" />
+        <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/shiporderview.xml" value="0.14871016691957512" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/layout/splash_screen.xml" value="0.1456752655538695" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/menu/chef_bottom_navigation.xml" value="0.1456752655538695" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1795" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1795" />
         <entry key="..\:/Users/Ismael/AppData/Local/Android/Sdk/platforms/android-29/data/res/layout/simple_spinner_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/font/caudex.xml" value="0.2537037037037037" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef__post_dish.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_food_panel__bottom_navigation.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_forgot_password.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_order_dishes.xml" value="0.5" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_order_tobe_prepared.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_ordertobe_prepare_view.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_prepared_order.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_prepared_order_view.xml" value="0.25" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chef_verify_phone.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_chefsendotp.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_choose_one.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_customer_forgotpassword.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_customer_online_payment.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_customer_password.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_delivery__send_otp.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_delivery__shipping_order.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_delivery__verify_phone.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_delivery_pending_order_view.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_delivery_ship_order_view.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_food_panel__bottom_navigation.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_main_menu.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_order_dish.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_payable_orders.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_pending_orders.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_sendotp.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_update__delete__dish.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_verify_phone.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/cart_placeorder.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/chef_finalorder.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/chef_menu_update_delete.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/customer_menudish.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/customer_payableorder.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/customer_trackorder.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/devices.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/enter_address.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_chef_home.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_chef_order.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_chef_pendingorders.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_chef_profile.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_customerhome.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_customerorder.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_customertrack.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/main_printer.xml" value="0.33" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/pending_order_dishes.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop.xml" value="0.33" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop_adapter.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop_list.xml" value="0.33" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop_update.xml" value="0.25" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_order_to_be_prepared_view_measurement.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_post_product.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_delivery.xml" value="0.5" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_producer.xml" value="0.33" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_retailer.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/shiporderview.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/menu/add_crop.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/menu/logout.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/menu/search.xml" value="0.2598958333333333" />
       </map>
     </option>
   </component>
