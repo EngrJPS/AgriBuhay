@@ -15,10 +15,10 @@ import java.util.List;
 public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.ViewHolder> {
 
     private Context context;
-    private List<CustomerPendingOrders> customerPendingOrderslist;
+    private List<RetailerPendingOrders> retailerPendingOrderslist;
 
-    public PendingOrdersAdapter(Context context, List<CustomerPendingOrders> customerPendingOrderslist) {
-        this.customerPendingOrderslist = customerPendingOrderslist;
+    public PendingOrdersAdapter(Context context, List<RetailerPendingOrders> retailerPendingOrderslist) {
+        this.retailerPendingOrderslist = retailerPendingOrderslist;
         this.context = context;
     }
 
@@ -26,34 +26,34 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.pending_order_dishes, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.pending_order_products, parent, false);
         return new PendingOrdersAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final CustomerPendingOrders customerPendingOrders = customerPendingOrderslist.get(position);
-        holder.Dishname.setText(customerPendingOrders.getDishName());
-        holder.Price.setText("Price: ₱ " + customerPendingOrders.getPrice());
-        holder.Quantity.setText("× " + customerPendingOrders.getDishQuantity());
-        holder.Totalprice.setText("Total: ₱ " + customerPendingOrders.getTotalPrice());
+        final RetailerPendingOrders retailerPendingOrders = retailerPendingOrderslist.get(position);
+        holder.Productname.setText(retailerPendingOrders.getProductName());
+        holder.Price.setText("Price: ₱ " + retailerPendingOrders.getPrice());
+        holder.Quantity.setText("× " + retailerPendingOrders.getProductQuantity());
+        holder.Totalprice.setText("Total: ₱ " + retailerPendingOrders.getTotalPrice());
 
     }
 
     @Override
     public int getItemCount() {
-        return customerPendingOrderslist.size();
+        return retailerPendingOrderslist.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Dishname, Price, Quantity, Totalprice;
+        TextView Productname, Price, Quantity, Totalprice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            Dishname = itemView.findViewById(R.id.Dishh);
+            Productname = itemView.findViewById(R.id.Dishh);
             Price = itemView.findViewById(R.id.pricee);
             Quantity = itemView.findViewById(R.id.qtyy);
             Totalprice = itemView.findViewById(R.id.total);

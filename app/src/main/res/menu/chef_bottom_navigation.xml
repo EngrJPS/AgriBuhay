@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/chefHome"
+        android:id="@+id/producerHome"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Home" />
 
@@ -20,7 +20,7 @@
 
 
     <item
-        android:id="@+id/chefProfile"
+        android:id="@+id/producerProfile"
         android:icon="@drawable/ic_baseline_agriculture_24"
         android:title="Post Products" />
 

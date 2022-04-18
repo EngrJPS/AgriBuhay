@@ -120,7 +120,7 @@ public class RegistrationRetailer extends AppCompatActivity {
     String Localaddress;
     String confirmpass;
     String mobileno;
-    String role = "Customer";
+    String role = "Retailer";
     CountryCodePicker Cpp;
     ProgressDialog mDialog;
 
@@ -424,7 +424,7 @@ public class RegistrationRetailer extends AppCompatActivity {
 
 
             //TODO change the name of the reference from Retailer
-            databaseReference = firebaseDatabase.getInstance().getReference("Customer");
+            databaseReference = firebaseDatabase.getInstance().getReference("Retailer");
             FAuth = FirebaseAuth.getInstance();
 
             Signin.setOnClickListener(new View.OnClickListener() {
@@ -467,7 +467,7 @@ public class RegistrationRetailer extends AppCompatActivity {
                                             hashMappp.put("Suburban", suburban);
 
                                             //TODO change the reference name to Retailer
-                                            firebaseDatabase.getInstance().getReference("Customer")
+                                            firebaseDatabase.getInstance().getReference("Retailer")
                                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                     .setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
 

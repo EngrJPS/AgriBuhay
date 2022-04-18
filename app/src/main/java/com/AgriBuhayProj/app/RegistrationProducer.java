@@ -119,7 +119,7 @@ public class RegistrationProducer extends AppCompatActivity {
     String house;
     String Area;
     String Postcode;
-    String role = "Chef";
+    String role = "Producer";
     String statee;
     String cityy;
     String suburban;
@@ -421,7 +421,7 @@ public class RegistrationProducer extends AppCompatActivity {
         });
 
         //This line will create a database to the firebase
-        databaseReference = firebaseDatabase.getInstance().getReference("Chef");
+        databaseReference = firebaseDatabase.getInstance().getReference("Producer");
         FAuth = FirebaseAuth.getInstance();
 
 
@@ -475,7 +475,7 @@ public class RegistrationProducer extends AppCompatActivity {
                                         hashMappp.put("Postcode", Postcode);
                                         hashMappp.put("State", statee);
                                         hashMappp.put("Suburban", suburban);
-                                        firebaseDatabase.getInstance().getReference("Chef")
+                                        firebaseDatabase.getInstance().getReference("Producer")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                 .setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
 
@@ -497,7 +497,7 @@ public class RegistrationProducer extends AppCompatActivity {
                                                                     dialog.dismiss();
 
 
-                                                                    Intent b = new Intent(RegistrationProducer.this, ChefVerifyPhone.class);
+                                                                    Intent b = new Intent(RegistrationProducer.this, ProducerVerifyPhone.class);
                                                                     b.putExtra("phonenumber", phonenumber);
                                                                     startActivity(b);
 
@@ -537,7 +537,7 @@ public class RegistrationProducer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(RegistrationProducer.this, ChefLogin.class);
+                Intent i = new Intent(RegistrationProducer.this, ProducerLogin.class);
                 startActivity(i);
                 finish();
             }
@@ -547,7 +547,7 @@ public class RegistrationProducer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent e = new Intent(RegistrationProducer.this, Chefloginphone.class);
+                Intent e = new Intent(RegistrationProducer.this, ProducerLoginPhone.class);
                 startActivity(e);
                 finish();
             }

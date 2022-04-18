@@ -21,7 +21,7 @@ import java.util.List;
 public class PendingOrders extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    private List<CustomerPendingOrders> customerPendingOrdersList;
+    private List<RetailerPendingOrders> retailerPendingOrdersList;
     private PendingOrdersAdapter adapter;
     DatabaseReference databaseReference;
 
@@ -33,27 +33,27 @@ public class PendingOrders extends AppCompatActivity {
         recyclerView = findViewById(R.id.Recycleorders);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(PendingOrders.this));
-        customerPendingOrdersList = new ArrayList<>();
-        CustomerpendingOrders();
+        retailerPendingOrdersList = new ArrayList<>();
+        RetailerpendingOrders();
     }
 
-    private void CustomerpendingOrders() {
+    private void RetailerpendingOrders() {
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("CustomerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference("RetailerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                customerPendingOrdersList.clear();
+                retailerPendingOrdersList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    DatabaseReference data = FirebaseDatabase.getInstance().getReference("CustomerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("Dishes");
+                    DatabaseReference data = FirebaseDatabase.getInstance().getReference("RetailerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("Products");
                     data.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                CustomerPendingOrders customerPendingOrders = snapshot1.getValue(CustomerPendingOrders.class);
-                                customerPendingOrdersList.add(customerPendingOrders);
+                                RetailerPendingOrders retailerPendingOrders = snapshot1.getValue(RetailerPendingOrders.class);
+                                retailerPendingOrdersList.add(retailerPendingOrders);
                             }
-                            adapter = new PendingOrdersAdapter(PendingOrders.this, customerPendingOrdersList);
+                            adapter = new PendingOrdersAdapter(PendingOrders.this, retailerPendingOrdersList);
                             recyclerView.setAdapter(adapter);
                         }
 

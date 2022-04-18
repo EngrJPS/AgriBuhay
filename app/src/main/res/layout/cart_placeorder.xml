@@ -23,7 +23,7 @@
 
 
             <TextView
-                android:id="@+id/Dishname"
+                android:id="@+id/Productname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -57,7 +57,7 @@
 
 
             <TextView
-                android:id="@+id/pricers"
+                android:id="@+id/pricephp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
@@ -75,7 +75,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/totalrs"
+            android:id="@+id/totalphp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

@@ -3,13 +3,13 @@ package com.AgriBuhayProj.app.RetailerPanel;
 public class Cart {
 
     //TODO add mobile number in this model
-    private String ChefId,DishID,DishName,DishQuantity,Price,Totalprice;
+    private String ProducerId, ProductID, ProductName, ProductQuantity,Price,Totalprice;
 
-    public Cart(String chefId, String dishID, String dishName, String dishQuantity, String price, String totalprice) {
-        ChefId = chefId;
-        DishID = dishID;
-        DishName = dishName;
-        DishQuantity = dishQuantity;
+    public Cart(String producerId, String productID, String productName, String productQuantity, String price, String totalprice) {
+        ProducerId = producerId;
+        ProductID = productID;
+        ProductName = productName;
+        ProductQuantity = productQuantity;
         Price = price;
         Totalprice = totalprice;
     }
@@ -17,36 +17,36 @@ public class Cart {
     public Cart() {
     }
 
-    public String getChefId() {
-        return ChefId;
+    public String getProducerId() {
+        return ProducerId;
     }
 
-    public void setChefId(String chefId) {
-        ChefId = chefId;
+    public void setProducerId(String producerId) {
+        ProducerId = producerId;
     }
 
-    public String getDishID() {
-        return DishID;
+    public String getProductID() {
+        return ProductID;
     }
 
-    public void setDishID(String dishID) {
-        DishID = dishID;
+    public void setProductID(String productID) {
+        ProductID = productID;
     }
 
-    public String getDishName() {
-        return DishName;
+    public String getProductName() {
+        return ProductName;
     }
 
-    public void setDishName(String dishName) {
-        DishName = dishName;
+    public void setProductName(String productName) {
+        ProductName = productName;
     }
 
-    public String getDishQuantity() {
-        return DishQuantity;
+    public String getProductQuantity() {
+        return ProductQuantity;
     }
 
-    public void setDishQuantity(String dishQuantity) {
-        DishQuantity = dishQuantity;
+    public void setProductQuantity(String productQuantity) {
+        ProductQuantity = productQuantity;
     }
 
     public String getPrice() {
