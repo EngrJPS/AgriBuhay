@@ -13,10 +13,10 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import com.AgriBuhayProj.app.ProducerPanel.ProducerPreparedOrderView;
-import com.AgriBuhayProj.app.ProducerProductPanel_BottomNavigation;
+import com.AgriBuhayProj.app.ProductPanelBottomNavigation_Producer;
 import com.AgriBuhayProj.app.RetailerPanel.PayableOrders;
-import com.AgriBuhayProj.app.RetailerProductPanel_BottomNavigation;
-import com.AgriBuhayProj.app.Logistics_ProductPanelBottomNavigation;
+import com.AgriBuhayProj.app.ProductPanelBottomNavigation_Retailer;
+import com.AgriBuhayProj.app.ProductPanelBottomNavigation_Logistics;
 import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.SplashScreen;
 
@@ -39,7 +39,7 @@ public class ShowNotification {
         acIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         if (page.trim().equalsIgnoreCase("Order")) {
-            acIntent = new Intent(context, ProducerProductPanel_BottomNavigation.class).putExtra("PAGE", "Orderpage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Producer.class).putExtra("PAGE", "Orderpage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("Payment")) {
@@ -47,31 +47,31 @@ public class ShowNotification {
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("Home")) {
-            acIntent = new Intent(context, RetailerProductPanel_BottomNavigation.class).putExtra("PAGE", "Homepage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Retailer.class).putExtra("PAGE", "Homepage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("Confirm")) {
-            acIntent = new Intent(context, ProducerProductPanel_BottomNavigation.class).putExtra("PAGE", "Confirmpage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Producer.class).putExtra("PAGE", "Confirmpage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("Preparing")) {
-            acIntent = new Intent(context, RetailerProductPanel_BottomNavigation.class).putExtra("PAGE", "Preparingpage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Retailer.class).putExtra("PAGE", "Preparingpage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("Prepared")) {
-            acIntent = new Intent(context, RetailerProductPanel_BottomNavigation.class).putExtra("PAGE", "Preparedpage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Retailer.class).putExtra("PAGE", "Preparedpage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("DeliveryOrder")) {
-            acIntent = new Intent(context, Logistics_ProductPanelBottomNavigation.class).putExtra("PAGE", "DeliveryOrderpage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Logistics.class).putExtra("PAGE", "DeliveryOrderpage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("DeliverOrder")) {
-            acIntent = new Intent(context, RetailerProductPanel_BottomNavigation.class).putExtra("PAGE", "DeliverOrderpage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Retailer.class).putExtra("PAGE", "DeliverOrderpage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("AcceptOrder")) {
-            acIntent = new Intent(context, ProducerProductPanel_BottomNavigation.class).putExtra("PAGE", "AcceptOrderpage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Producer.class).putExtra("PAGE", "AcceptOrderpage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("RejectOrder")) {
@@ -79,11 +79,11 @@ public class ShowNotification {
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("ThankYou")) {
-            acIntent = new Intent(context, RetailerProductPanel_BottomNavigation.class).putExtra("PAGE", "ThankYoupage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Retailer.class).putExtra("PAGE", "ThankYoupage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
         if (page.trim().equalsIgnoreCase("Delivered")) {
-            acIntent = new Intent(context, ProducerProductPanel_BottomNavigation.class).putExtra("PAGE", "Deliveredpage");
+            acIntent = new Intent(context, ProductPanelBottomNavigation_Producer.class).putExtra("PAGE", "Deliveredpage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
 

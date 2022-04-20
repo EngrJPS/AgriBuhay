@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="Add Crop"
+        android:title="Crop List"
         android:id="@+id/addCrop"
         android:visible="true"
         app:showAsAction="never">

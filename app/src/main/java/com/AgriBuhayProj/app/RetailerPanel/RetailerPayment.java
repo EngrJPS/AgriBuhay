@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.RetailerProductPanel_BottomNavigation;
+import com.AgriBuhayProj.app.ProductPanelBottomNavigation_Retailer;
 import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.SendNotification.APIService;
 import com.AgriBuhayProj.app.SendNotification.Client;
@@ -44,7 +44,7 @@ public class RetailerPayment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retailer_payment);
+        setContentView(R.layout.retailer_payment);
 
         OnlinePayment = (TextView) findViewById(R.id.online);
         CashPayment = (TextView) findViewById(R.id.cash);
@@ -173,7 +173,7 @@ public class RetailerPayment extends AppCompatActivity {
                                                                                                     public void onClick(DialogInterface dialog, int which) {
 
                                                                                                         dialog.dismiss();
-                                                                                                        Intent b = new Intent(RetailerPayment.this, RetailerProductPanel_BottomNavigation.class);
+                                                                                                        Intent b = new Intent(RetailerPayment.this, ProductPanelBottomNavigation_Retailer.class);
                                                                                                         b.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                                                                         startActivity(b);
                                                                                                         finish();

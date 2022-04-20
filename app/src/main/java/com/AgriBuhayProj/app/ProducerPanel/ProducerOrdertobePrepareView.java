@@ -57,7 +57,7 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_producer_ordertobe_prepare_view);
+        setContentView(R.layout.producer_ordertobe_prepare_view);
         recyclerViewproduct = findViewById(R.id.Recycle_viewOrder);
         grandtotal = findViewById(R.id.rupees);
         note = findViewById(R.id.NOTE);
@@ -231,7 +231,7 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
                 note.setText(producerWaitingOrders1.getNote());
                 address.setText(producerWaitingOrders1.getAddress());
                 name.setText(producerWaitingOrders1.getName());
-                number.setText("+63" + producerWaitingOrders1.getMobileNumber());
+                number.setText(producerWaitingOrders1.getMobileNumber());
 
             }
 

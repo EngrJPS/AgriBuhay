@@ -74,17 +74,17 @@ public class SplashScreen extends AppCompatActivity {
                                         String role = dataSnapshot.getValue(String.class);
                                         //Todo database name role path Customer, Chef, DeliveryPerson
                                         if (role.equals("Retailer")) {
-                                            Intent n = new Intent(SplashScreen.this, RetailerProductPanel_BottomNavigation.class);
+                                            Intent n = new Intent(SplashScreen.this, ProductPanelBottomNavigation_Retailer.class);
                                             startActivity(n);
                                             finish();
                                         }
                                         if (role.equals("Producer")) {
-                                            Intent a = new Intent(SplashScreen.this, ProducerProductPanel_BottomNavigation.class);
+                                            Intent a = new Intent(SplashScreen.this, ProductPanelBottomNavigation_Producer.class);
                                             startActivity(a);
                                             finish();
                                         }
                                         if (role.equals("LogisticsPerson")) {
-                                            Intent intent = new Intent(SplashScreen.this, Logistics_ProductPanelBottomNavigation.class);
+                                            Intent intent = new Intent(SplashScreen.this, ProductPanelBottomNavigation_Logistics.class);
                                             startActivity(intent);
                                             finish();
                                         }

@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.AgriBuhayProj.app.Producer;
+import com.AgriBuhayProj.app.Models.Producer;
 import com.AgriBuhayProj.app.Models.Crops;
 import com.AgriBuhayProj.app.Models.Sensors;
 import com.AgriBuhayProj.app.ProducerPanel.ProducerFinalOrders;
@@ -62,7 +62,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
     FirebaseAuth fbAuth;
     DatabaseReference dbRef;
 
-    String dishName;
+    String productName;
 
     @Override
     public void onCreate(Bundle mSavedInstanceState) {
@@ -85,16 +85,16 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         randomUIID = getIntent().getStringExtra("RandomUIID");
 
         //DISPLAY PRODUCT NAME
-        dbRef.child("ChefFinalOrders").child(uID).child(randomUIID).child("Dishes").addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child("ProducerFinalOrders").child(uID).child(randomUIID).child("Products").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     final ProducerFinalOrders productFinalOrders = dataSnapshot.getValue(ProducerFinalOrders.class);
-                    dishName = productFinalOrders.getProductName();
-                    prodName.getEditText().setText(dishName);
+                    productName = productFinalOrders.getProductName();
+                    prodName.getEditText().setText(productName);
                 }
                 //GET CROP DATA
-                dbRef.child("Crops").child(dishName).addValueEventListener(new ValueEventListener() {
+                dbRef.child("Crops").child(productName).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Crops crops = snapshot.getValue(Crops.class);
@@ -349,9 +349,9 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             final Producer producer = snapshot.getValue(Producer.class);
-                            String producerName = producer.getFname() + " " + producer.getLname();
-                            String province = producer.getState();
-                            String address = producer.getCity() + " " + producer.getSuburban();
+                            String producerName = producer.getFirstName() + " " + producer.getLastName();
+                            String province = producer.getProvince();
+                            String address = producer.getCity() + " " + producer.getBaranggay();
                             String num = "+63" + producer.getMobile();
                             try {
                                 OutputStream os = mBluetoothSocket
@@ -359,8 +359,6 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                                 String BILL = "";
                                 BILL = BILL
                                         + "================================\n";
-
-
                                 BILL = BILL + String.format("%1$-10s %2$10s", "Producer name: ", producerName);
                                 BILL = BILL + "\n";
                                 BILL = BILL + String.format("%1$-10s %2$10s", "Province: ", province);
@@ -423,9 +421,9 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     OutputStream os = mBluetoothSocket
                             .getOutputStream();
                     String BILL = "";
-
-                    BILL = BILL
-                            + "================================\n";
+                    BILL = BILL + String.format("%1$-10s %2$10s", "Transaction Number: ", randomUIID);
+                    BILL = BILL + "\n";
+                    BILL = BILL + "================================\n";
                     BILL = BILL + String.format("%1$-10s %2$10s", "Product name: ", prod);
                     BILL = BILL + "\n";
                     BILL = BILL + String.format("%1$-10s %2$10s", "Total Net Weight: ", weight);

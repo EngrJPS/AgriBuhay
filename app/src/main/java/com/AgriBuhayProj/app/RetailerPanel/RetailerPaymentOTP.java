@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.RetailerProductPanel_BottomNavigation;
+import com.AgriBuhayProj.app.ProductPanelBottomNavigation_Retailer;
 import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.SendNotification.APIService;
 import com.AgriBuhayProj.app.SendNotification.Client;
@@ -47,7 +47,7 @@ public class RetailerPaymentOTP extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retailer_payment_otp);
+        setContentView(R.layout.retailer_payment_otp);
         otp = (EditText) findViewById(R.id.OTP);
         place = (Button) findViewById(R.id.place);
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
@@ -168,7 +168,7 @@ public class RetailerPaymentOTP extends AppCompatActivity {
                                                                                                     public void onClick(DialogInterface dialog, int which) {
 
                                                                                                         dialog.dismiss();
-                                                                                                        Intent b = new Intent(RetailerPaymentOTP.this, RetailerProductPanel_BottomNavigation.class);
+                                                                                                        Intent b = new Intent(RetailerPaymentOTP.this, ProductPanelBottomNavigation_Retailer.class);
                                                                                                         b.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                                                                         startActivity(b);
                                                                                                         finish();

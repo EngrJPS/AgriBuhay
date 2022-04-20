@@ -25,18 +25,16 @@ public class ProducerHomeAdapter extends RecyclerView.Adapter<ProducerHomeAdapte
        this.mcont=context;
    }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view= LayoutInflater.from(mcont).inflate(R.layout.producer_menu_update_delete,parent,false);
+       View view= LayoutInflater.from(mcont).inflate(R.layout.producer_post_product_adapter,parent,false);
        return new ProducerHomeAdapter.ViewHolder(view);
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
        final UpdateProductModel updateProductModel = updateProductModellist.get(position);
        holder.products.setText(updateProductModel.getProducts());
        updateProductModel.getRandomUID();

@@ -110,6 +110,7 @@ public class RegistrationProducer extends AppCompatActivity {
     FirebaseAuth FAuth;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
+
     String fname;
     String lname;
     String emailid;
@@ -438,6 +439,8 @@ public class RegistrationProducer extends AppCompatActivity {
                 Area = area.getEditText().getText().toString().trim();
                 house = houseno.getEditText().getText().toString().trim();
                 Postcode = postcode.getEditText().getText().toString().trim();
+
+                String fullName = fname+" "+lname;
                 String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
 
 
@@ -446,15 +449,15 @@ public class RegistrationProducer extends AppCompatActivity {
                     final ProgressDialog mDialog = new ProgressDialog(RegistrationProducer.this);
                     mDialog.setCancelable(false);
                     mDialog.setCanceledOnTouchOutside(false);
-                    mDialog.setMessage("Registering please wait...");
+                    mDialog.setMessage("Registration in progress..");
                     mDialog.show();
 
                     FAuth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
+                                String prodID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(prodID);
                                 final HashMap<String,String> hashMap = new HashMap<>();
                                 hashMap.put("Role", role);
                                 //TODO this is the database for the chef
@@ -463,18 +466,18 @@ public class RegistrationProducer extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         HashMap<String, String> hashMappp = new HashMap<>();
-                                        hashMappp.put("Area", Area);
+                                        hashMappp.put("Province", statee);
                                         hashMappp.put("City", cityy);
-                                        hashMappp.put("ConfirmPassword", confirmpassword);
-                                        hashMappp.put("EmailID", emailid);
-                                        hashMappp.put("Fname", fname);
+                                        hashMappp.put("Baranggay", suburban);
                                         hashMappp.put("House", house);
-                                        hashMappp.put("Lname", lname);
-                                        hashMappp.put("Mobile", mobile);
-                                        hashMappp.put("Password", password);
-                                        hashMappp.put("Postcode", Postcode);
-                                        hashMappp.put("State", statee);
-                                        hashMappp.put("Suburban", suburban);
+                                        hashMappp.put("Area", Area);
+                                        hashMappp.put("PostCode", Postcode);
+                                        hashMappp.put("EmailID", emailid);
+                                        hashMappp.put("FirstName", fname);
+                                        hashMappp.put("LastName", lname);
+                                        hashMappp.put("FullName", fullName);
+                                        hashMappp.put("Mobile", phonenumber);
+
                                         firebaseDatabase.getInstance().getReference("Producer")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                 .setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -497,7 +500,7 @@ public class RegistrationProducer extends AppCompatActivity {
                                                                     dialog.dismiss();
 
 
-                                                                    Intent b = new Intent(RegistrationProducer.this, ProducerVerifyPhone.class);
+                                                                    Intent b = new Intent(RegistrationProducer.this, VerifyPhoneProducer.class);
                                                                     b.putExtra("phonenumber", phonenumber);
                                                                     startActivity(b);
 
@@ -537,7 +540,7 @@ public class RegistrationProducer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(RegistrationProducer.this, ProducerLogin.class);
+                Intent i = new Intent(RegistrationProducer.this, LoginEmailProducer.class);
                 startActivity(i);
                 finish();
             }
@@ -547,7 +550,7 @@ public class RegistrationProducer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent e = new Intent(RegistrationProducer.this, ProducerLoginPhone.class);
+                Intent e = new Intent(RegistrationProducer.this, LoginPhoneProducer.class);
                 startActivity(e);
                 finish();
             }

@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.AgriBuhayProj.app.Retailer;
+import com.AgriBuhayProj.app.Models.Retailer;
 import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.ReusableCode.ReusableCodeForAll;
 import com.AgriBuhayProj.app.SendNotification.APIService;
@@ -156,7 +156,7 @@ public class RetailerCartFragment extends Fragment {
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                                 builder.setTitle("Enter Address");
                                                 LayoutInflater inflater = getActivity().getLayoutInflater();
-                                                View view = inflater.inflate(R.layout.enter_address, null);
+                                                View view = inflater.inflate(R.layout.retailer_enter_address, null);
                                                 final EditText localaddress = (EditText) view.findViewById(R.id.LA);
                                                 final EditText addnote = (EditText) view.findViewById(R.id.addnote);
                                                 RadioGroup group = (RadioGroup) view.findViewById(R.id.grp);
@@ -168,7 +168,7 @@ public class RetailerCartFragment extends Fragment {
                                                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                                                         if (home.isChecked()) {
 
-                                                            localaddress.setText(retailer.getLocalAddress() + ", " + retailer.getSuburban());
+                                                            localaddress.setText(retailer.getLocalAddress() + ", " + retailer.getBaranggay());
                                                         } else if (other.isChecked()) {
                                                             localaddress.getText().clear();
                                                             Toast.makeText(getContext(), "check", Toast.LENGTH_SHORT).show();
@@ -200,7 +200,7 @@ public class RetailerCartFragment extends Fragment {
                                                                     hashMap.put("ProductName", cart1.getProductName());
                                                                     hashMap.put("ProductQuantity", cart1.getProductQuantity());
                                                                     hashMap.put("Price", cart1.getPrice());
-                                                                    hashMap.put("TotalPrice", cart1.getTotalprice());
+                                                                    hashMap.put("TotalPrice", cart1.getTotalPrice());
                                                                     FirebaseDatabase.getInstance().getReference("RetailerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUId).child("Products").child(ProductId).setValue(hashMap);
 
                                                                 }
@@ -212,7 +212,7 @@ public class RetailerCartFragment extends Fragment {
                                                                         HashMap<String, String> hashMap1 = new HashMap<>();
                                                                         hashMap1.put("Address", address);
                                                                         hashMap1.put("GrandTotalPrice", String.valueOf(grandtotal));
-                                                                        hashMap1.put("MobileNumber", retailer.getMobileno());
+                                                                        hashMap1.put("MobileNumber", retailer.getMobile());
                                                                         hashMap1.put("Name", retailer.getFirstName() + " " + retailer.getLastName());
                                                                         hashMap1.put("Note", Addnote);
                                                                         FirebaseDatabase.getInstance().getReference("RetailerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUId).child("OtherInformation").setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {

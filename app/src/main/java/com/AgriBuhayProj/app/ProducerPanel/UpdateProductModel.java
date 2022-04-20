@@ -2,14 +2,7 @@ package com.AgriBuhayProj.app.ProducerPanel;
 
 public class UpdateProductModel {
 
-    //TODO add phonenum here
-    String Products,RandomUID,Description,Quantity,Price,ImageURL, ProducerId, Mobile;
-
-
-    public UpdateProductModel()
-    {
-
-    }
+    String Products,RandomUID,Description,Quantity,Price,ImageURL,ProducerID,Mobile;
 
     public String getProducts() {
         return Products;
@@ -59,12 +52,12 @@ public class UpdateProductModel {
         ImageURL = imageURL;
     }
 
-    public String getProducerId() {
-        return ProducerId;
+    public String getProducerID() {
+        return ProducerID;
     }
 
-    public void setProducerId(String producerId) {
-        ProducerId = producerId;
+    public void setProducerID(String producerID) {
+        ProducerID = producerID;
     }
 
     public String getMobile() {

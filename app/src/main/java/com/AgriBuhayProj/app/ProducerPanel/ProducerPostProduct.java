@@ -20,7 +20,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.Producer;
+import com.AgriBuhayProj.app.Models.Producer;
 import com.AgriBuhayProj.app.Models.Crops;
 import com.AgriBuhayProj.app.R;
 
@@ -48,25 +48,26 @@ import java.util.UUID;
 
 public class ProducerPostProduct extends AppCompatActivity {
 
-
     ImageButton imageButton;
     Button post_product;
     Spinner Products;
     TextInputLayout desc, qty, pri, num;
-    String description, quantity, price, products, mobile;
-    Uri imageuri;
-    private Uri mCropimageuri;
+    ProgressDialog progressDialog;
+
+    Uri imageURI,cropURI;
+
     FirebaseStorage storage;
     StorageReference storageReference;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference,spinRef;
     DatabaseReference dataaa;
-    FirebaseAuth FAuth;
+    FirebaseAuth fbAuth;
     StorageReference ref;
-    String ProducerId;
-    String RandomUId;
-    String State, City, sub;
-    String Mobile;
+
+    String description,quantity,price, products, mobile;
+    String producerID,randomUID;
+    String province,city,baranggay;
+    String imageURL;
 
     List<Crops> cropList;
     ArrayAdapter<Crops> adapter;
@@ -74,21 +75,29 @@ public class ProducerPostProduct extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_producer__post_product);
+        setContentView(R.layout.producer_post_product);
+
+        progressDialog = new ProgressDialog(ProducerPostProduct.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        Products = (Spinner) findViewById(R.id.products);
-        desc = (TextInputLayout) findViewById(R.id.description);
-        qty = (TextInputLayout) findViewById(R.id.quantity);
-        pri = (TextInputLayout) findViewById(R.id.price);
-        num = (TextInputLayout) findViewById(R.id.mobile);
-        post_product = (Button) findViewById(R.id.post);
 
-        FAuth = FirebaseAuth.getInstance();
+        desc = findViewById(R.id.description);
+        qty = findViewById(R.id.quantity);
+        pri = findViewById(R.id.price);
+        num = findViewById(R.id.mobile);
+        post_product = findViewById(R.id.post);
+        imageButton = findViewById(R.id.imageupload);
+        Products = findViewById(R.id.products);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        fbAuth = FirebaseAuth.getInstance();
 
         //TODO this is the database for the FoodSupplyDetails
-        databaseReference = firebaseDatabase.getInstance().getReference("ProductSupplyDetails");
+        databaseReference = firebaseDatabase.getReference("ProductSupplyDetails");
 
         //SPINNER LIST
         //array
@@ -102,15 +111,15 @@ public class ProducerPostProduct extends AppCompatActivity {
 
         try {
             String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            dataaa = firebaseDatabase.getInstance().getReference("Producer").child(userid);
+            dataaa = firebaseDatabase.getReference("Producer").child(userid);
             dataaa.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Producer producerc = dataSnapshot.getValue(Producer.class);
-                    State = producerc.getState();
-                    City = producerc.getCity();
-                    sub = producerc.getSuburban();
-                    imageButton = (ImageButton) findViewById(R.id.imageupload);
+                    Producer producer = dataSnapshot.getValue(Producer.class);
+                    province = producer.getProvince();
+                    city = producer.getCity();
+                    baranggay = producer.getBaranggay();
+
                     imageButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -122,7 +131,6 @@ public class ProducerPostProduct extends AppCompatActivity {
                     post_product.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             products = Products.getSelectedItem().toString().trim();
                             description = desc.getEditText().getText().toString().trim();
                             quantity = qty.getEditText().getText().toString().trim();
@@ -143,7 +151,6 @@ public class ProducerPostProduct extends AppCompatActivity {
             });
 
         } catch (Exception e) {
-
             Log.e("Errrrrr: ", e.getMessage());
         }
     }
@@ -160,9 +167,7 @@ public class ProducerPostProduct extends AppCompatActivity {
         if (TextUtils.isEmpty(description)) {
             desc.setErrorEnabled(true);
             desc.setError("Description is Required");
-
         } else {
-
             desc.setError(null);
             isValiDescription = true;
         }
@@ -183,25 +188,28 @@ public class ProducerPostProduct extends AppCompatActivity {
         return isvalid;
     }
 
+    //UPLOAD IMAGE
     private void uploadImage() {
-        if (imageuri != null) {
-            final ProgressDialog progressDialog = new ProgressDialog(ProducerPostProduct.this);
+        if (imageURI != null) {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
-            RandomUId = UUID.randomUUID().toString();
-            ref = storageReference.child(RandomUId);
-            ProducerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            ref.putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
+            randomUID = UUID.randomUUID().toString();
+
+            producerID = fbAuth.getCurrentUser().getUid();
+
+            ref = storageReference.child(randomUID);
+            ref.putFile(imageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
+                            imageURL = uri.toString();
                             //Added Mobile
-                            ProductSupplyDetails info = new ProductSupplyDetails(products, quantity, price, description, String.valueOf(uri), RandomUId, ProducerId, mobile);
-                            //TODO this is the database for the FoodSupplyDetails
-                            firebaseDatabase.getInstance().getReference("ProductSupplyDetails").child(State).child(City).child(sub).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUId)
+                            ProductSupplyDetails info = new ProductSupplyDetails(products,quantity,price,description,imageURL,randomUID,producerID,mobile);
+                            //TODO Product Supply Details database
+                            firebaseDatabase.getReference("ProductSupplyDetails").child(province).child(city).child(baranggay).child(producerID).child(randomUID)
                                     .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -211,19 +219,16 @@ public class ProducerPostProduct extends AppCompatActivity {
                             });
                         }
                     });
-
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-
                     progressDialog.dismiss();
                     Toast.makeText(ProducerPostProduct.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-
                     double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                     progressDialog.setMessage("Uploaded " + (int) progress + "%");
                     progressDialog.setCanceledOnTouchOutside(false);
@@ -240,21 +245,15 @@ public class ProducerPostProduct extends AppCompatActivity {
     @Override
     @SuppressLint("NewApi")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            imageuri = CropImage.getPickImageResultUri(this, data);
-
-            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageuri)) {
-                mCropimageuri = imageuri;
+            imageURI = CropImage.getPickImageResultUri(this, data);
+            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageURI)) {
+                cropURI = imageURI;
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-
             } else {
-
-                startCropImageActivity(imageuri);
+                startCropImageActivity(imageURI);
             }
         }
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -264,23 +263,20 @@ public class ProducerPostProduct extends AppCompatActivity {
                 Toast.makeText(this, "Cropping failed" + result.getError(), Toast.LENGTH_SHORT).show();
             }
         }
-
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-
-        if (mCropimageuri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startCropImageActivity(mCropimageuri);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (cropURI != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startCropImageActivity(cropURI);
         } else {
             Toast.makeText(this, "cancelling,required permission not granted", Toast.LENGTH_SHORT).show();
         }
     }
 
+    //CROP IMAGE
     private void startCropImageActivity(Uri imageuri) {
         CropImage.activity(imageuri)
                 .setGuidelines(CropImageView.Guidelines.ON)

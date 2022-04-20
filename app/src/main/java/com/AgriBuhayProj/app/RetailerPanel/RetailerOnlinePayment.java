@@ -21,7 +21,7 @@ public class RetailerOnlinePayment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retailer_online_payment);
+        setContentView(R.layout.retailer_online_payment);
 
         Addcard = (Button) findViewById(R.id.addcard);
         cardname = (TextInputLayout) findViewById(R.id.nameoncard);

@@ -43,7 +43,7 @@ public class LogisticsPendingOrderFragmentAdapter extends RecyclerView.Adapter<L
     private List<LogisticsShipOrders1> logisticsShipOrders1List;
     private APIService apiService;
     String producerid;
-    String logisticsId = "oCpc4SwLVFbKO0fPdtp4R6bmDmI3";
+    String logisticsId = "1cn9AWGK42ew9mIkKpIoEQ2yLrt2";
 
 
     public LogisticsPendingOrderFragmentAdapter(Context context, List<LogisticsShipOrders1> logisticsShipOrders1List) {
@@ -63,8 +63,8 @@ public class LogisticsPendingOrderFragmentAdapter extends RecyclerView.Adapter<L
     public void onBindViewHolder(@NonNull LogisticsPendingOrderFragmentAdapter.ViewHolder holder, int position) {
         LogisticsShipOrders1 logisticsShipOrders1 = logisticsShipOrders1List.get(position);
         holder.Address.setText(logisticsShipOrders1.getAddress());
-        holder.mobilenumber.setText("+63" + logisticsShipOrders1.getMobileNumber());
-        holder.grandtotalprice.setText("Grand Total: ₱ " + logisticsShipOrders1.getGrandTotalPrice());
+        holder.mobilenumber.setText(logisticsShipOrders1.getMobileNumber());
+        holder.grandtotalprice.setText("total Price: ₱ " + logisticsShipOrders1.getGrandTotalPrice());
         final String randomuid = logisticsShipOrders1.getRandomUID();
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
             @Override

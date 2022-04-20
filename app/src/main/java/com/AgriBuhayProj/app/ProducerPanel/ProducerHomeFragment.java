@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.AgriBuhayProj.app.Producer;
+import com.AgriBuhayProj.app.Models.Producer;
 import com.AgriBuhayProj.app.MainMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,8 +37,7 @@ public class ProducerHomeFragment extends Fragment {
     private List<UpdateProductModel> updateProductModelList;
     private ProducerHomeAdapter adapter;
     DatabaseReference dataaa;
-    private String State, City, Sub;
-
+    private String province, city, baranggay;
 
 
     @Nullable
@@ -59,10 +58,10 @@ public class ProducerHomeFragment extends Fragment {
         dataaa.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Producer producerc = dataSnapshot.getValue(Producer.class);
-                State = producerc.getState();
-                City = producerc.getCity();
-                Sub = producerc.getSuburban();
+                Producer producer = dataSnapshot.getValue(Producer.class);
+                province = producer.getProvince();
+                city = producer.getCity();
+                baranggay = producer.getBaranggay();
                 producerProducts();
             }
 //
@@ -79,9 +78,10 @@ public class ProducerHomeFragment extends Fragment {
 
     private void producerProducts() {
 
-        String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         //TODO this is the database for the FoodSupplyDetails
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ProductSupplyDetails").child(State).child(City).child(Sub).child(useridd);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ProductSupplyDetails").child(province).child(city).child(baranggay).child(userID);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -103,7 +103,6 @@ public class ProducerHomeFragment extends Fragment {
 
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.logout, menu);
@@ -111,7 +110,6 @@ public class ProducerHomeFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int idd = item.getItemId();
         if (idd == R.id.LogOut) {
             Logout();
@@ -121,11 +119,9 @@ public class ProducerHomeFragment extends Fragment {
     }
 
     private void Logout() {
-
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), MainMenu.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
         startActivity(intent);
-
     }
 }

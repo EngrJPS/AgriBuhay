@@ -28,7 +28,7 @@ public class ProducerPreparedOrder extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_producer_prepared_order);
+        setContentView(R.layout.producer_prepared_order);
         recyclerView = findViewById(R.id.Recycle_preparedOrders);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ProducerPreparedOrder.this));

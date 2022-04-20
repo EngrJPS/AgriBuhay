@@ -26,21 +26,21 @@
                 android:id="@+id/Productname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:textColor="@color/Blacklogo"
                 android:maxWidth="300dp"
-                android:text="Pannerr tikka malasa "
-                android:textSize="25dp" />
+                android:text="Product Name"
+                android:textSize="25sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right">
+                android:gravity="end">
 
                 <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
                     android:id="@+id/elegantbtn"
                     android:layout_width="75dp"
-                  android:layout_marginRight="10dp"
+                  android:layout_marginEnd="10dp"
                     app:backgroundDrawable="@drawable/elegant_btnshape"
                     android:layout_height="25dp"
                     android:layout_gravity="bottom"
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:gravity="right"
+            android:gravity="end"
             android:orientation="horizontal">
 
 
@@ -60,15 +60,15 @@
                 android:id="@+id/pricephp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
-                android:text="Price: Rs 50"
+                android:layout_marginEnd="4dp"
+                android:text="Price:"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/qty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="end"
                 android:text="x 3"
                 android:textSize="18sp" />
@@ -79,11 +79,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="8dp"
-            android:gravity="right"
-            android:text="Total: Rs 150"
-            android:textSize="18sp"></TextView>
+            android:gravity="end"
+            android:text="Total:"
+            android:textSize="18sp"/>
 
     </LinearLayout>
 

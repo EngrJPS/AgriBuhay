@@ -26,7 +26,7 @@ public class ProducerOrderProductsAdapter extends RecyclerView.Adapter<ProducerO
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mcontext).inflate(R.layout.producer_order_products, parent, false);
+        View view = LayoutInflater.from(mcontext).inflate(R.layout.producer_order_products_adapter, parent, false);
         return new ProducerOrderProductsAdapter.ViewHolder(view);
     }
 

@@ -30,7 +30,7 @@ public class ProducerOrderProducts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_producer_order_products);
+        setContentView(R.layout.producer_order_products_list);
         recyclerViewproduct = findViewById(R.id.Recycle_orders_products);
         recyclerViewproduct.setHasFixedSize(true);
         recyclerViewproduct.setLayoutManager(new LinearLayoutManager(this));

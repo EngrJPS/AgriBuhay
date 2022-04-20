@@ -46,20 +46,20 @@ public class RetailerHomeAdapter extends RecyclerView.Adapter<RetailerHomeAdapte
         final UpdateProductModel updateProductModel = updateProductModellist.get(position);
         Glide.with(mcontext).load(updateProductModel.getImageURL()).into(holder.imageView);
         holder.Productname.setText(updateProductModel.getProducts());
-        updateProductModel.getRandomUID();
-        updateProductModel.getProducerId();
-        updateProductModel.getMobile();
+        String randomUID = updateProductModel.getRandomUID();
+        String producerID = updateProductModel.getProducerID();
+        String mobile = updateProductModel.getMobile();
         holder.price.setText("Price: ₱ " + updateProductModel.getPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent=new Intent(mcontext, OrderProduct.class);
-                intent.putExtra("ProductMenu", updateProductModel.getRandomUID());
+                intent.putExtra("ProductMenu", randomUID);
                 //TODO putExtra chef ID
-                intent.putExtra("ProducerId", updateProductModel.getProducerId());
+                intent.putExtra("ProducerId", producerID);
                 //TODO putExtra phonenum here
-                intent.putExtra("ProducerPhoneNum", updateProductModel.getMobile());
+                intent.putExtra("ProducerPhoneNum", mobile);
                 mcontext.startActivity(intent);
             }
         });

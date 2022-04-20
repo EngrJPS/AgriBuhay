@@ -20,9 +20,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.Producer;
+import com.AgriBuhayProj.app.Models.Producer;
 import com.bumptech.glide.Glide;
-import com.AgriBuhayProj.app.ProducerProductPanel_BottomNavigation;
+import com.AgriBuhayProj.app.ProductPanelBottomNavigation_Producer;
 import com.AgriBuhayProj.app.R;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,7 +74,7 @@ public class UpdateDeleteProduct extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update__delete__product);
+        setContentView(R.layout.producer_post_product_update_delete);
 
         desc = (TextInputLayout) findViewById(R.id.description);
         qty = (TextInputLayout) findViewById(R.id.quantity);
@@ -91,9 +91,9 @@ public class UpdateDeleteProduct extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Producer producerc = dataSnapshot.getValue(Producer.class);
-                State = producerc.getState();
+                State = producerc.getProvince();
                 City = producerc.getCity();
-                Sub = producerc.getSuburban();
+                Sub = producerc.getBaranggay();
 
                 Update_product.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -132,7 +132,7 @@ public class UpdateDeleteProduct extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        startActivity(new Intent(UpdateDeleteProduct.this, ProducerProductPanel_BottomNavigation.class));
+                                        startActivity(new Intent(UpdateDeleteProduct.this, ProductPanelBottomNavigation_Producer.class));
                                     }
                                 });
                                 AlertDialog alertt = product.create();

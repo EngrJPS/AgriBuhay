@@ -21,6 +21,15 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity
+            android:name=".ProducerPanel.ProducerDeliveredOrdersDetails"
+            android:exported="false" />
+        <activity
+            android:name=".ProducerPanel.ProducerDeliveredOrdersAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".ProducerPanel.ProducerDeliveredOrdersList"
+            android:exported="false" />
+        <activity
             android:name=".ProducerPanel.ProducerAddCropUpdate"
             android:exported="false"
             android:label="Update Crop" />
@@ -52,21 +61,21 @@
         <activity
             android:name=".LogisticsPanel.LogisticsPendingOrderView"
             android:label="Pending Orders" />
-        <activity android:name=".Logistics_ProductPanelBottomNavigation" />
+        <activity android:name=".ProductPanelBottomNavigation_Logistics" />
         <activity
-            android:name=".LogisticsSendOtp"
+            android:name=".SendOTPLogistics"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".LogisticsForgotPassword"
+            android:name=".ForgotPasswordLogistics"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".LogisticsLogin"
+            android:name=".LoginEmailLogistics"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".LogisticsLoginPhone"
+            android:name=".LoginPhoneLogistics"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".LogisticsVerifyPhone"
+            android:name=".VerifyPhoneLogistics"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
             android:name=".RegistrationLogistics"
@@ -121,50 +130,50 @@
             android:name=".ProducerPanel.ProducerPostProduct"
             android:label="Post Product" />
         <activity
-            android:name=".ProducerProductPanel_BottomNavigation"
+            android:name=".ProductPanelBottomNavigation_Producer"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".RetailerProductPanel_BottomNavigation"
+            android:name=".ProductPanelBottomNavigation_Retailer"
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity
             android:name=".MainMenu"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".ProducerSendOTP"
+            android:name=".SendOTPProducer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".ProducerLoginPhone"
+            android:name=".LoginPhoneProducer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".SendOTP"
+            android:name=".SendOTPRetailer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".LoginPhone"
+            android:name=".LoginPhoneRetailer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".ProducerVerifyPhone"
+            android:name=".VerifyPhoneProducer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".VerifyPhone"
+            android:name=".VerifyPhoneRetailer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".ProducerForgotPassword"
+            android:name=".ForgotPasswordProducer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".ProducerLogin"
+            android:name=".LoginEmailProducer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".ChooseOne"
+            android:name=".ChooseRole"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
             android:name=".RegistrationProducer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".ForgotPassword"
+            android:name=".ForgotPasswordRetailer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
-            android:name=".Login"
+            android:name=".LoginEmailRetailer"
             android:theme="@style/AppThemeNoActionbar" />
         <activity
             android:name=".RegistrationRetailer"

@@ -21,7 +21,7 @@ public class RetailerPhoneNumber extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retailer_phonenumber);
+        setContentView(R.layout.retailer_phonenumber);
 
         num=(EditText)findViewById(R.id.phonenumber);
         cpp=(CountryCodePicker)findViewById(R.id.Countrycode);
