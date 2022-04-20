@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.AgriBuhayProj.app.LogisiticsPanel.Delivery_ShippingOrder">
+    tools:context=".ProducerPanel.ProducerDeliveredOrdersDetails">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,16 +16,26 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ad3"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="12dp"
+                android:text="Shipping Address:"
+                android:textColor="@color/Black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/rAddress"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/OffWhite"
                 android:text="Address"
                 android:textColor="@color/Black"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -38,15 +48,41 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtTrack"
+                android:id="@+id/tNum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 android:layout_marginBottom="12dp"
                 android:gravity="center"
                 android:text="Tracking Number"
                 android:textColor="@color/Black"
                 android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="12dp"
+                android:text="Delivery Date:"
+                android:textColor="@color/Black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:gravity="center"
+                android:text="Date"
+                android:textColor="@color/Black"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -58,12 +94,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/pri"
+                    android:id="@+id/tPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
-                    android:text="Grand Total:"
+                    android:text="Total Price"
                     android:textColor="#000000"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -99,13 +135,34 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/chefname2"
+                    android:id="@+id/lName"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:layout_marginLeft="15dp"
                     android:fontFamily="@font/caudex"
                     android:gravity="center_vertical"
-                    android:text="Producer:"
+                    android:text="Logistics"
+                    android:textColor="#FA3E03"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lMobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="15dp"
+                    android:fontFamily="@font/caudex"
+                    android:gravity="center_vertical"
+                    android:text="Mobile number"
                     android:textColor="#FA3E03"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -121,20 +178,21 @@
 
 
                 <TextView
-                    android:id="@+id/ShipName1"
+                    android:id="@+id/rName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="5dp"
-                    android:text="Name"
+                    android:text="Retailer"
                     android:textAllCaps="false"
-                    android:textColor="@color/Black"
-                    android:textSize="18sp" />
+                    android:textColor="@color/darkgray"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/ShipNumber1"
+                    android:id="@+id/rMobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -145,8 +203,8 @@
                     android:text="Mobile number"
                     android:textAllCaps="false"
                     android:textColor="@color/darkgray"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
@@ -161,39 +219,19 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <ImageButton
-                android:id="@+id/imageProof"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/camerabtnshape"
-                app:srcCompat="@drawable/ic_baseline_camera_24" />
-
-                <Button
-                    android:id="@+id/call2"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/btnred"
-                    android:text="Call"
-                    android:textAlignment="center"
-                    android:textColor="@color/white" />
-
-                <Button
-                    android:id="@+id/shipped2"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/btnblueish"
-                    android:text="Shipped"
-                    android:textColor="@color/white" />
+            <ImageView
+                android:id="@+id/imProof"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:adjustViewBounds="true"
+                />
 
         </LinearLayout>
+
     </ScrollView>
 
 </RelativeLayout>

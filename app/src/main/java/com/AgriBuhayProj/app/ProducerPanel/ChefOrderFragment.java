@@ -14,15 +14,16 @@ import androidx.fragment.app.Fragment;
 import com.AgriBuhayProj.app.R;
 public class ChefOrderFragment extends Fragment {
 
-    TextView OrdertobePrepare, Preparedorders;
+    TextView OrdertobePrepare, Preparedorders, deliveredOrders;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setTitle("Orders");
         View v = inflater.inflate(R.layout.fragment_chef_order, null);
-        OrdertobePrepare=(TextView)v.findViewById(R.id.ordertobe);
-        Preparedorders=(TextView)v.findViewById(R.id.prepareorder);
+        OrdertobePrepare = v.findViewById(R.id.ordertobe);
+        Preparedorders = v.findViewById(R.id.prepareorder);
+        deliveredOrders = v.findViewById(R.id.delivered);
 
         OrdertobePrepare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +41,13 @@ public class ChefOrderFragment extends Fragment {
             }
         });
 
+        deliveredOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),ProducerDeliveredOrdersList.class);
+                startActivity(intent);
+            }
+        });
 
         return v;
     }

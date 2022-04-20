@@ -370,8 +370,6 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                                 String BILL = "";
                                 BILL = BILL
                                         + "================================\n";
-
-
                                 BILL = BILL + String.format("%1$-10s %2$10s", "Producer name: ", producerName);
                                 BILL = BILL + "\n";
                                 BILL = BILL + String.format("%1$-10s %2$10s", "Province: ", province);
@@ -434,9 +432,9 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     OutputStream os = mBluetoothSocket
                             .getOutputStream();
                     String BILL = "";
-
-                    BILL = BILL
-                            + "================================\n";
+                    BILL = BILL + String.format("%1$-10s %2$10s", "Transaction Number: ", randomUIID);
+                    BILL = BILL + "\n";
+                    BILL = BILL + "================================\n";
                     BILL = BILL + String.format("%1$-10s %2$10s", "Product name: ", prod);
                     BILL = BILL + "\n";
                     BILL = BILL + String.format("%1$-10s %2$10s", "Total Net Weight: ", weight);

@@ -141,15 +141,15 @@ public class ChefOrdertobePrepareView extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     //TODO this is the database for the CustomerFinalOrders
-                                                    FirebaseDatabase.getInstance().getReference("CustomerFinalOrders").child(userid).child(RandomUID).child("OtherInformation").child("Status").setValue("Chef is preparing your order...").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    FirebaseDatabase.getInstance().getReference("CustomerFinalOrders").child(userid).child(RandomUID).child("OtherInformation").child("Status").setValue("Producer is preparing your order...").addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             //TODO this is the database for the ChefWaitingOrders
-                                                            FirebaseDatabase.getInstance().getReference("CheWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Dishes").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                            //FirebaseDatabase.getInstance().getReference("CheWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Dishes").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                               //@Override
+                                                                //public void onComplete(@NonNull Task<Void> task) {
                                                                     //TODO this is the database for the ChefWaitingOrders
-                                                                    FirebaseDatabase.getInstance().getReference("ChefWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    FirebaseDatabase.getInstance().getReference("ChefWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                         @Override
                                                                         public void onSuccess(Void aVoid) {
                                                                             //TODO this is the database for the Tokens
@@ -186,8 +186,8 @@ public class ChefOrdertobePrepareView extends AppCompatActivity {
 
                                                                         }
                                                                     });
-                                                                }
-                                                            });
+                                                               // }
+                                                            //});
                                                         }
                                                     });
                                                 }

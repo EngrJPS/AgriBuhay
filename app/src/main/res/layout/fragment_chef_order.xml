@@ -45,5 +45,26 @@
         android:layout_below="@id/prepareorder"
         android:background="@color/lightgray" />
 
+    <TextView
+        android:id="@+id/delivered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hr1"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:drawableStart="@drawable/ic_delivered_orders_black"
+        android:drawablePadding="8dp"
+        android:text="Delivered Orders"
+        android:textColor="@color/Blacklogo"
+        android:textSize="21dp" />
+
+    <TableRow
+        android:id="@+id/hr2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/delivered"
+        android:background="@color/lightgray" />
+
 
 </RelativeLayout>

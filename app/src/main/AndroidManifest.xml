@@ -21,6 +21,15 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity
+            android:name=".ProducerPanel.ProducerDeliveredOrdersDetails"
+            android:exported="false" />
+        <activity
+            android:name=".ProducerPanel.ProducerDeliveredOrdersAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".ProducerPanel.ProducerDeliveredOrdersList"
+            android:exported="false" />
+        <activity
             android:name=".ProducerPanel.ProducerAddCropUpdate"
             android:exported="false"
             android:label="Update Crop" />
