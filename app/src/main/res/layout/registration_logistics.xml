@@ -20,7 +20,7 @@
             android:id="@+id/regPic"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:src="@drawable/top_prod_reg"
+            android:src="@drawable/logistics_reg_back"
             android:scaleType="centerCrop"/>
 
         <TextView

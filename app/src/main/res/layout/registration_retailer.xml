@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/top_prod_reg" />
+            android:src="@drawable/retailer_register_back" />
 
         <TextView
             android:layout_width="wrap_content"

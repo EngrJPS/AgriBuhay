@@ -13,9 +13,10 @@
 <!--    change this image for the retailer login-->
     <ImageView
         android:layout_width="500dp"
-        android:layout_height="300dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="57dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/top_image"
+        android:src="@drawable/retailer_login_back1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -101,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="end"
-            android:layout_marginLeft="220dp"
+            android:layout_marginLeft="190dp"
             android:text="Forgot Password?"
             android:textColor="@color/Black"
             android:textSize="16dp" />

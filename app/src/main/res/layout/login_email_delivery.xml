@@ -14,9 +14,10 @@
 
     <ImageView
         android:layout_width="500dp"
-        android:layout_height="300dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="57dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/top_image"
+        android:src="@drawable/logistics_login_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
