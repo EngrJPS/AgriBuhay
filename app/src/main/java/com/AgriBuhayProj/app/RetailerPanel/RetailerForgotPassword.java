@@ -27,7 +27,7 @@ public class RetailerForgotPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retailer_forgotpassword);
+        setContentView(R.layout.retailer_forgot_password);
 
         emaillid=(TextInputLayout)findViewById(R.id.email);
         Reset=(Button)findViewById(R.id.reset);

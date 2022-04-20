@@ -1,28 +1,35 @@
 package com.AgriBuhayProj.app.Models;
 
 public class Logistics {
-    private String Area,City,EmailID,Fname,House,Lname,Mobile,State,Suburban;
+    private String Province,City,Baranggay,House,Area,PostCode,FirstName,LastName,FullName,EmailID,Mobile;
 
     public Logistics() {
     }
 
-    public Logistics(String area, String city, String emailID, String fname, String house, String lname, String mobile, String state, String suburban) {
-        Area = area;
+    public Logistics(String province, String baranggay, String city, String area, String firstName, String lastName, String fullName, String emailID, String mobile) {
+        Province = province;
+        Baranggay = baranggay;
         City = city;
+        Area = area;
+        FirstName = firstName;
+        LastName = lastName;
+        FullName = fullName;
         EmailID = emailID;
-        Fname = fname;
-        House = house;
-        Lname = lname;
         Mobile = mobile;
-        State = state;
-        Suburban = suburban;
     }
 
-    public String getArea() {
-        return Area;
+    public String getProvince() {
+        return Province;
     }
-    public void setArea(String area) {
-        Area = area;
+    public void setProvince(String province) {
+        Province = province;
+    }
+
+    public String getBaranggay() {
+        return Baranggay;
+    }
+    public void setBaranggay(String baranggay) {
+        Baranggay = baranggay;
     }
 
     public String getCity() {
@@ -32,6 +39,34 @@ public class Logistics {
         City = city;
     }
 
+    public String getArea() {
+        return Area;
+    }
+    public void setArea(String area) {
+        Area = area;
+    }
+
+    public String getFirstName() {
+        return FirstName;
+    }
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+    public void setLastName(String lastName) {
+        LastName = lastName;
+    }
+
+    public String getFullName() {
+        return FullName;
+    }
+    public void setFullName(String fullName) {
+        FullName = fullName;
+    }
+
     public String getEmailID() {
         return EmailID;
     }
@@ -39,45 +74,10 @@ public class Logistics {
         EmailID = emailID;
     }
 
-    public String getFname() {
-        return Fname;
-    }
-    public void setFname(String fname) {
-        Fname = fname;
-    }
-
-    public String getHouse() {
-        return House;
-    }
-    public void setHouse(String house) {
-        House = house;
-    }
-
-    public String getLname() {
-        return Lname;
-    }
-    public void setLname(String lname) {
-        Lname = lname;
-    }
-
     public String getMobile() {
         return Mobile;
     }
     public void setMobile(String mobile) {
         Mobile = mobile;
-    }
-
-    public String getState() {
-        return State;
-    }
-    public void setState(String state) {
-        State = state;
-    }
-
-    public String getSuburban() {
-        return Suburban;
-    }
-    public void setSuburban(String suburban) {
-        Suburban = suburban;
     }
 }

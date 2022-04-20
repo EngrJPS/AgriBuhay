@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.RetailerPanel;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,14 +37,15 @@ public class RetailerCartAdapter extends RecyclerView.Adapter<RetailerCartAdapte
         return new RetailerCartAdapter.ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Cart cart = cartModellist.get(position);
         holder.productname.setText(cart.getProductName());
         holder.PricePhp.setText("Price: ₱ " + cart.getPrice());
         holder.Qty.setText("× " + cart.getProductQuantity());
-        holder.Totalphp.setText("Total: ₱ " + cart.getTotalprice());
-        total += Integer.parseInt(cart.getTotalprice());
+        holder.Totalphp.setText("Total: ₱ " + cart.getTotalPrice());
+        total += Integer.parseInt(cart.getTotalPrice());
         holder.elegantNumberButton.setNumber(cart.getProductQuantity());
         final int productprice = Integer.parseInt(cart.getPrice());
 
@@ -58,9 +60,9 @@ public class RetailerCartAdapter extends RecyclerView.Adapter<RetailerCartAdapte
                     hashMap.put("ProductName", cart.getProductName());
                     hashMap.put("ProductQuantity", String.valueOf(num));
                     hashMap.put("Price", String.valueOf(productprice));
-                    hashMap.put("Totalprice", String.valueOf(totalprice));
+                    hashMap.put("TotalPrice", String.valueOf(totalprice));
                     hashMap.put("ProducerId",cart.getProducerId());
-                    //TODO put ChefPhoneNum
+                    hashMap.put("Mobile",cart.getMobile());
 
                     FirebaseDatabase.getInstance().getReference("Cart").child("CartItems").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(cart.getProductID()).setValue(hashMap);
                 } else {

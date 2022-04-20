@@ -29,12 +29,12 @@ public class LogisticsPendingOrderView extends AppCompatActivity {
     String RandomUID;
     TextView grandtotal, address, name, number, ProducerName;
     LinearLayout l1;
-    String logisticsId = "oCpc4SwLVFbKO0fPdtp4R6bmDmI3";
+    String logisticsId = "1cn9AWGK42ew9mIkKpIoEQ2yLrt2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_logistics_pending_order_view);
+        setContentView(R.layout.logistics_pending_order_view);
         recyclerViewproduct = findViewById(R.id.delivieworder);
         recyclerViewproduct.setHasFixedSize(true);
         recyclerViewproduct.setLayoutManager(new LinearLayoutManager(LogisticsPendingOrderView.this));
@@ -84,9 +84,8 @@ public class LogisticsPendingOrderView extends AppCompatActivity {
                 grandtotal.setText("₱ " + logisticsShipOrders1.getGrandTotalPrice());
                 address.setText(logisticsShipOrders1.getAddress());
                 name.setText(logisticsShipOrders1.getName());
-                number.setText("+63" + logisticsShipOrders1.getMobileNumber());
-                ProducerName.setText("Producer "+ logisticsShipOrders1.getProducerName());
-
+                number.setText(logisticsShipOrders1.getMobileNumber());
+                ProducerName.setText("Producer: "+ logisticsShipOrders1.getProducerName());
             }
 
             @Override

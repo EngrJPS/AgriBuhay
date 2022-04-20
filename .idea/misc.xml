@@ -151,10 +151,17 @@
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_food_panel__bottom_navigation.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_main_menu.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_order_dish.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_order_product.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_payable_orders.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_pending_orders.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_producer_order_products.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_producer_order_tobe_prepared.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_producer_ordertobe_prepare_view.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_retailer_password.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_retailer_phone_send_otp.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_sendotp.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_update__delete__dish.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_update__delete__product.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_verify_phone.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/cart_placeorder.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/chef_finalorder.xml" value="0.2598958333333333" />
@@ -172,6 +179,7 @@
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/delivery_shiporders.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/devices.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/enter_address.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/forgot_password_retailer.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_chef_home.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_chef_order.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_chef_pendingorders.xml" value="0.2598958333333333" />
@@ -179,9 +187,21 @@
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_customerhome.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_customerorder.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_customertrack.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_logisticspendingorder.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_logisticsshiporder.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_producer_home.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_producer_order.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/login_phone_retailer.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_pending_order_view.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_pendingorder.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_pendingorders.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_ship_order_view.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_shiporders.xml" value="0.25" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_shipping_order.xml" value="0.33" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_shipping_order_proof.xml" value="0.33" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/main_printer.xml" value="0.33" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/pending_order_dishes.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/pending_order_products.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop.xml" value="0.33" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop_adapter.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_add_crop_list.xml" value="0.33" />
@@ -189,12 +209,30 @@
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_delivered_orders_adapter.xml" value="0.33" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_delivered_orders_details.xml" value="0.33" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_delivered_orders_list.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_menu_update_delete.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_order_products.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_order_products_adapter.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_order_to_be_prepared_view_measurement.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_orders.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_ordertobe_prepare_view.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_ordertobeprepared.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_ordertobeprepared_view.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_post_product.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_post_product_update_delete.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_prepared_order.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_prepared_order_view.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_delivery.xml" value="0.5" />
-        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_producer.xml" value="0.33" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_logistics.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_producer.xml" value="0.1" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_retailer.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/retailer_forgot_password.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/send_otp_logistics.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/send_otp_producer.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/send_otp_retailer.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/shiporderview.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/verify_phone_logistics.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/verify_phone_producer.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/verify_phone_retailer.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/menu/add_crop.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/menu/delivery_bottom_navigation.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/menu/logout.xml" value="0.2598958333333333" />

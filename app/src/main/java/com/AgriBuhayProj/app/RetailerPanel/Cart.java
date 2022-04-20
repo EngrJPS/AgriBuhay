@@ -3,16 +3,7 @@ package com.AgriBuhayProj.app.RetailerPanel;
 public class Cart {
 
     //TODO add mobile number in this model
-    private String ProducerId, ProductID, ProductName, ProductQuantity,Price,Totalprice;
-
-    public Cart(String producerId, String productID, String productName, String productQuantity, String price, String totalprice) {
-        ProducerId = producerId;
-        ProductID = productID;
-        ProductName = productName;
-        ProductQuantity = productQuantity;
-        Price = price;
-        Totalprice = totalprice;
-    }
+    private String ProducerId,ProductID,ProductName,ProductQuantity,Price,TotalPrice,Mobile;
 
     public Cart() {
     }
@@ -57,11 +48,19 @@ public class Cart {
         Price = price;
     }
 
-    public String getTotalprice() {
-        return Totalprice;
+    public String getTotalPrice() {
+        return TotalPrice;
     }
 
-    public void setTotalprice(String totalprice) {
-        Totalprice = totalprice;
+    public void setTotalPrice(String totalPrice) {
+        TotalPrice = totalPrice;
+    }
+
+    public String getMobile() {
+        return Mobile;
+    }
+
+    public void setMobile(String mobile) {
+        Mobile = mobile;
     }
 }

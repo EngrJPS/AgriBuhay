@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.Retailer;
+import com.AgriBuhayProj.app.Models.Retailer;
 import com.AgriBuhayProj.app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,7 +41,7 @@ public class RetailerPhoneSendOTP extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retailer_phone_send_otp);
+        setContentView(R.layout.retailer_phone_send_otp);
 
         phonenumber = getIntent().getStringExtra("phonenumber").trim();
         sendverificationcode(phonenumber);
@@ -60,7 +60,7 @@ public class RetailerPhoneSendOTP extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 Retailer retailer = dataSnapshot.getValue(Retailer.class);
-                OldNumber= retailer.getMobileno();
+                OldNumber= retailer.getMobile();
                 verify.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

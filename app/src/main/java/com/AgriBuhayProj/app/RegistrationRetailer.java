@@ -438,6 +438,9 @@ public class RegistrationRetailer extends AppCompatActivity {
                     confirmpass = cmpass.getEditText().getText().toString().trim();
                     mobileno = Mobileno.getEditText().getText().toString().trim();
 
+                    String fullName = firstname+" "+lastname;
+                    String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobileno;
+
                     if (isValid()) {
 
                         mDialog.show();
@@ -455,16 +458,15 @@ public class RegistrationRetailer extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             HashMap<String, String> hashMappp = new HashMap<>();
+                                            hashMappp.put("Province", statee);
                                             hashMappp.put("City", cityy);
-                                            hashMappp.put("ConfirmPassword", confirmpass);
+                                            hashMappp.put("Baranggay", suburban);
+                                            hashMappp.put("LocalAddress", Localaddress);
                                             hashMappp.put("EmailID", email);
                                             hashMappp.put("FirstName", firstname);
                                             hashMappp.put("LastName", lastname);
-                                            hashMappp.put("Mobileno", mobileno);
-                                            hashMappp.put("Password", password);
-                                            hashMappp.put("LocalAddress", Localaddress);
-                                            hashMappp.put("State", statee);
-                                            hashMappp.put("Suburban", suburban);
+                                            hashMappp.put("FullName", lastname);
+                                            hashMappp.put("Mobile", phonenumber);
 
                                             //TODO change the reference name to Retailer
                                             firebaseDatabase.getInstance().getReference("Retailer")
@@ -487,8 +489,7 @@ public class RegistrationRetailer extends AppCompatActivity {
                                                                     public void onClick(DialogInterface dialog, int which) {
 
                                                                         dialog.dismiss();
-                                                                        String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobileno;
-                                                                        Intent b = new Intent(RegistrationRetailer.this, VerifyPhone.class);
+                                                                        Intent b = new Intent(RegistrationRetailer.this, VerifyPhoneRetailer.class);
                                                                         b.putExtra("phonenumber", phonenumber);
                                                                         startActivity(b);
 
@@ -530,7 +531,7 @@ public class RegistrationRetailer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(RegistrationRetailer.this, Login.class);
+                Intent i = new Intent(RegistrationRetailer.this, LoginEmailRetailer.class);
                 startActivity(i);
                 finish();
             }
@@ -540,7 +541,7 @@ public class RegistrationRetailer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent e = new Intent(RegistrationRetailer.this, LoginPhone.class);
+                Intent e = new Intent(RegistrationRetailer.this, LoginPhoneRetailer.class);
                 startActivity(e);
                 finish();
             }

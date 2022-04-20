@@ -34,7 +34,7 @@ public class LogisticsShipOrderView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_logistics_ship_order_view);
+        setContentView(R.layout.logistics_ship_order_view);
         recyclerViewproduct = findViewById(R.id.delishipvieworder);
         recyclerViewproduct.setHasFixedSize(true);
         recyclerViewproduct.setLayoutManager(new LinearLayoutManager(LogisticsShipOrderView.this));
@@ -85,7 +85,7 @@ public class LogisticsShipOrderView extends AppCompatActivity {
                 grandtotal.setText("₱ " + logisticsShipFinalOrders1.getGrandTotalPrice());
                 address.setText(logisticsShipFinalOrders1.getAddress());
                 name.setText(logisticsShipFinalOrders1.getName());
-                number.setText("+63" + logisticsShipFinalOrders1.getMobileNumber());
+                number.setText(logisticsShipFinalOrders1.getMobileNumber());
                 ProducerName.setText("Producer " + logisticsShipFinalOrders1.getProducerName());
 
             }

@@ -19,12 +19,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.Producer;
+import com.AgriBuhayProj.app.Models.Producer;
 import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.AgriBuhayProj.app.ProducerPanel.UpdateProductModel;
-import com.AgriBuhayProj.app.Retailer;
-import com.AgriBuhayProj.app.RetailerProductPanel_BottomNavigation;
+import com.AgriBuhayProj.app.Models.Retailer;
+import com.AgriBuhayProj.app.ProductPanelBottomNavigation_Retailer;
 
 import com.AgriBuhayProj.app.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -56,7 +56,6 @@ public class OrderProduct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_product);
 
-
         Productname = (TextView) findViewById(R.id.product_namee);
         ProducerName = (TextView) findViewById(R.id.producer_name);
         ProducerLocation = (TextView) findViewById(R.id.producer_location);
@@ -67,15 +66,17 @@ public class OrderProduct extends AppCompatActivity {
         additem = (ElegantNumberButton) findViewById(R.id.number_btn);
         textMessage = (Button) findViewById(R.id.sendText);
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
         final String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         dataaa = FirebaseDatabase.getInstance().getReference("Retailer").child(userid);
         dataaa.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Retailer ret = dataSnapshot.getValue(Retailer.class);
-                State = ret.getState();
+                State = ret.getProvince();
                 City = ret.getCity();
-                Sub = ret.getSuburban();
+                Sub = ret.getBaranggay();
 
                 RandomId = getIntent().getStringExtra("ProductMenu");
                 //TODO ChefID getStringExtra
@@ -104,9 +105,9 @@ public class OrderProduct extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Producer producer = dataSnapshot.getValue(Producer.class);
 
-                                String name = "<b>" + "Producer Name: " + "</b>" + producer.getFname() + " " + producer.getLname();
+                                String name = "<b>" + "Producer Name: " + "</b>" + producer.getFullName();
                                 ProducerName.setText(Html.fromHtml(name));
-                                String loc = "<b>" + "Location: " + "</b>" + producer.getSuburban();
+                                String loc = "<b>" + "Location: " + "</b>" + producer.getBaranggay();
                                 ProducerLocation.setText(Html.fromHtml(loc));
                                 retID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 databaseReference = FirebaseDatabase.getInstance().getReference("Cart").child("CartItems").child(retID).child(RandomId);
@@ -154,14 +155,14 @@ public class OrderProduct extends AppCompatActivity {
                                     }
                                     int i=0;
                                     for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                                        i++;
+                                    i++;
                                         if(i==totalcount){
                                             cart1= snapshot.getValue(Cart.class);
                                         }
                                     }
 
                                     if (ProducerID.equals(cart1.getProducerId())) {
-                                        data = FirebaseDatabase.getInstance().getReference("ProductSupplyDetails").child(State).child(City).child(Sub).child(ProducerID).child(RandomId);
+                                        data = firebaseDatabase.getReference("ProductSupplyDetails").child(State).child(City).child(Sub).child(ProducerID).child(RandomId);
                                         data.addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -177,12 +178,12 @@ public class OrderProduct extends AppCompatActivity {
                                                     hashMap.put("ProductID", RandomId);
                                                     hashMap.put("ProductQuantity", String.valueOf(num));
                                                     hashMap.put("Price", String.valueOf(productprice));
-                                                    hashMap.put("Totalprice", String.valueOf(totalprice));
+                                                    hashMap.put("TotalPrice", String.valueOf(totalprice));
                                                     hashMap.put("ProducerId", ProducerID);
                                                     hashMap.put("ProducerPhone", ProducerMobileNum);
                                                     //TODO Add Mobile number here
                                                     retID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                                    reference = FirebaseDatabase.getInstance().getReference("Cart").child("CartItems").child(retID).child(RandomId);
+                                                    reference = firebaseDatabase.getReference("Cart").child("CartItems").child(retID).child(RandomId);
                                                     reference.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
@@ -191,7 +192,6 @@ public class OrderProduct extends AppCompatActivity {
                                                     });
 
                                                 } else {
-
                                                     firebaseDatabase.getInstance().getReference("Cart").child(retID).child(RandomId).removeValue();
                                                 }
                                             }
@@ -210,19 +210,17 @@ public class OrderProduct extends AppCompatActivity {
                                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 dialog.dismiss();
-                                                Intent intent = new Intent(OrderProduct.this, RetailerProductPanel_BottomNavigation.class);
+                                                Intent intent = new Intent(OrderProduct.this, ProductPanelBottomNavigation_Retailer.class);
                                                 startActivity(intent);
                                                 finish();
-
                                             }
                                         });
                                         AlertDialog alert = builder.create();
                                         alert.show();
                                     }
                                 } else {
-                                data = FirebaseDatabase.getInstance().getReference("ProductSupplyDetails").child(State).child(City).child(Sub).child(ProducerID).child(RandomId);
+                                data = firebaseDatabase.getReference("ProductSupplyDetails").child(State).child(City).child(Sub).child(ProducerID).child(RandomId);
                                 data.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -237,23 +235,21 @@ public class OrderProduct extends AppCompatActivity {
                                             hashMap.put("ProductID", RandomId);
                                             hashMap.put("ProductQuantity", String.valueOf(num));
                                             hashMap.put("Price", String.valueOf(productprice));
-                                            hashMap.put("Totalprice", String.valueOf(totalprice));
+                                            hashMap.put("TotalPrice", String.valueOf(totalprice));
                                             hashMap.put("ProducerId", ProducerID);
-                                            hashMap.put("ProducerPhone", ProducerMobileNum);
+                                            hashMap.put("Mobile", ProducerMobileNum);
                                             //TODO Add Mobile number here
                                             retID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                            reference = FirebaseDatabase.getInstance().getReference("Cart").child("CartItems").child(retID).child(RandomId);
+                                            reference = firebaseDatabase.getReference("Cart").child("CartItems").child(retID).child(RandomId);
                                             reference.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-
                                                     Toast.makeText(OrderProduct.this, "Added to cart", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
 
                                         } else {
-
-                                            firebaseDatabase.getInstance().getReference("Cart").child(retID).child(RandomId).removeValue();
+                                            firebaseDatabase.getReference("Cart").child(retID).child(RandomId).removeValue();
                                         }
                                     }
 
@@ -295,7 +291,7 @@ public class OrderProduct extends AppCompatActivity {
     private void sendSMS() {
         try{
             SmsManager smgr = SmsManager.getDefault();
-            smgr.sendTextMessage(ProducerMobileNum, null, "A customer has sent you an order please check your application", null,null);
+            smgr.sendTextMessage(ProducerMobileNum, null, "A customer has sent you an order", null,null);
             Toast.makeText(getApplicationContext(), "The message sent successfully", Toast.LENGTH_SHORT).show();
         }catch(Exception ex){
             Toast.makeText(getApplicationContext(), "SMS Failed to send. Please try again", Toast.LENGTH_SHORT).show();

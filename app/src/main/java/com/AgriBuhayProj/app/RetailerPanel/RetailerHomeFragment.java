@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.AgriBuhayProj.app.ProducerPanel.UpdateProductModel;
-import com.AgriBuhayProj.app.Retailer;
+import com.AgriBuhayProj.app.Models.Retailer;
 
 import com.AgriBuhayProj.app.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +38,7 @@ public class RetailerHomeFragment extends Fragment implements SwipeRefreshLayout
     RecyclerView recyclerView;
     private List<UpdateProductModel> updateProductModelList;
     private RetailerHomeAdapter adapter;
-    String State, City, Sub;
+    String province, city, baranggay;
     DatabaseReference dataaa, databaseReference;
     SwipeRefreshLayout swipeRefreshLayout;
     SearchView searchView;
@@ -71,9 +71,9 @@ public class RetailerHomeFragment extends Fragment implements SwipeRefreshLayout
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Retailer ret = dataSnapshot.getValue(Retailer.class);
-                        State = ret.getState();
-                        City = ret.getCity();
-                        Sub = ret.getSuburban();
+                        province = ret.getProvince();
+                        city = ret.getCity();
+                        baranggay = ret.getBaranggay();
                         retailermenu();
                     }
 
@@ -91,13 +91,12 @@ public class RetailerHomeFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-
         retailermenu();
     }
 
     private void retailermenu() {
         swipeRefreshLayout.setRefreshing(true);
-        databaseReference = FirebaseDatabase.getInstance().getReference("ProductSupplyDetails").child(State).child(City).child(Sub);
+        databaseReference = FirebaseDatabase.getInstance().getReference("ProductSupplyDetails").child(province).child(city).child(baranggay);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -111,7 +110,6 @@ public class RetailerHomeFragment extends Fragment implements SwipeRefreshLayout
                 adapter = new RetailerHomeAdapter(getContext(), updateProductModelList);
                 recyclerView.setAdapter(adapter);
                 swipeRefreshLayout.setRefreshing(false);
-
             }
 
             @Override

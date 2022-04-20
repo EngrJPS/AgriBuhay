@@ -93,8 +93,8 @@ public class ProducerDeliveredOrdersDetails extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Logistics logistics = snapshot.getValue(Logistics.class);
-                        String firstName = logistics.getFname();
-                        String lastName = logistics.getLname();
+                        String firstName = logistics.getFirstName();
+                        String lastName = logistics.getLastName();
                         String logisticsName = firstName+" "+lastName;
                         logName.setText("Courier: "+logisticsName);
                         logMobile.setText("Mobile Number: +63"+logistics.getMobile());

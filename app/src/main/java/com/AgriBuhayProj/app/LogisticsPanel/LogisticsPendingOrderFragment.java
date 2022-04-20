@@ -36,7 +36,7 @@ public class LogisticsPendingOrderFragment extends Fragment {
     private LogisticsPendingOrderFragmentAdapter adapter;
     private DatabaseReference databaseReference;
     private SwipeRefreshLayout swipeRefreshLayout;
-    String logisticsId = "oCpc4SwLVFbKO0fPdtp4R6bmDmI3";
+    String logisticsId = "1cn9AWGK42ew9mIkKpIoEQ2yLrt2";
 
     @Nullable
     @Override

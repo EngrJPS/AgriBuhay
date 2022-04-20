@@ -4,16 +4,6 @@ public class RetailerPendingOrders {
 
     private String ProducerId, ProductID, ProductName, ProductQuantity, Price, TotalPrice;
 
-    public RetailerPendingOrders(String productID, String productName, String productQuantity, String price, String totalPrice, String producerId) {
-        ProducerId = producerId;
-        ProductID = productID;
-        ProductName = productName;
-        ProductQuantity = productQuantity;
-        Price = price;
-        TotalPrice = totalPrice;
-
-    }
-
     public RetailerPendingOrders() {
 
     }

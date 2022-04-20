@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.AgriBuhayProj.app.Retailer;
+import com.AgriBuhayProj.app.Models.Retailer;
 import com.AgriBuhayProj.app.MainMenu;
 import com.AgriBuhayProj.app.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -118,9 +118,9 @@ public class RetailerProfileFragment extends Fragment {
                 firstname.setText(retailer.getFirstName());
                 lastname.setText(retailer.getLastName());
                 address.setText(retailer.getLocalAddress());
-                mobileno.setText(retailer.getMobileno());
+                mobileno.setText(retailer.getMobile());
                 Email.setText(retailer.getEmailID());
-                State.setSelection(getIndexByString(State, retailer.getState()));
+                State.setSelection(getIndexByString(State, retailer.getProvince()));
                 State.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -249,7 +249,7 @@ public class RetailerProfileFragment extends Fragment {
 
                             Suburban.setAdapter(arrayAdapter);
                         }
-                        Suburban.setSelection(getIndexByString(Suburban, retailer.getSuburban()));
+                        Suburban.setSelection(getIndexByString(Suburban, retailer.getBaranggay()));
                     }
 
                     @Override
@@ -296,11 +296,8 @@ public class RetailerProfileFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Retailer retailer = dataSnapshot.getValue(Retailer.class);
 
-
-                        confirmpass = retailer.getConfirmPassword();
                         email = retailer.getEmailID();
-                        passwordd = retailer.getPassword();
-                        long mobilenoo = Long.parseLong(retailer.getMobileno());
+                        long mobilenoo = Long.parseLong(retailer.getMobile());
 
                         String Fname = firstname.getText().toString().trim();
                         String Lname = lastname.getText().toString().trim();

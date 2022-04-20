@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.Retailer;
+import com.AgriBuhayProj.app.Models.Retailer;
 import com.AgriBuhayProj.app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,7 +39,7 @@ public class RetailerPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retailer_password);
+        setContentView(R.layout.retailer_password);
 
         current = (TextInputLayout) findViewById(R.id.current_pwd);
         neww = (TextInputLayout) findViewById(R.id.new_pwd);

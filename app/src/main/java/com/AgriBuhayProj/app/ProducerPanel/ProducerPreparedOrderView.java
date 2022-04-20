@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.AgriBuhayProj.app.Producer;
+import com.AgriBuhayProj.app.Models.Producer;
 
 import com.AgriBuhayProj.app.Printer.ProducerPrintOrder;
 import com.AgriBuhayProj.app.R;
@@ -61,12 +62,12 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
 
     DatabaseReference reference;
 
-    String logisticsId = "oCpc4SwLVFbKO0fPdtp4R6bmDmI3";
+    String logisticsId = "1cn9AWGK42ew9mIkKpIoEQ2yLrt2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_producer_prepared_order_view);
+        setContentView(R.layout.producer_prepared_order_view);
         //XML
         recyclerViewproduct = findViewById(R.id.Recycle_viewOrder);
         grandtotal = findViewById(R.id.Gtotal);
@@ -111,7 +112,6 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                     Prepared.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             progressDialog.setMessage("Please wait...");
                             progressDialog.show();
                             //TODO this is the database for the Chef
@@ -120,7 +120,7 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     final Producer producer = dataSnapshot.getValue(Producer.class);
-                                    final String ProducerName = producer.getFname() + " " + producer.getLname();
+                                    final String ProducerName = producer.getFirstName() + " " + producer.getLastName();
                                     //TODO this is the database for the ChefFinalOrders
                                     DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
                                     databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -266,13 +266,14 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
         //TODO this is the database for the ChefFinalOrders
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ProducerFinalOrders1 producerFinalOrders1 = dataSnapshot.getValue(ProducerFinalOrders1.class);
                 grandtotal.setText("₱ " + producerFinalOrders1.getGrandTotalPrice());
                 address.setText(producerFinalOrders1.getAddress());
                 name.setText(producerFinalOrders1.getName());
-                number.setText("+63" + producerFinalOrders1.getMobileNumber());
+                number.setText(producerFinalOrders1.getMobileNumber());
 
             }
 

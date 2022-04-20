@@ -56,8 +56,8 @@ public class LogisticsShipOrderFragmentAdapter extends RecyclerView.Adapter<Logi
 
         final LogisticsShipFinalOrders1 logisticsShipFinalOrders1 = logisticsShipFinalOrders1List.get(position);
         holder.Address.setText(logisticsShipFinalOrders1.getAddress());
-        holder.grandtotalprice.setText("Grand Total: ₱ " + logisticsShipFinalOrders1.getGrandTotalPrice());
-        holder.mobilenumber.setText("+63" + logisticsShipFinalOrders1.getMobileNumber());
+        holder.grandtotalprice.setText("Total PRice: ₱ " + logisticsShipFinalOrders1.getGrandTotalPrice());
+        holder.mobilenumber.setText(logisticsShipFinalOrders1.getMobileNumber());
         final String random = logisticsShipFinalOrders1.getRandomUID();
         final String userid = logisticsShipFinalOrders1.getUserId();
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {

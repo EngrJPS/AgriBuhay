@@ -432,9 +432,10 @@ public class RegistrationLogistics extends AppCompatActivity {
                 house = houseno.getEditText().getText().toString().trim();
                 Postcode = postcode.getEditText().getText().toString().trim();
 
+                String fullName = fname+" "+lname;
+                String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
+
                 if (isValid()) {
-
-
                     mDialog.setMessage("Registering please wait...");
                     mDialog.show();
 
@@ -446,26 +447,26 @@ public class RegistrationLogistics extends AppCompatActivity {
                                 databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
                                 final HashMap<String, String> hashMap = new HashMap<>();
                                 hashMap.put("Role", role);
-                                //TODO this is the database for the DeliveryPerson
+
                                 databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         HashMap<String, String> hashMappp = new HashMap<>();
-                                        hashMappp.put("Area", Area);
+                                        hashMappp.put("Province", statee);
                                         hashMappp.put("City", cityy);
-                                        hashMappp.put("ConfirmPassword", confirmpassword);
+                                        hashMappp.put("Baranggay", suburban);
+                                        hashMappp.put("House", house);
+                                        hashMappp.put("Area", Area);
+                                        hashMappp.put("PostCode", Postcode);
                                         hashMappp.put("EmailID", emailid);
                                         hashMappp.put("Fname", fname);
-                                        hashMappp.put("House", house);
                                         hashMappp.put("Lname", lname);
-                                        hashMappp.put("Mobile", mobile);
-                                        hashMappp.put("Password", password);
-                                        hashMappp.put("Postcode", Postcode);
-                                        hashMappp.put("State", statee);
-                                        hashMappp.put("Suburban", suburban);
+                                        hashMappp.put("FullName", fullName);
+                                        hashMappp.put("Mobile", phonenumber);
+
                                         //Todo change the deliveryperson to Logistics
-                                        firebaseDatabase.getInstance().getReference("LogisticsPerson").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        firebaseDatabase.getInstance().getReference("Logistics").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -481,11 +482,9 @@ public class RegistrationLogistics extends AppCompatActivity {
                                                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialog, int which) {
-
                                                                     dialog.dismiss();
 
-                                                                    String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
-                                                                    Intent b = new Intent(RegistrationLogistics.this, LogisticsVerifyPhone.class);
+                                                                    Intent b = new Intent(RegistrationLogistics.this, VerifyPhoneLogistics.class);
                                                                     b.putExtra("phonenumber", phonenumber);
                                                                     startActivity(b);
 
@@ -524,7 +523,7 @@ public class RegistrationLogistics extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent e = new Intent(RegistrationLogistics.this, LogisticsLoginPhone.class);
+                Intent e = new Intent(RegistrationLogistics.this, LoginPhoneLogistics.class);
                 startActivity(e);
                 finish();
             }
@@ -533,7 +532,7 @@ public class RegistrationLogistics extends AppCompatActivity {
         Emaill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(RegistrationLogistics.this, LogisticsLogin.class);
+                Intent a = new Intent(RegistrationLogistics.this, LoginEmailLogistics.class);
                 startActivity(a);
                 finish();
             }
