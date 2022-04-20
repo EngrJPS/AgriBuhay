@@ -41,7 +41,7 @@ public class LoginPhone extends AppCompatActivity {
 
                 numberr=num.getText().toString().trim();
                 String phonenumber= cpp.getSelectedCountryCodeWithPlus() + numberr;
-                Intent b=new Intent(LoginPhone.this,sendotp.class);
+                Intent b=new Intent(LoginPhone.this, SendOTP.class);
                 b.putExtra("phonenumber",phonenumber);
                 startActivity(b);
                 finish();

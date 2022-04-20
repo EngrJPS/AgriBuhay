@@ -2,23 +2,15 @@ package com.AgriBuhayProj.app.Printer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageDecoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,15 +18,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.AgriBuhayProj.app.Chef;
+import com.AgriBuhayProj.app.Producer;
 import com.AgriBuhayProj.app.Models.Crops;
 import com.AgriBuhayProj.app.Models.Sensors;
-import com.AgriBuhayProj.app.ProducerPanel.ChefFinalOrders;
-import com.AgriBuhayProj.app.ProducerPanel.ChefFinalOrders1;
+import com.AgriBuhayProj.app.ProducerPanel.ProducerFinalOrders;
+import com.AgriBuhayProj.app.ProducerPanel.ProducerFinalOrders1;
 import com.AgriBuhayProj.app.R;
 import com.AgriBuhayProj.app.ReusableCode.ReusableCodeForAll;
-import com.bumptech.glide.util.Util;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -45,7 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.text.DecimalFormat;
 import java.util.Set;
@@ -100,8 +89,8 @@ public class ProducerPrintOrder extends Activity implements Runnable {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    final ChefFinalOrders productFinalOrders = dataSnapshot.getValue(ChefFinalOrders.class);
-                    dishName = productFinalOrders.getDishName();
+                    final ProducerFinalOrders productFinalOrders = dataSnapshot.getValue(ProducerFinalOrders.class);
+                    dishName = productFinalOrders.getProductName();
                     prodName.getEditText().setText(dishName);
                 }
                 //GET CROP DATA
@@ -295,10 +284,10 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     dataa.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            final ChefFinalOrders1 chefFinalOrders1 = snapshot.getValue(ChefFinalOrders1.class);
-                            String retailerName = chefFinalOrders1.getName();
-                            String retailerAds = chefFinalOrders1.getAddress();
-                            String totalPrice = chefFinalOrders1.getGrandTotalPrice();
+                            final ProducerFinalOrders1 producerFinalOrders1 = snapshot.getValue(ProducerFinalOrders1.class);
+                            String retailerName = producerFinalOrders1.getName();
+                            String retailerAds = producerFinalOrders1.getAddress();
+                            String totalPrice = producerFinalOrders1.getGrandTotalPrice();
                             try {
                                 OutputStream os = mBluetoothSocket
                                         .getOutputStream();
@@ -359,11 +348,11 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     data.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            final Chef chef = snapshot.getValue(Chef.class);
-                            String producerName = chef.getFname() + " " + chef.getLname();
-                            String province = chef.getState();
-                            String address = chef.getCity() + " " + chef.getSuburban();
-                            String num = "+63" + chef.getMobile();
+                            final Producer producer = snapshot.getValue(Producer.class);
+                            String producerName = producer.getFname() + " " + producer.getLname();
+                            String province = producer.getState();
+                            String address = producer.getCity() + " " + producer.getSuburban();
+                            String num = "+63" + producer.getMobile();
                             try {
                                 OutputStream os = mBluetoothSocket
                                         .getOutputStream();

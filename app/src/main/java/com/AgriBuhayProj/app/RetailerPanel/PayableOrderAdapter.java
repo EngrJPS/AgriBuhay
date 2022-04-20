@@ -15,43 +15,43 @@ import java.util.List;
 public class PayableOrderAdapter extends RecyclerView.Adapter<PayableOrderAdapter.ViewHolder> {
 
     private Context context;
-    private List<CustomerPaymentOrders> customerPaymentOrderslist;
+    private List<RetailerPaymentOrders> retailerPaymentOrderslist;
 
-    public PayableOrderAdapter(Context context, List<CustomerPaymentOrders> customerPendingOrderslist) {
-        this.customerPaymentOrderslist = customerPendingOrderslist;
+    public PayableOrderAdapter(Context context, List<RetailerPaymentOrders> retailerPendingOrderslist) {
+        this.retailerPaymentOrderslist = retailerPendingOrderslist;
         this.context = context;
     }
 
     @NonNull
     @Override
     public PayableOrderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.customer_payableorder, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.retailer_payableorder, parent, false);
         return new PayableOrderAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PayableOrderAdapter.ViewHolder holder, int position) {
 
-        final CustomerPaymentOrders customerPaymentOrders = customerPaymentOrderslist.get(position);
-        holder.Dishname.setText(customerPaymentOrders.getDishName());
-        holder.Price.setText("Price: ₱ " + customerPaymentOrders.getDishPrice());
-        holder.Quantity.setText("× " + customerPaymentOrders.getDishQuantity());
-        holder.Totalprice.setText("Total: ₱ " + customerPaymentOrders.getTotalPrice());
+        final RetailerPaymentOrders retailerPaymentOrders = retailerPaymentOrderslist.get(position);
+        holder.Productname.setText(retailerPaymentOrders.getProductName());
+        holder.Price.setText("Price: ₱ " + retailerPaymentOrders.getProductPrice());
+        holder.Quantity.setText("× " + retailerPaymentOrders.getProductQuantity());
+        holder.Totalprice.setText("Total: ₱ " + retailerPaymentOrders.getTotalPrice());
     }
 
     @Override
     public int getItemCount() {
-        return customerPaymentOrderslist.size();
+        return retailerPaymentOrderslist.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Dishname, Price, Quantity, Totalprice;
+        TextView Productname, Price, Quantity, Totalprice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            Dishname = itemView.findViewById(R.id.dish);
+            Productname = itemView.findViewById(R.id.product);
             Price = itemView.findViewById(R.id.pri);
             Quantity = itemView.findViewById(R.id.qt);
             Totalprice = itemView.findViewById(R.id.Tot);

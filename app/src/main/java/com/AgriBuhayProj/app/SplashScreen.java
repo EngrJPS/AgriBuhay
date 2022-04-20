@@ -73,18 +73,18 @@ public class SplashScreen extends AppCompatActivity {
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         String role = dataSnapshot.getValue(String.class);
                                         //Todo database name role path Customer, Chef, DeliveryPerson
-                                        if (role.equals("Customer")) {
-                                            Intent n = new Intent(SplashScreen.this, CustomerFoodPanel_BottomNavigation.class);
+                                        if (role.equals("Retailer")) {
+                                            Intent n = new Intent(SplashScreen.this, RetailerProductPanel_BottomNavigation.class);
                                             startActivity(n);
                                             finish();
                                         }
-                                        if (role.equals("Chef")) {
-                                            Intent a = new Intent(SplashScreen.this, ChefFoodPanel_BottomNavigation.class);
+                                        if (role.equals("Producer")) {
+                                            Intent a = new Intent(SplashScreen.this, ProducerProductPanel_BottomNavigation.class);
                                             startActivity(a);
                                             finish();
                                         }
-                                        if (role.equals("DeliveryPerson")) {
-                                            Intent intent = new Intent(SplashScreen.this, Delivery_FoodPanelBottomNavigation.class);
+                                        if (role.equals("LogisticsPerson")) {
+                                            Intent intent = new Intent(SplashScreen.this, Logistics_ProductPanelBottomNavigation.class);
                                             startActivity(intent);
                                             finish();
                                         }
