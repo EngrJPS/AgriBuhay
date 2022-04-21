@@ -3,6 +3,7 @@ package com.AgriBuhayProj.app.ProducerPanel;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -31,13 +32,15 @@ public class ProducerDeliveredOrdersAdapter extends RecyclerView.Adapter<Produce
         return new ProducerDeliveredOrdersAdapter.ViewHolder(view);
     }
 
+    //TODO: provide string format for holder
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ProducerDeliveredOrdersAdapter.ViewHolder holder, int position) {
         final History display = historyModel.get(position);
-        holder.trackingNumber.setText(display.getTrackingNumber());
-        holder.logisticsName.setText(display.getDeliveryID());
-        holder.retailerName.setText(display.getRetailerName());
-        holder.totalPrice.setText(display.getTotalPrice());
+        holder.trackingNumber.setText("Tracking Number: \n"+display.getTrackingNumber());
+        holder.logisticsName.setText("Logistics: "+display.getLogisticsName());
+        holder.retailerName.setText("Retailer: "+display.getRetailerName());
+        holder.totalPrice.setText("₱"+display.getTotalPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

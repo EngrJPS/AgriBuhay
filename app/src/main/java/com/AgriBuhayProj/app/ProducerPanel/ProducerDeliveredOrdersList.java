@@ -49,7 +49,7 @@ public class ProducerDeliveredOrdersList extends AppCompatActivity implements Ad
 
         deliveredList = new ArrayList<>();
 
-        dbRef = FirebaseDatabase.getInstance().getReference("Delivery History").child(producerID);
+        dbRef = FirebaseDatabase.getInstance().getReference("DeliveryHistory").child(producerID);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -71,7 +71,7 @@ public class ProducerDeliveredOrdersList extends AppCompatActivity implements Ad
 
     private void deliveredOrders(){
         //database reference
-        dbRef = FirebaseDatabase.getInstance().getReference("Delivery History").child(producerID);
+        dbRef = FirebaseDatabase.getInstance().getReference("DeliveryHistory").child(producerID);
         //update recyclerview
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override

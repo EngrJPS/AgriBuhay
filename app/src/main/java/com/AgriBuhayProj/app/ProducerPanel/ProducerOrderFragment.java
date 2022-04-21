@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.AgriBuhayProj.app.R;
 public class ProducerOrderFragment extends Fragment {
 
-    TextView OrdertobePrepare, Preparedorders;
+    TextView OrdertobePrepare, Preparedorders,DeliveredOrders;
 
     @Nullable
     @Override
@@ -23,6 +23,7 @@ public class ProducerOrderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_producer_order, null);
         OrdertobePrepare=(TextView)v.findViewById(R.id.ordertobe);
         Preparedorders=(TextView)v.findViewById(R.id.prepareorder);
+        DeliveredOrders=(TextView)v.findViewById(R.id.delivered);
 
         OrdertobePrepare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +41,13 @@ public class ProducerOrderFragment extends Fragment {
             }
         });
 
+        DeliveredOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), ProducerDeliveredOrdersList.class);
+                startActivity(intent);
+            }
+        });
 
         return v;
     }

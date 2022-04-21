@@ -123,6 +123,7 @@ public class UpdateDeleteProduct extends AppCompatActivity {
                         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
                                 //TODO this is the database for the FoosuplyDetails
                                 firebaseDatabase.getInstance().getReference("ProductSupplyDetails").child(State).child(City).child(Sub).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(ID).removeValue();
 
@@ -183,7 +184,7 @@ public class UpdateDeleteProduct extends AppCompatActivity {
                 //TODO this is the database for the FoodSupplyDetails
                 databaseReference = firebaseDatabase.getInstance().getReference("ProductSupplyDetails");
                 storage = FirebaseStorage.getInstance();
-                storageReference = storage.getReference();
+                storageReference = storage.getReference("ProductSupply");
                 imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -239,11 +240,11 @@ public class UpdateDeleteProduct extends AppCompatActivity {
     private void uploadImage() {
 
         if (imageuri != null) {
-
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
+            String producerID = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
             RandomUId = UUID.randomUUID().toString();
-            ref = storageReference.child(RandomUId);
+            ref = storageReference.child(producerID).child(RandomUId);
             ref.putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -329,6 +330,7 @@ public class UpdateDeleteProduct extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
 
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (mCropimageuri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startCropImageActivity(mCropimageuri);
         } else {

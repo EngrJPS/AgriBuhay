@@ -280,7 +280,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
             public void run() {
                 try {
                     randomUIID = getIntent().getStringExtra("RandomUIID");
-                    DatabaseReference dataa = FirebaseDatabase.getInstance().getReference("ChefFinalOrders").child(fbAuth.getCurrentUser().getUid()).child(randomUIID).child("OtherInformation");
+                    DatabaseReference dataa = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(fbAuth.getCurrentUser().getUid()).child(randomUIID).child("OtherInformation");
                     dataa.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -344,7 +344,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         Thread t = new Thread() {
             public void run() {
                 try {
-                    DatabaseReference data = FirebaseDatabase.getInstance().getReference("Chef").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    DatabaseReference data = FirebaseDatabase.getInstance().getReference("Producer").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     data.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {

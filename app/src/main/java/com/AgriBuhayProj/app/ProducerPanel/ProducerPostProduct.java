@@ -82,7 +82,7 @@ public class ProducerPostProduct extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
 
         storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+        storageReference = storage.getReference("ProductSupply");
 
         desc = findViewById(R.id.description);
         qty = findViewById(R.id.quantity);
@@ -198,7 +198,7 @@ public class ProducerPostProduct extends AppCompatActivity {
 
             producerID = fbAuth.getCurrentUser().getUid();
 
-            ref = storageReference.child(randomUID);
+            ref = storageReference.child(producerID).child(randomUID);
             ref.putFile(imageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

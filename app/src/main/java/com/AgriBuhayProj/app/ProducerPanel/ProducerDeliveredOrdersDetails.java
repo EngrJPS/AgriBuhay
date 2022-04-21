@@ -63,7 +63,7 @@ public class ProducerDeliveredOrdersDetails extends AppCompatActivity {
         proof = findViewById(R.id.imProof);
 
         //delivery details
-        dbRef = FirebaseDatabase.getInstance().getReference("Delivery History");
+        dbRef = FirebaseDatabase.getInstance().getReference("DeliveryHistory");
         dbRef.child(producerID).child(trackingNumber).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -77,7 +77,9 @@ public class ProducerDeliveredOrdersDetails extends AppCompatActivity {
                 date.setText(history.getDeliveryDate());
                 total.setText("Total Price: ₱"+history.getTotalPrice());
                 retailName.setText("Buyer: "+history.getRetailerName());
-                retailMobile.setText("Mobile Number: +63"+history.getRetailerMobile());
+                retailMobile.setText("Mobile Number: "+history.getRetailerMobile());
+                logName.setText("Logistics: "+history.getLogisticsName());
+                logMobile.setText("Mobile Number: "+history.getLogisticsMobile());
 
                 //display image
                 Uri imageURI = Uri.parse(history.getDeliveryImage());
@@ -85,25 +87,6 @@ public class ProducerDeliveredOrdersDetails extends AppCompatActivity {
                         .load(imageURI)
                         .fitCenter()
                         .into(proof);
-
-                String deliveryID = history.getDeliveryID();
-
-                dbRef = FirebaseDatabase.getInstance().getReference("DeliverPerson"); //change to logistic
-                dbRef.child(deliveryID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Logistics logistics = snapshot.getValue(Logistics.class);
-                        String firstName = logistics.getFirstName();
-                        String lastName = logistics.getLastName();
-                        String logisticsName = firstName+" "+lastName;
-                        logName.setText("Courier: "+logisticsName);
-                        logMobile.setText("Mobile Number: +63"+logistics.getMobile());
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
