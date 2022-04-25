@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -149,9 +151,18 @@ public class VerifyPhoneProducer extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progress.dismiss();
-                            Intent intent = new Intent(VerifyPhoneProducer.this,MainMenu.class);
-                            startActivity(intent);
-                            finish();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VerifyPhoneProducer.this);
+                            builder.setCancelable(false);
+                            builder.setMessage("Mobile number verified successfully");
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(VerifyPhoneProducer.this,MainMenu.class));
+                                    finish();
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
                         } else {
                             progress.dismiss();
                             ReusableCodeForAll.ShowAlert(VerifyPhoneProducer.this,"Error",task.getException().getMessage());
@@ -184,7 +195,6 @@ public class VerifyPhoneProducer extends AppCompatActivity {
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 entercode.setText(code);
-                /*verifyCode(code);*/
             }
         }
         @Override

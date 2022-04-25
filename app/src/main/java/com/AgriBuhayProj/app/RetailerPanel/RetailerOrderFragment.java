@@ -44,4 +44,6 @@ public class RetailerOrderFragment extends Fragment {
         });
         return v;
     }
+
+
 }

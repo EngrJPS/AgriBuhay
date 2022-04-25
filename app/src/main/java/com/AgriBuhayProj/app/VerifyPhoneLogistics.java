@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -144,9 +146,18 @@ public class VerifyPhoneLogistics extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progress.dismiss();
-                            Intent intent = new Intent(VerifyPhoneLogistics.this, MainMenu.class);
-                            startActivity(intent);
-                            finish();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VerifyPhoneLogistics.this);
+                            builder.setCancelable(false);
+                            builder.setMessage("Mobile number verified successfully");
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(VerifyPhoneLogistics.this,MainMenu.class));
+                                    finish();
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
                         } else {
                             progress.dismiss();
                             ReusableCodeForAll.ShowAlert(VerifyPhoneLogistics.this, "Error", task.getException().getMessage());
@@ -178,13 +189,9 @@ public class VerifyPhoneLogistics extends AppCompatActivity {
 
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
-
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 entercode.setText(code);
-                /*verifyCode(code);*/
-
             }
         }
 

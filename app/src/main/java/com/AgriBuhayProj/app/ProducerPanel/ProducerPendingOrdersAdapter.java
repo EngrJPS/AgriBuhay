@@ -345,8 +345,6 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
             Vieworder = itemView.findViewById(R.id.vieww);
             Accept = itemView.findViewById(R.id.accept);
             Reject = itemView.findViewById(R.id.reject);
-
-
         }
     }
 }

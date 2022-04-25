@@ -53,11 +53,10 @@ public class ProductPanelBottomNavigation_Retailer extends AppCompatActivity imp
     }
 
     private void UpdateToken() {
-
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String refreshToken = FirebaseInstanceId.getInstance().getToken();
         Token token = new Token(refreshToken);
-        FirebaseDatabase.getInstance().getReference("Tokens").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
+        FirebaseDatabase.getInstance().getReference("Tokens").child(firebaseUser.getUid()).setValue(token);
 
     }
 
@@ -77,7 +76,6 @@ public class ProductPanelBottomNavigation_Retailer extends AppCompatActivity imp
             case R.id.Home:
                 fragment = new RetailerHomeFragment();
                 break;
-
 
             case R.id.Cart:
                 fragment = new RetailerCartFragment();

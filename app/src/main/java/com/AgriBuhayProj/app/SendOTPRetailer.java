@@ -47,7 +47,7 @@ public class SendOTPRetailer extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("LoginEmailRetailer OTP");
+        getSupportActionBar().setTitle("OTP Verification");
 
         //PROGRESS DIALOG
         progress = new ProgressDialog(SendOTPRetailer.this);

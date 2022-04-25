@@ -1,26 +1,34 @@
 package com.AgriBuhayProj.app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
 public class LoginPhoneRetailer extends AppCompatActivity {
-
-
     EditText num;
     TextView txtsignup;
     Button sendotp,signinemail;
     CountryCodePicker cpp;
+    ProgressDialog progressDialog;
     FirebaseAuth FAuth;
+    DatabaseReference dbRef;
     String numberr;
 
     @Override
@@ -35,7 +43,7 @@ public class LoginPhoneRetailer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -45,7 +53,12 @@ public class LoginPhoneRetailer extends AppCompatActivity {
         signinemail=(Button)findViewById(R.id.btnEmail);
         txtsignup=(TextView)findViewById(R.id.acsignup);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+
         FAuth=FirebaseAuth.getInstance();
+        dbRef = FirebaseDatabase.getInstance().getReference("Mobile");
 
         sendotp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +66,42 @@ public class LoginPhoneRetailer extends AppCompatActivity {
 
                 numberr=num.getText().toString().trim();
                 String phonenumber= cpp.getSelectedCountryCodeWithPlus() + numberr;
-                Intent b=new Intent(LoginPhoneRetailer.this, SendOTPRetailer.class);
-                b.putExtra("phonenumber",phonenumber);
-                startActivity(b);
-                finish();
+
+                if(!numberr.isEmpty()){ //field not empty
+                    if(!(numberr.length()<10)){ //number not <10
+                        progressDialog.setMessage("Verifying...");
+                        progressDialog.show();
+                        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.child(phonenumber).exists()){ //number exists
+                                    if(snapshot.child(phonenumber).child("role").getValue().equals("Retailer")){ //retailer number
+                                        progressDialog.dismiss();
+                                        startActivity(new Intent(LoginPhoneRetailer.this, SendOTPRetailer.class).putExtra("phonenumber",phonenumber));
+                                        finish();
+                                    }else{ //non-retailer number
+                                        progressDialog.dismiss();
+                                        num.setError("Account is not a Retailer");
+                                    }
+                                }else{ //number doesn't exists
+                                    progressDialog.dismiss();
+                                    num.setError("Number Doesn't Exists");
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                progressDialog.dismiss();
+                                Toast.makeText(LoginPhoneRetailer.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }else{ //number is <10
+                        progressDialog.dismiss();
+                        num.setError("must be 10 characters long");
+                    }
+                }else{ //empty field
+                    progressDialog.dismiss();
+                    num.setError("Field is empty");
+                }
 
             }
         });
@@ -73,7 +118,6 @@ public class LoginPhoneRetailer extends AppCompatActivity {
         signinemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent em=new Intent(LoginPhoneRetailer.this, LoginEmailRetailer.class);
                 startActivity(em);
                 finish();
@@ -82,5 +126,5 @@ public class LoginPhoneRetailer extends AppCompatActivity {
 
     }
 
-    public void onBackPressed(){ finish(); }
+    public void onBackPressed(){  }
 }

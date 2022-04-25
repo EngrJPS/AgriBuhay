@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -136,15 +138,11 @@ public class RegistrationRetailer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
 
         try {
-            mDialog = new ProgressDialog(RegistrationRetailer.this);
-            mDialog.setMessage("Registering please wait...");
-            mDialog.setCancelable(false);
-            mDialog.setCanceledOnTouchOutside(false);
             fname = (TextInputLayout) findViewById(R.id.Fname);
             lname = (TextInputLayout) findViewById(R.id.Lname);
             localadd = (TextInputLayout) findViewById(R.id.Localaddress);
@@ -159,6 +157,10 @@ public class RegistrationRetailer extends AppCompatActivity {
             Cpp = (CountryCodePicker) findViewById(R.id.CountryCode);
             Email = (Button) findViewById(R.id.Emailid);
             Phone = (Button) findViewById(R.id.phone);
+
+            mDialog = new ProgressDialog(RegistrationRetailer.this);
+            mDialog.setCancelable(false);
+            mDialog.setCanceledOnTouchOutside(false);
 
             //PROVINCE SPIN
             statespin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -422,14 +424,15 @@ public class RegistrationRetailer extends AppCompatActivity {
                 }
             });
 
-
-            //TODO change the name of the reference from Retailer
-            databaseReference = firebaseDatabase.getInstance().getReference("Retailer");
+            //db instances
+            firebaseDatabase = FirebaseDatabase.getInstance();
             FAuth = FirebaseAuth.getInstance();
 
             Signin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    hideKeyboard();
+
                     email = emaill.getEditText().getText().toString().trim();
                     password = pass.getEditText().getText().toString().trim();
                     firstname = fname.getEditText().getText().toString().trim();
@@ -442,74 +445,81 @@ public class RegistrationRetailer extends AppCompatActivity {
                     String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobileno;
 
                     if (isValid()) {
-
+                        mDialog.setMessage("Registration in progress...");
                         mDialog.show();
 
                         FAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                    databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
-                                    final HashMap<String, String> hashMap = new HashMap<>();
-                                    hashMap.put("Role", role);
-                                    //TODO this is the database for the Customer
-                                    databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    String retailerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                    //user db
+                                    databaseReference = firebaseDatabase.getReference("User").child(retailerID);
+                                    //user values
+                                    final HashMap<String, String> userMap = new HashMap<>();
+                                    userMap.put("Role", role);
+                                    //set user values
+                                    databaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                            HashMap<String, String> hashMappp = new HashMap<>();
-                                            hashMappp.put("Province", statee);
-                                            hashMappp.put("City", cityy);
-                                            hashMappp.put("Baranggay", suburban);
-                                            hashMappp.put("LocalAddress", Localaddress);
-                                            hashMappp.put("EmailID", email);
-                                            hashMappp.put("FirstName", firstname);
-                                            hashMappp.put("LastName", lastname);
-                                            hashMappp.put("FullName", lastname);
-                                            hashMappp.put("Mobile", phonenumber);
-
-                                            //TODO change the reference name to Retailer
-                                            firebaseDatabase.getInstance().getReference("Retailer")
-                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                    .setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
-
+                                            //mobile db
+                                            databaseReference = firebaseDatabase.getReference("Mobile").child(phonenumber);
+                                            //mobile values
+                                            final  HashMap<String, String> phoneMap = new HashMap<>();
+                                            phoneMap.put("mobile", phonenumber);
+                                            phoneMap.put("id", retailerID);
+                                            phoneMap.put("role", role);
+                                            //put mobile values
+                                            databaseReference.setValue(phoneMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-
+                                                    //retailer db
+                                                    databaseReference = firebaseDatabase.getReference("Retailer");
+                                                    //retailer values
+                                                    HashMap<String, String> retailerMap = new HashMap<>();
+                                                    retailerMap.put("Province", statee);
+                                                    retailerMap.put("City", cityy);
+                                                    retailerMap.put("Baranggay", suburban);
+                                                    retailerMap.put("LocalAddress", Localaddress);
+                                                    retailerMap.put("EmailID", email);
+                                                    retailerMap.put("FirstName", firstname);
+                                                    retailerMap.put("LastName", lastname);
+                                                    retailerMap.put("FullName", fullName);
+                                                    retailerMap.put("Mobile", phonenumber);
+                                                    //put retailer values
+                                                    databaseReference.child(retailerID).setValue(retailerMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
-                                                            if (task.isSuccessful()) {
-                                                                mDialog.dismiss();
-                                                                AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationRetailer.this);
-                                                                builder.setMessage("Registered Successfully,Please Verify your Email");
-                                                                builder.setCancelable(false);
-                                                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                                        dialog.dismiss();
-                                                                        Intent b = new Intent(RegistrationRetailer.this, VerifyPhoneRetailer.class);
-                                                                        b.putExtra("phonenumber", phonenumber);
-                                                                        startActivity(b);
-
+                                                            mDialog.dismiss();
+                                                            FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        mDialog.dismiss();
+                                                                        AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationRetailer.this);
+                                                                        builder.setMessage("Registered Successfully,Please Verify your Email");
+                                                                        builder.setCancelable(false);
+                                                                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                                dialog.dismiss();
+                                                                                startActivity(new Intent(RegistrationRetailer.this, VerifyPhoneRetailer.class).putExtra("phonenumber", phonenumber));
+                                                                            }
+                                                                        });
+                                                                        AlertDialog alert = builder.create();
+                                                                        alert.show();
+                                                                    } else {
+                                                                        mDialog.dismiss();
+                                                                        ReusableCodeForAll.ShowAlert(RegistrationRetailer.this,"Error",task.getException().getMessage());
                                                                     }
-                                                                });
-                                                                AlertDialog alert = builder.create();
-                                                                alert.show();
-
-                                                            } else {
-                                                                mDialog.dismiss();
-                                                                ReusableCodeForAll.ShowAlert(RegistrationRetailer.this,"Error",task.getException().getMessage());
-
-                                                            }
+                                                                }
+                                                            });
                                                         }
                                                     });
                                                 }
                                             });
                                         }
                                     });
-
                                 } else {
                                     mDialog.dismiss();
                                     ReusableCodeForAll.ShowAlert(RegistrationRetailer.this,"Error",task.getException().getMessage());
@@ -517,8 +527,6 @@ public class RegistrationRetailer extends AppCompatActivity {
                             }
                         });
                     }
-
-
                 }
             });
         } catch (Exception e) {
@@ -526,13 +534,10 @@ public class RegistrationRetailer extends AppCompatActivity {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
-
         Email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent i = new Intent(RegistrationRetailer.this, LoginEmailRetailer.class);
-                startActivity(i);
+                startActivity(new Intent(RegistrationRetailer.this, LoginEmailRetailer.class));
                 finish();
             }
         });
@@ -540,14 +545,10 @@ public class RegistrationRetailer extends AppCompatActivity {
         Phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent e = new Intent(RegistrationRetailer.this, LoginPhoneRetailer.class);
-                startActivity(e);
+                startActivity(new Intent(RegistrationRetailer.this, LoginPhoneRetailer.class));
                 finish();
             }
         });
-
-
     }
 
     String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -632,7 +633,18 @@ public class RegistrationRetailer extends AppCompatActivity {
         } else {
             isValidaddress = true;
         }
-        isvalid = (isValidfirstname && isValidlastname && isValidemail && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isValidaddress) ? true : false;
+        isvalid = isValidfirstname && isValidlastname && isValidemail && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isValidaddress;
         return isvalid;
     }
+
+    //HIDE KEYBOARD
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager hide = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            hide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void onBackPressed(){}
 }

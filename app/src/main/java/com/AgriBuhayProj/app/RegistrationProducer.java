@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -138,7 +140,7 @@ public class RegistrationProducer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -421,14 +423,14 @@ public class RegistrationProducer extends AppCompatActivity {
             }
         });
 
-        //This line will create a database to the firebase
-        databaseReference = firebaseDatabase.getInstance().getReference("Producer");
+        //db instances
+        firebaseDatabase = FirebaseDatabase.getInstance();
         FAuth = FirebaseAuth.getInstance();
-
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
 
                 fname = Fname.getEditText().getText().toString().trim();
                 lname = Lname.getEditText().getText().toString().trim();
@@ -445,7 +447,6 @@ public class RegistrationProducer extends AppCompatActivity {
 
 
                 if (isValid()) {
-
                     final ProgressDialog mDialog = new ProgressDialog(RegistrationProducer.this);
                     mDialog.setCancelable(false);
                     mDialog.setCanceledOnTouchOutside(false);
@@ -456,92 +457,90 @@ public class RegistrationProducer extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String prodID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(prodID);
-                                final HashMap<String,String> hashMap = new HashMap<>();
-                                hashMap.put("Role", role);
-                                //TODO this is the database for the chef
-                                databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-
+                                String producerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                //user db
+                                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(producerID);
+                                //user values
+                                final HashMap<String,String> userMap = new HashMap<>();
+                                userMap.put("Role", role);
+                                //set user values
+                                databaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        HashMap<String, String> hashMappp = new HashMap<>();
-                                        hashMappp.put("Province", statee);
-                                        hashMappp.put("City", cityy);
-                                        hashMappp.put("Baranggay", suburban);
-                                        hashMappp.put("House", house);
-                                        hashMappp.put("Area", Area);
-                                        hashMappp.put("PostCode", Postcode);
-                                        hashMappp.put("EmailID", emailid);
-                                        hashMappp.put("FirstName", fname);
-                                        hashMappp.put("LastName", lname);
-                                        hashMappp.put("FullName", fullName);
-                                        hashMappp.put("Mobile", phonenumber);
-
-                                        firebaseDatabase.getInstance().getReference("Producer")
-                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                .setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
-
+                                        //mobile db
+                                        databaseReference = firebaseDatabase.getReference("Mobile").child(phonenumber);
+                                        //mobile values
+                                        final  HashMap<String, String> phoneMap = new HashMap<>();
+                                        phoneMap.put("mobile", phonenumber);
+                                        phoneMap.put("id", producerID);
+                                        phoneMap.put("role", role);
+                                        //put mobile values
+                                        databaseReference.setValue(phoneMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                mDialog.dismiss();
-
-                                                FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                //producer db
+                                                databaseReference = firebaseDatabase.getReference("Producer");
+                                                //producer values
+                                                HashMap<String, String> producerMap = new HashMap<>();
+                                                producerMap.put("Province", statee);
+                                                producerMap.put("City", cityy);
+                                                producerMap.put("Baranggay", suburban);
+                                                producerMap.put("House", house);
+                                                producerMap.put("Area", Area);
+                                                producerMap.put("PostCode", Postcode);
+                                                producerMap.put("EmailID", emailid);
+                                                producerMap.put("FirstName", fname);
+                                                producerMap.put("LastName", lname);
+                                                producerMap.put("FullName", fullName);
+                                                producerMap.put("Mobile", phonenumber);
+                                                //put producer values
+                                                databaseReference.child(producerID).setValue(producerMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        if (task.isSuccessful()) {
-                                                            AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationProducer.this);
-                                                            builder.setMessage("Registered Successfully,Please Verify your Email");
-                                                            builder.setCancelable(false);
-                                                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                                    dialog.dismiss();
-
-
-                                                                    Intent b = new Intent(RegistrationProducer.this, VerifyPhoneProducer.class);
-                                                                    b.putExtra("phonenumber", phonenumber);
-                                                                    startActivity(b);
+                                                        mDialog.dismiss();
+                                                        FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationProducer.this);
+                                                                    builder.setMessage("Registered Successfully,Please Verify your Email");
+                                                                    builder.setCancelable(false);
+                                                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            dialog.dismiss();
+                                                                            startActivity(new Intent(RegistrationProducer.this, VerifyPhoneProducer.class).putExtra("phonenumber", phonenumber));
+                                                                        }
+                                                                    });
+                                                                    AlertDialog alert = builder.create();
+                                                                    alert.show();
+                                                                } else {
+                                                                    mDialog.dismiss();
+                                                                    ReusableCodeForAll.ShowAlert(RegistrationProducer.this, "Error", task.getException().getMessage());
 
                                                                 }
-                                                            });
-                                                            AlertDialog alert = builder.create();
-                                                            alert.show();
-
-                                                        } else {
-                                                            mDialog.dismiss();
-                                                            ReusableCodeForAll.ShowAlert(RegistrationProducer.this, "Error", task.getException().getMessage());
-
-                                                        }
+                                                            }
+                                                        });
                                                     }
                                                 });
                                             }
                                         });
                                     }
                                 });
-
-
                             } else {
                                 mDialog.dismiss();
                                 ReusableCodeForAll.ShowAlert(RegistrationProducer.this, "Error", task.getException().getMessage());
                             }
-
                         }
                     });
-
                 }
-
             }
-
         });
 
         Emaill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent i = new Intent(RegistrationProducer.this, LoginEmailProducer.class);
-                startActivity(i);
+                startActivity(new Intent(RegistrationProducer.this, LoginEmailProducer.class));
                 finish();
             }
         });
@@ -549,14 +548,10 @@ public class RegistrationProducer extends AppCompatActivity {
         Phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent e = new Intent(RegistrationProducer.this, LoginPhoneProducer.class);
-                startActivity(e);
+                startActivity(new Intent(RegistrationProducer.this, LoginPhoneProducer.class));
                 finish();
             }
         });
-
-
     }
 
     String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -661,7 +656,18 @@ public class RegistrationProducer extends AppCompatActivity {
             isvalidpostcode = true;
         }
 
-        isvalid = (isValidname && isvalidpostcode && isvalidlname && isValidemail && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isvalidarea && isvalidhousestreetno) ? true : false;
+        isvalid = isValidname && isvalidpostcode && isvalidlname && isValidemail && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isvalidarea && isvalidhousestreetno;
         return isvalid;
     }
+
+    //HIDE KEYBOARD
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager hide = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            hide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void onBackPressed(){}
 }

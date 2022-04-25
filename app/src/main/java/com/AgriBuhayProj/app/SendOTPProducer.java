@@ -47,7 +47,7 @@ public class SendOTPProducer extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Register");
+        getSupportActionBar().setTitle("OTP Verification");
 
         //PROGRESS DIALOG
         progress = new ProgressDialog(SendOTPProducer.this);

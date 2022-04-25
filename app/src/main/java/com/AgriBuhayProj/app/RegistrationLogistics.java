@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -136,6 +138,7 @@ public class RegistrationLogistics extends AppCompatActivity {
         signup = (Button) findViewById(R.id.Signupp);
         Phone = (Button) findViewById(R.id.Phonenumber);
         Cpp = (CountryCodePicker) findViewById(R.id.ctrycode);
+
         final ProgressDialog mDialog = new ProgressDialog(RegistrationLogistics.this);
         mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
@@ -147,7 +150,7 @@ public class RegistrationLogistics extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -413,14 +416,14 @@ public class RegistrationLogistics extends AppCompatActivity {
             }
         });
 
-
-        //TODO change the reference name to Logistics
-        databaseReference = firebaseDatabase.getInstance().getReference("Logistics");
+        //db instances
+        firebaseDatabase = FirebaseDatabase.getInstance();
         FAuth = FirebaseAuth.getInstance();
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
 
                 fname = Fname.getEditText().getText().toString().trim();
                 lname = Lname.getEditText().getText().toString().trim();
@@ -436,43 +439,52 @@ public class RegistrationLogistics extends AppCompatActivity {
                 String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
 
                 if (isValid()) {
-                    mDialog.setMessage("Registering please wait...");
+                    mDialog.setMessage("Registration in progress...");
                     mDialog.show();
 
                     FAuth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
-                                final HashMap<String, String> hashMap = new HashMap<>();
-                                hashMap.put("Role", role);
-                                databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                String logisticsID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                //user db
+                                databaseReference = firebaseDatabase.getReference("User").child(logisticsID);
+                                //user values
+                                final HashMap<String, String> userMap = new HashMap<>();
+                                userMap.put("Role", role);
+                                //set user values
+                                databaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        databaseReference = FirebaseDatabase.getInstance().getReference("Mobile").child(phonenumber);
+                                        //mobile db
+                                        databaseReference = firebaseDatabase.getReference("Mobile").child(phonenumber);
+                                        //mobile values
                                         final  HashMap<String, String> phoneMap = new HashMap<>();
                                         phoneMap.put("mobile", phonenumber);
-                                        phoneMap.put("id", useridd);
+                                        phoneMap.put("id", logisticsID);
                                         phoneMap.put("role", role);
+                                        //put mobile values
                                         databaseReference.setValue(phoneMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                HashMap<String, String> hashMappp = new HashMap<>();
-                                                hashMappp.put("Province", statee);
-                                                hashMappp.put("City", cityy);
-                                                hashMappp.put("Baranggay", suburban);
-                                                hashMappp.put("House", house);
-                                                hashMappp.put("Area", Area);
-                                                hashMappp.put("PostCode", Postcode);
-                                                hashMappp.put("EmailID", emailid);
-                                                hashMappp.put("Fname", fname);
-                                                hashMappp.put("Lname", lname);
-                                                hashMappp.put("FullName", fullName);
-                                                hashMappp.put("Mobile", phonenumber);
-                                                hashMappp.put("LogisticsID", useridd);
-                                                //Todo change the deliveryperson to Logistics
-                                                firebaseDatabase.getInstance().getReference("Logistics").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                //logistics db
+                                                databaseReference = firebaseDatabase.getReference("Logistics");
+                                                //logistics values
+                                                HashMap<String, String> logisticsMap = new HashMap<>();
+                                                logisticsMap.put("Province", statee);
+                                                logisticsMap.put("City", cityy);
+                                                logisticsMap.put("Baranggay", suburban);
+                                                logisticsMap.put("House", house);
+                                                logisticsMap.put("Area", Area);
+                                                logisticsMap.put("PostCode", Postcode);
+                                                logisticsMap.put("EmailID", emailid);
+                                                logisticsMap.put("Fname", fname);
+                                                logisticsMap.put("Lname", lname);
+                                                logisticsMap.put("FullName", fullName);
+                                                logisticsMap.put("Mobile", phonenumber);
+                                                logisticsMap.put("LogisticsID", logisticsID);
+                                                //put logistics values
+                                                databaseReference.child(logisticsID).setValue(logisticsMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         mDialog.dismiss();
@@ -487,9 +499,7 @@ public class RegistrationLogistics extends AppCompatActivity {
                                                                         @Override
                                                                         public void onClick(DialogInterface dialog, int which) {
                                                                             dialog.dismiss();
-                                                                            Intent b = new Intent(RegistrationLogistics.this, VerifyPhoneLogistics.class);
-                                                                            b.putExtra("phonenumber", phonenumber);
-                                                                            startActivity(b);
+                                                                            startActivity(new Intent(RegistrationLogistics.this, VerifyPhoneLogistics.class).putExtra("phonenumber", phonenumber));
                                                                         }
                                                                     });
                                                                     AlertDialog alert = builder.create();
@@ -510,7 +520,6 @@ public class RegistrationLogistics extends AppCompatActivity {
                                 mDialog.dismiss();
                                 ReusableCodeForAll.ShowAlert(RegistrationLogistics.this, "Error", task.getException().getMessage());
                             }
-
                         }
                     });
                 }
@@ -520,9 +529,7 @@ public class RegistrationLogistics extends AppCompatActivity {
         Phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent e = new Intent(RegistrationLogistics.this, LoginPhoneLogistics.class);
-                startActivity(e);
+                startActivity(new Intent(RegistrationLogistics.this, LoginPhoneLogistics.class));
                 finish();
             }
         });
@@ -530,13 +537,10 @@ public class RegistrationLogistics extends AppCompatActivity {
         Emaill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(RegistrationLogistics.this, LoginEmailLogistics.class);
-                startActivity(a);
+                startActivity(new Intent(RegistrationLogistics.this, LoginEmailLogistics.class));
                 finish();
             }
         });
-
-
     }
 
     String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -642,7 +646,18 @@ public class RegistrationLogistics extends AppCompatActivity {
             isvalidpostcode = true;
         }
 
-        isvalid = (isValidname && isvalidpostcode && isValidemail && isvalidlname && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isvalidarea && isvalidhousestreetno) ? true : false;
+        isvalid = isValidname && isvalidpostcode && isValidemail && isvalidlname && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isvalidarea && isvalidhousestreetno;
         return isvalid;
     }
+
+    //HIDE KEYBOARD
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager hide = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            hide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void onBackPressed(){}
 }
