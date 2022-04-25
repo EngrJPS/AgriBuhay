@@ -29,27 +29,17 @@ public class ChooseRole extends AppCompatActivity {
                 switch(type){
                     case "Email":
                         startActivity(new Intent(ChooseRole.this, LoginEmailProducer.class));
+                        finish();
                         break;
                     case "Phone":
                         startActivity(new Intent(ChooseRole.this, LoginPhoneProducer.class));
+                        finish();
                         break;
                     case "SignUp":
                         startActivity(new Intent(ChooseRole.this, RegistrationProducer.class));
+                        finish();
                         break;
                 }
-                /*if (type.equals("Email")) {
-                    Intent emailProducer = new Intent(ChooseRole.this, LoginEmailProducer.class);
-                    startActivity(emailProducer);
-                }
-                if (type.equals("Phone")) {
-                    Intent phoneProducer = new Intent(ChooseRole.this, LoginPhoneProducer.class);
-                    startActivity(phoneProducer);
-                }
-                if (type.equals("SignUp")) {
-                    Intent registerProducer = new Intent(ChooseRole.this, RegistrationProducer.class);
-                    startActivity(registerProducer);
-                }*/
-
             }
         });
 
@@ -59,26 +49,17 @@ public class ChooseRole extends AppCompatActivity {
                 switch(type){
                     case "Email":
                         startActivity(new Intent(ChooseRole.this, LoginEmailRetailer.class));
+                        finish();
                         break;
                     case "Phone":
                         startActivity(new Intent(ChooseRole.this, LoginPhoneRetailer.class));
+                        finish();
                         break;
                     case "SignUp":
                         startActivity(new Intent(ChooseRole.this, RegistrationRetailer.class));
+                        finish();
                         break;
                 }
-                /*if (type.equals("Email")) {
-                    Intent emailRetailer = new Intent(ChooseRole.this, LoginEmailRetailer.class);
-                    startActivity(emailRetailer);
-                }
-                if (type.equals("Phone")) {
-                    Intent phoneRetailer = new Intent(ChooseRole.this, LoginPhoneRetailer.class);
-                    startActivity(phoneRetailer);
-                }
-                if (type.equals("SignUp")) {
-                    Intent registerRetailer = new Intent(ChooseRole.this, RegistrationRetailer.class);
-                    startActivity(registerRetailer);
-                }*/
             }
         });
 
@@ -88,26 +69,17 @@ public class ChooseRole extends AppCompatActivity {
                 switch(type){
                     case "Email":
                         startActivity(new Intent(ChooseRole.this, LoginEmailLogistics.class));
+                        finish();
                         break;
                     case "Phone":
                         startActivity(new Intent(ChooseRole.this, LoginPhoneLogistics.class));
+                        finish();
                         break;
                     case "SignUp":
                         startActivity(new Intent(ChooseRole.this, RegistrationLogistics.class));
+                        finish();
                         break;
                 }
-                /*if (type.equals("SignUp")) {
-                    Intent registerLogistics = new Intent(ChooseRole.this, RegistrationLogistics.class);
-                    startActivity(registerLogistics);
-                }
-                if (type.equals("Phone")) {
-                    Intent phoneLogistics = new Intent(ChooseRole.this, LoginPhoneLogistics.class);
-                    startActivity(phoneLogistics);
-                }
-                if (type.equals("Email")) {
-                    Intent emailLogistics = new Intent(ChooseRole.this, LoginEmailLogistics.class);
-                    startActivity(emailLogistics);
-                }*/
             }
         });
     }

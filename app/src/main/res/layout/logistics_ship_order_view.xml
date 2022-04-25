@@ -27,25 +27,25 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
-            android:gravity="left"
+            android:gravity="start"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/pri"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
                 android:text="Total Price:"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
                 android:orientation="horizontal">
 
 
@@ -53,12 +53,12 @@
                     android:id="@+id/Shiptotal"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
                     android:gravity="center_vertical"
                     android:textStyle="bold"
-                    android:text="Rs. 2000"
+                    android:text="2000"
                     android:textColor="#000000"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -66,38 +66,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:gravity="left"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/producername1"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:fontFamily="@font/caudex"
-                android:text="Chef Name"
-                android:textColor="@color/darkgreen"
-                android:textSize="20dp" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="17dp"
             android:background="@color/white"
-            android:gravity="left"
+            android:gravity="start"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ShipAddress"
+                android:id="@+id/shipPName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
@@ -105,26 +83,26 @@
                 android:text="Address"
                 android:textAllCaps="false"
                 android:textColor="@color/Black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/ShipName"
+                android:id="@+id/shipPAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
                 android:text="Name"
                 android:textAllCaps="false"
                 android:textColor="@color/Black"
-                android:textSize="17dp" />
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/ShipNumber"
+                android:id="@+id/shipPNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center_vertical"
@@ -133,7 +111,60 @@
                 android:text="Mobile number"
                 android:textAllCaps="false"
                 android:textColor="@color/darkgray"
-                android:textSize="17dp" />
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            android:background="@color/white"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ShipAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:maxWidth="300dp"
+                android:text="Address"
+                android:textAllCaps="false"
+                android:textColor="@color/Black"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/ShipName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:text="Name"
+                android:textAllCaps="false"
+                android:textColor="@color/Black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/ShipNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"
+                android:text="Mobile number"
+                android:textAllCaps="false"
+                android:textColor="@color/darkgray"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

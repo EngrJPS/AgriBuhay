@@ -79,7 +79,7 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
     private void CheforderdishesView() {
         RandomUID = getIntent().getStringExtra("RandomUID");
 
-        //TODO this is the database for the ChefWaitingOrders
+        //ProducerWaitingOrders
         reference = FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -102,7 +102,7 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
                             progressDialog.setMessage("Please wait...");
                             progressDialog.show();
 
-                            //TODO this is the database for the ChefWaitingOrders
+                            //ProducerWaitingOrders
                             DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
                             databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -123,7 +123,7 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
                                         //TODO this is the database for the ChefFinalOrders
                                         FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products").child(productid).setValue(hashMap);
                                     }
-                                    //TODO this is the database for the ChefWaitingOrders
+                                    //ProducerWaitingOrders
                                     DatabaseReference data = FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
                                     data.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -136,23 +136,23 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
                                             hashMap1.put("Name", producerWaitingOrders1.getName());
                                             hashMap1.put("RandomUID", RandomUID);
                                             hashMap1.put("Status", "Producer is preparing your Order...");
-                                            //TODO this is the database for the ChefFinalOrders
+                                            //ProducerFinalOrders
                                             FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation").setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    //TODO this is the database for the CustomerFinalOrders
+                                                    //RetailerFinalOrders
                                                     FirebaseDatabase.getInstance().getReference("RetailerFinalOrders").child(userid).child(RandomUID).child("OtherInformation").child("Status").setValue("Producer is preparing your order...").addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
-                                                            //TODO this is the database for the ChefWaitingOrders
+                                                            //ProducerWaitingOrders
                                                             FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                                    //TODO this is the database for the ChefWaitingOrders
+                                                                    //ProducerWaitingOrders
                                                                     FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                         @Override
                                                                         public void onSuccess(Void aVoid) {
-                                                                            //TODO this is the database for the Tokens
+                                                                            //Tokens
                                                                             FirebaseDatabase.getInstance().getReference().child("Tokens").child(userid).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
                                                                                 @Override
                                                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -160,17 +160,14 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
                                                                                     sendNotifications(usertoken, "Estimated Time", "Producer is Preparing your Order", "Preparing");
                                                                                     progressDialog.dismiss();
                                                                                     AlertDialog.Builder builder = new AlertDialog.Builder(ProducerOrdertobePrepareView.this);
-                                                                                    builder.setMessage("See Orders which are Prepared");
+                                                                                    builder.setMessage("See Prepared Orders");
                                                                                     builder.setCancelable(false);
                                                                                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                                                         @Override
                                                                                         public void onClick(DialogInterface dialog, int which) {
 
                                                                                             dialog.dismiss();
-                                                                                            Intent b = new Intent(ProducerOrdertobePrepareView.this, ProducerOrderTobePrepared.class);
-                                                                                            startActivity(b);
                                                                                             finish();
-
 
                                                                                         }
                                                                                     });

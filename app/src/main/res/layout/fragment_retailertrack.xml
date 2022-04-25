@@ -97,7 +97,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
                 android:gravity="center_vertical"
-                android:text="Grand Total:"
+                android:text="Total:"
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:textStyle="bold" />

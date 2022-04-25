@@ -111,7 +111,7 @@ public class RegistrationLogistics extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth FAuth;
-    String role = "LogisticsPerson";
+    String role = "Logistics";
     String statee, cityy, suburban, fname, lname, mobile, confirmpassword, password, Area, Postcode, house, emailid;
 
 
@@ -415,7 +415,7 @@ public class RegistrationLogistics extends AppCompatActivity {
 
 
         //TODO change the reference name to Logistics
-        databaseReference = firebaseDatabase.getInstance().getReference("LogisticsPerson");
+        databaseReference = firebaseDatabase.getInstance().getReference("Logistics");
         FAuth = FirebaseAuth.getInstance();
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -447,65 +447,65 @@ public class RegistrationLogistics extends AppCompatActivity {
                                 databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
                                 final HashMap<String, String> hashMap = new HashMap<>();
                                 hashMap.put("Role", role);
-
                                 databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        HashMap<String, String> hashMappp = new HashMap<>();
-                                        hashMappp.put("Province", statee);
-                                        hashMappp.put("City", cityy);
-                                        hashMappp.put("Baranggay", suburban);
-                                        hashMappp.put("House", house);
-                                        hashMappp.put("Area", Area);
-                                        hashMappp.put("PostCode", Postcode);
-                                        hashMappp.put("EmailID", emailid);
-                                        hashMappp.put("Fname", fname);
-                                        hashMappp.put("Lname", lname);
-                                        hashMappp.put("FullName", fullName);
-                                        hashMappp.put("Mobile", phonenumber);
-
-                                        //Todo change the deliveryperson to Logistics
-                                        firebaseDatabase.getInstance().getReference("Logistics").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
-
+                                        databaseReference = FirebaseDatabase.getInstance().getReference("Mobile").child(phonenumber);
+                                        final  HashMap<String, String> phoneMap = new HashMap<>();
+                                        phoneMap.put("mobile", phonenumber);
+                                        phoneMap.put("id", useridd);
+                                        phoneMap.put("role", role);
+                                        databaseReference.setValue(phoneMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                mDialog.dismiss();
-
-                                                FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                HashMap<String, String> hashMappp = new HashMap<>();
+                                                hashMappp.put("Province", statee);
+                                                hashMappp.put("City", cityy);
+                                                hashMappp.put("Baranggay", suburban);
+                                                hashMappp.put("House", house);
+                                                hashMappp.put("Area", Area);
+                                                hashMappp.put("PostCode", Postcode);
+                                                hashMappp.put("EmailID", emailid);
+                                                hashMappp.put("Fname", fname);
+                                                hashMappp.put("Lname", lname);
+                                                hashMappp.put("FullName", fullName);
+                                                hashMappp.put("Mobile", phonenumber);
+                                                hashMappp.put("LogisticsID", useridd);
+                                                //Todo change the deliveryperson to Logistics
+                                                firebaseDatabase.getInstance().getReference("Logistics").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        if (task.isSuccessful()) {
-                                                            AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationLogistics.this);
-                                                            builder.setMessage("Registered Successfully,Please Verify your Email");
-                                                            builder.setCancelable(false);
-                                                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-                                                                    dialog.dismiss();
-
-                                                                    Intent b = new Intent(RegistrationLogistics.this, VerifyPhoneLogistics.class);
-                                                                    b.putExtra("phonenumber", phonenumber);
-                                                                    startActivity(b);
-
+                                                        mDialog.dismiss();
+                                                        FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationLogistics.this);
+                                                                    builder.setMessage("Registered Successfully,Please Verify your Email");
+                                                                    builder.setCancelable(false);
+                                                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            dialog.dismiss();
+                                                                            Intent b = new Intent(RegistrationLogistics.this, VerifyPhoneLogistics.class);
+                                                                            b.putExtra("phonenumber", phonenumber);
+                                                                            startActivity(b);
+                                                                        }
+                                                                    });
+                                                                    AlertDialog alert = builder.create();
+                                                                    alert.show();
+                                                                } else {
+                                                                    mDialog.dismiss();
+                                                                    ReusableCodeForAll.ShowAlert(RegistrationLogistics.this, "Error", task.getException().getMessage());
                                                                 }
-                                                            });
-                                                            AlertDialog alert = builder.create();
-                                                            alert.show();
-
-                                                        } else {
-                                                            mDialog.dismiss();
-                                                            ReusableCodeForAll.ShowAlert(RegistrationLogistics.this, "Error", task.getException().getMessage());
-
-                                                        }
+                                                            }
+                                                        });
                                                     }
                                                 });
                                             }
                                         });
                                     }
                                 });
-
-
                             } else {
                                 mDialog.dismiss();
                                 ReusableCodeForAll.ShowAlert(RegistrationLogistics.this, "Error", task.getException().getMessage());
@@ -513,8 +513,6 @@ public class RegistrationLogistics extends AppCompatActivity {
 
                         }
                     });
-
-
                 }
             }
         });

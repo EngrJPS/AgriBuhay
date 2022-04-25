@@ -31,6 +31,7 @@ public class ProducerOrderTobePrepared extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.producer_order_to_be_prepared_list);
+
         recyclerView = findViewById(R.id.Recycle_orderstobeprepared);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ProducerOrderTobePrepared.this));
@@ -39,6 +40,7 @@ public class ProducerOrderTobePrepared extends AppCompatActivity {
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.green);
         adapter = new ProducerOrderTobePreparedAdapter(ProducerOrderTobePrepared.this, producerWaitingOrders1List);
         recyclerView.setAdapter(adapter);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

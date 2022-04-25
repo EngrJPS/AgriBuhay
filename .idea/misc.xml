@@ -161,6 +161,31 @@
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1795" />
         <entry key="..\:/Users/Ismael/AndroidStudioProjects/FoodTest1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1795" />
         <entry key="..\:/Users/Ismael/AppData/Local/Android/Sdk/platforms/android-29/data/res/layout/simple_spinner_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_order_product.xml" value="0.33" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_payable_orders.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/activity_pending_orders.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/cart_placeorder.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/fragment_retailercart.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_pending_order_view.xml" value="0.25" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_pendingorder.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_pendingorders.xml" value="0.33" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_ship_order_view.xml" value="0.25" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_shiporders.xml" value="0.22" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/logistics_shipping_order.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/main_printer.xml" value="0.33" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_delivered_orders_list.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_finalorder.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_prepared_order.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_prepared_order_view.xml" value="0.33" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_preparedorder.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/producer_preparedorderview.xml" value="0.4363411619283066" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/registration_retailer.xml" value="0.33" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/retailer_menuproduct.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/retailer_order_product.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/retailer_pendingorders.xml" value="0.33" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/retailer_phonenumber.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/retailer_trackorder.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/user/Desktop/FINAL/Prototype/app/src/main/res/layout/splash_screen.xml" value="0.25" />
       </map>
     </option>
   </component>

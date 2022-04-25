@@ -26,8 +26,8 @@
                 android:id="@+id/productqty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="4dp"
                 android:text="1 x "
                 android:textColor="#FA3E03"
                 android:textSize="18sp" />
@@ -36,14 +36,14 @@
                 android:id="@+id/productnm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="dishname"
+                android:text="product"
                 android:textColor="@color/Blacklogo"
                 android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
                 android:orientation="horizontal">
 
 
@@ -51,10 +51,10 @@
                     android:id="@+id/totRS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:text=" rs.2000"
+                    android:layout_marginEnd="15dp"
+                    android:text="2000"
                     android:textColor="@color/Blacklogo"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </LinearLayout>

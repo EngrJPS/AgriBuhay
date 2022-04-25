@@ -190,7 +190,7 @@ public class VerifyPhoneLogistics extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
-
+            progress.dismiss();
             Toast.makeText(VerifyPhoneLogistics.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };

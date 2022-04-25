@@ -33,7 +33,7 @@ public class RetailerCartAdapter extends RecyclerView.Adapter<RetailerCartAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mcontext).inflate(R.layout.cart_placeorder, parent, false);
+        View view = LayoutInflater.from(mcontext).inflate(R.layout.retailer_cart_placeorder, parent, false);
         return new RetailerCartAdapter.ViewHolder(view);
     }
 
@@ -70,7 +70,7 @@ public class RetailerCartAdapter extends RecyclerView.Adapter<RetailerCartAdapte
                 }
             }
         });
-        RetailerCartFragment.grandt.setText("Grand Total: ₱ " + total);
+        RetailerCartFragment.grandt.setText("Total: ₱ " + total);
         FirebaseDatabase.getInstance().getReference("Cart").child("GrandTotal").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("GrandTotal").setValue(String.valueOf(total));
 
     }

@@ -17,11 +17,11 @@
             android:id="@+id/product2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="10dp"
-            android:text="dishname"
+            android:text="product"
             android:textColor="@color/Blacklogo"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="4dp"
-                android:text="Price: Rs 50"
+                android:text="Price: "
                 android:textColor="@color/darkgray"
                 android:textSize="15sp" />
 
@@ -60,8 +60,8 @@
                     android:id="@+id/Total2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:text="Total rs: 2000"
+                    android:layout_marginEnd="15dp"
+                    android:text="Total: 2000"
                     android:textColor="@color/darkgray" />
             </LinearLayout>
 

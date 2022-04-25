@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +20,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class LoginEmailLogistics extends AppCompatActivity {
 
@@ -26,9 +34,10 @@ public class LoginEmailLogistics extends AppCompatActivity {
     Button Signin, Signinphone;
     TextView Forgotpassword;
     TextView txt;
+
     FirebaseAuth FAuth;
-    String em;
-    String pwd;
+
+    private String em,pwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +51,7 @@ public class LoginEmailLogistics extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -52,6 +61,7 @@ public class LoginEmailLogistics extends AppCompatActivity {
         txt = (TextView) findViewById(R.id.donot);
         Forgotpassword = (TextView) findViewById(R.id.Dforgotpass);
         Signinphone = (Button) findViewById(R.id.Dphonebtn);
+
         FAuth = FirebaseAuth.getInstance();
 
         Signin.setOnClickListener(new View.OnClickListener() {
@@ -65,53 +75,63 @@ public class LoginEmailLogistics extends AppCompatActivity {
                     mDialog.setCancelable(false);
                     mDialog.setMessage("Logging in...");
                     mDialog.show();
+
+                    //login
                     FAuth.signInWithEmailAndPassword(em, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-
-                                mDialog.dismiss();
-                                if (FAuth.getCurrentUser().isEmailVerified()) {
-                                    mDialog.dismiss();
-                                    Toast.makeText(LoginEmailLogistics.this, "You are logged in", Toast.LENGTH_SHORT).show();
-                                    Intent z = new Intent(LoginEmailLogistics.this, ProductPanelBottomNavigation_Logistics.class);
-                                    startActivity(z);
-                                    finish();
-
-
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    final String loginID = FAuth.getCurrentUser().getUid();
+                                    final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("User");
+                                    dbRef.child(loginID).child("Role").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if(Objects.equals(snapshot.getValue(), "Logistics")){
+                                                email.setErrorEnabled(false);
+                                                if (FAuth.getCurrentUser().isEmailVerified()) {
+                                                    mDialog.dismiss();
+                                                    Toast.makeText(LoginEmailLogistics.this, "You are logged in", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(LoginEmailLogistics.this, ProductPanelBottomNavigation_Logistics.class));
+                                                    finish();
+                                                } else {
+                                                    mDialog.dismiss();
+                                                    ReusableCodeForAll.ShowAlert(LoginEmailLogistics.this, "", "Please Verify your Email");
+                                                }
+                                            }else{
+                                                mDialog.dismiss();
+                                                email.setErrorEnabled(true);
+                                                email.setError("Account is not a Courier");
+                                                FAuth.signOut();
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            mDialog.dismiss();
+                                            Toast.makeText(LoginEmailLogistics.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 } else {
-                                    ReusableCodeForAll.ShowAlert(LoginEmailLogistics.this, "", "Please Verify your Email");
+                                    mDialog.dismiss();
+                                    ReusableCodeForAll.ShowAlert(LoginEmailLogistics.this, "Error", task.getException().getMessage());
                                 }
-
-                            } else {
-
-                                mDialog.dismiss();
-                                ReusableCodeForAll.ShowAlert(LoginEmailLogistics.this, "Error", task.getException().getMessage());
                             }
-                        }
-                    });
+                        });
+                    }
                 }
-
-            }
         });
 
         txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent Register = new Intent(LoginEmailLogistics.this, RegistrationLogistics.class);
-                startActivity(Register);
+                startActivity(new Intent(LoginEmailLogistics.this, RegistrationLogistics.class));
                 finish();
-
             }
         });
 
         Forgotpassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(LoginEmailLogistics.this, ForgotPasswordLogistics.class);
-                startActivity(a);
+                startActivity(new Intent(LoginEmailLogistics.this, ForgotPasswordLogistics.class));
                 finish();
 
             }
@@ -120,14 +140,11 @@ public class LoginEmailLogistics extends AppCompatActivity {
         Signinphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent q = new Intent(LoginEmailLogistics.this, LoginPhoneLogistics.class);
-                startActivity(q);
+                startActivity(new Intent(LoginEmailLogistics.this, LoginPhoneLogistics.class));
                 finish();
             }
         });
     }
-
-    String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     public boolean isValid() {
         email.setErrorEnabled(false);
@@ -135,12 +152,13 @@ public class LoginEmailLogistics extends AppCompatActivity {
         pass.setErrorEnabled(false);
         pass.setError("");
 
-        boolean isvalidemail = false, isvalidpassword = false, isvalid = false;
+        boolean isvalidemail = false, isvalidpassword = false, isvalid;
+
         if (TextUtils.isEmpty(em)) {
             email.setErrorEnabled(true);
             email.setError("Email is required");
         } else {
-            if (em.matches(emailpattern)) {
+            if (Patterns.EMAIL_ADDRESS.matcher(em).matches()) {
                 isvalidemail = true;
             } else {
                 email.setErrorEnabled(true);
@@ -158,7 +176,5 @@ public class LoginEmailLogistics extends AppCompatActivity {
         return isvalid;
     }
 
-    public void onBackPressed(){
-        finish();
-    }
+    public void onBackPressed(){ }
 }

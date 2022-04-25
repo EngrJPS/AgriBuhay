@@ -54,7 +54,7 @@ public class OrderProduct extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_product);
+        setContentView(R.layout.retailer_order_product);
 
         Productname = (TextView) findViewById(R.id.product_namee);
         ProducerName = (TextView) findViewById(R.id.producer_name);

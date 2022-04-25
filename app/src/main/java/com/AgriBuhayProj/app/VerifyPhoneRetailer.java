@@ -196,7 +196,7 @@ public class VerifyPhoneRetailer extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
-
+            progress.dismiss();
             Toast.makeText(VerifyPhoneRetailer.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };

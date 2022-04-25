@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.AgriBuhayProj.app.Models.Producer;
 import com.AgriBuhayProj.app.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +29,8 @@ public class LogisticsShipOrderView extends AppCompatActivity {
     private LogisticsShipOrderViewAdapter adapter;
     DatabaseReference reference;
     String RandomUID;
-    TextView grandtotal, address, name, number, ProducerName;
+    private TextView grandtotal, address, name, number;
+    private TextView producerName,producerAddress,producerMobile;
     LinearLayout l1;
 
     @Override
@@ -40,10 +42,12 @@ public class LogisticsShipOrderView extends AppCompatActivity {
         recyclerViewproduct.setLayoutManager(new LinearLayoutManager(LogisticsShipOrderView.this));
         l1 = (LinearLayout) findViewById(R.id.linear2);
         grandtotal = (TextView) findViewById(R.id.Shiptotal);
-        ProducerName = (TextView) findViewById(R.id.producername1);
         address = (TextView) findViewById(R.id.ShipAddress);
         name = (TextView) findViewById(R.id.ShipName);
         number = (TextView) findViewById(R.id.ShipNumber);
+        producerName = (TextView) findViewById(R.id.shipPName);
+        producerAddress = (TextView) findViewById(R.id.shipPAdd);
+        producerMobile = (TextView) findViewById(R.id.shipPNum);
         logisticsShipFinalOrdersList = new ArrayList<>();
         logisticsfinalorders();
     }
@@ -83,13 +87,26 @@ public class LogisticsShipOrderView extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 LogisticsShipFinalOrders1 logisticsShipFinalOrders1 = dataSnapshot.getValue(LogisticsShipFinalOrders1.class);
                 grandtotal.setText("₱ " + logisticsShipFinalOrders1.getGrandTotalPrice());
-                address.setText(logisticsShipFinalOrders1.getAddress());
-                name.setText(logisticsShipFinalOrders1.getName());
-                number.setText(logisticsShipFinalOrders1.getMobileNumber());
-                ProducerName.setText("Producer " + logisticsShipFinalOrders1.getProducerName());
+                address.setText("Delivery Address: "+logisticsShipFinalOrders1.getAddress());
+                name.setText("Retailer: "+logisticsShipFinalOrders1.getName());
+                number.setText("Mobile: "+logisticsShipFinalOrders1.getMobileNumber());
 
+                producerName.setText("Producer: " + logisticsShipFinalOrders1.getProducerName());
+                final String prodID = logisticsShipFinalOrders1.getProducerId();
+                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Producer");
+                dbRef.child(prodID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Producer producer = snapshot.getValue(Producer.class);
+                        producerAddress.setText("Address: "+producer.getHouse()+", "+producer.getArea()+", "+producer.getBaranggay()+", "+producer.getCity()+", "+producer.getProvince());
+                        producerMobile.setText("Mobile: "+producer.getMobile());
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

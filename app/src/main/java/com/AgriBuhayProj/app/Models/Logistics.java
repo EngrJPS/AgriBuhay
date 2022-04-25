@@ -1,7 +1,7 @@
 package com.AgriBuhayProj.app.Models;
 
 public class Logistics {
-    private String Province,City,Baranggay,House,Area,PostCode,FirstName,LastName,FullName,EmailID,Mobile;
+    private String Province,City,Baranggay,House,Area,PostCode,FirstName,LastName,FullName,EmailID,Mobile,LogisticsID;
 
     public Logistics() {
     }
@@ -79,5 +79,29 @@ public class Logistics {
     }
     public void setMobile(String mobile) {
         Mobile = mobile;
+    }
+
+    public String getHouse() {
+        return House;
+    }
+
+    public void setHouse(String house) {
+        House = house;
+    }
+
+    public String getPostCode() {
+        return PostCode;
+    }
+
+    public void setPostCode(String postCode) {
+        PostCode = postCode;
+    }
+
+    public String getLogisticsID() {
+        return LogisticsID;
+    }
+
+    public void setLogisticsID(String logisticsID) {
+        LogisticsID = logisticsID;
     }
 }

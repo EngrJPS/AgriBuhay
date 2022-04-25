@@ -1,5 +1,4 @@
 package com.AgriBuhayProj.app.LogisticsPanel;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,7 +35,8 @@ public class LogisticsPendingOrderFragment extends Fragment {
     private LogisticsPendingOrderFragmentAdapter adapter;
     private DatabaseReference databaseReference;
     private SwipeRefreshLayout swipeRefreshLayout;
-    String logisticsId = "1cn9AWGK42ew9mIkKpIoEQ2yLrt2";
+    FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+    String logisticsId = fbAuth.getCurrentUser().getUid();
 
     @Nullable
     @Override

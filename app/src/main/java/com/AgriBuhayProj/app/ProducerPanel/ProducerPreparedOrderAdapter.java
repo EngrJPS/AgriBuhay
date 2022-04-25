@@ -35,7 +35,7 @@ public class ProducerPreparedOrderAdapter extends RecyclerView.Adapter<ProducerP
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final ProducerFinalOrders1 producerFinalOrders1 = producerFinalOrders1List.get(position);
         holder.Address.setText(producerFinalOrders1.getAddress());
-        holder.grandtotalprice.setText("Grand Total: ₱ " + producerFinalOrders1.getGrandTotalPrice());
+        holder.grandtotalprice.setText("Total: ₱ " + producerFinalOrders1.getGrandTotalPrice());
         final String random = producerFinalOrders1.getRandomUID();
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
             @Override

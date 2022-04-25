@@ -43,8 +43,8 @@ public class LogisticsPendingOrderFragmentAdapter extends RecyclerView.Adapter<L
     private List<LogisticsShipOrders1> logisticsShipOrders1List;
     private APIService apiService;
     String producerid;
-    String logisticsId = "1cn9AWGK42ew9mIkKpIoEQ2yLrt2";
-
+    FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+    String logisticsId = fbAuth.getCurrentUser().getUid();
 
     public LogisticsPendingOrderFragmentAdapter(Context context, List<LogisticsShipOrders1> logisticsShipOrders1List) {
         this.logisticsShipOrders1List = logisticsShipOrders1List;
@@ -64,12 +64,11 @@ public class LogisticsPendingOrderFragmentAdapter extends RecyclerView.Adapter<L
         LogisticsShipOrders1 logisticsShipOrders1 = logisticsShipOrders1List.get(position);
         holder.Address.setText(logisticsShipOrders1.getAddress());
         holder.mobilenumber.setText(logisticsShipOrders1.getMobileNumber());
-        holder.grandtotalprice.setText("total Price: ₱ " + logisticsShipOrders1.getGrandTotalPrice());
+        holder.grandtotalprice.setText("Total Price: ₱" + logisticsShipOrders1.getGrandTotalPrice());
         final String randomuid = logisticsShipOrders1.getRandomUID();
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(context, LogisticsPendingOrderView.class);
                 intent.putExtra("Random", randomuid);
                 context.startActivity(intent);
@@ -79,7 +78,6 @@ public class LogisticsPendingOrderFragmentAdapter extends RecyclerView.Adapter<L
         holder.Accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("LogisticsShipOrders").child(logisticsId).child(randomuid).child("Products");
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -189,7 +187,7 @@ public class LogisticsPendingOrderFragmentAdapter extends RecyclerView.Adapter<L
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String usertoken = dataSnapshot.getValue(String.class);
-                                sendNotifications(usertoken, "Order Rejected", "Your Order has been Rejected by the Delivery person due to some unfortunate circumstances", "RejectOrder");
+                                sendNotifications(usertoken, "Order Rejected", "Your Order has been Rejected by the Logistics due to unfortunate circumstances", "RejectOrder");
                                 FirebaseDatabase.getInstance().getReference("LogisticsShipOrders").child(logisticsId).child(randomuid).child("Products").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -217,7 +215,6 @@ public class LogisticsPendingOrderFragmentAdapter extends RecyclerView.Adapter<L
     }
 
     private void sendNotifications(String usertoken, String title, String message, String order) {
-
         Data data = new Data(title, message, order);
         NotificationSender sender = new NotificationSender(data, usertoken);
         apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {

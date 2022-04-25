@@ -83,7 +83,7 @@ public class SplashScreen extends AppCompatActivity {
                                             startActivity(a);
                                             finish();
                                         }
-                                        if (role.equals("LogisticsPerson")) {
+                                        if (role.equals("Logistics")) {
                                             Intent intent = new Intent(SplashScreen.this, ProductPanelBottomNavigation_Logistics.class);
                                             startActivity(intent);
                                             finish();

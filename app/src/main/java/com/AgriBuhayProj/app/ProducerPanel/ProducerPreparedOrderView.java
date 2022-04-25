@@ -12,12 +12,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.AgriBuhayProj.app.Models.Logistics;
 import com.AgriBuhayProj.app.Models.Producer;
 
 import com.AgriBuhayProj.app.Printer.ProducerPrintOrder;
@@ -53,6 +56,7 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
     private ProducerPreparedOrderViewAdapter adapter;
     String RandomUID, userid, productid;
     TextView grandtotal, address, name, number;
+    TextView cAddress,cMobile;
     LinearLayout l1;
     Button Prepared;
     private Button printOrder;
@@ -60,9 +64,13 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
     private APIService apiService;
     Spinner Shipper;
 
+    ArrayList<String> logisticsLIst;
+    ArrayList<String> idList;
+    ArrayAdapter<String> logAdapter;
+
     DatabaseReference reference;
 
-    String logisticsId = "1cn9AWGK42ew9mIkKpIoEQ2yLrt2";
+    String logisticsId/* = "1cn9AWGK42ew9mIkKpIoEQ2yLrt2"*/;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +78,21 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
         setContentView(R.layout.producer_prepared_order_view);
         //XML
         recyclerViewproduct = findViewById(R.id.Recycle_viewOrder);
+
         grandtotal = findViewById(R.id.Gtotal);
         address = findViewById(R.id.Cadress);
         name = findViewById(R.id.Cname);
         number = findViewById(R.id.Cnumber);
+
+        cAddress = findViewById(R.id.cAdd);
+        cMobile = findViewById(R.id.cNum);
+
         l1 = findViewById(R.id.linear);
         Shipper = findViewById(R.id.shipper);
         Prepared = findViewById(R.id.prepared);
         printOrder = findViewById(R.id.print);
+
+        reference = FirebaseDatabase.getInstance().getReference();
 
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         progressDialog = new ProgressDialog(ProducerPreparedOrderView.this);
@@ -86,12 +101,64 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
         recyclerViewproduct.setHasFixedSize(true);
         recyclerViewproduct.setLayoutManager(new LinearLayoutManager(ProducerPreparedOrderView.this));
         producerFinalOrdersList = new ArrayList<>();
-        ProducerorderdishesView();
 
+        //logistics array
+        logisticsLIst = new ArrayList<>();
+        idList = new ArrayList<>();
+        logAdapter = new ArrayAdapter<>(ProducerPreparedOrderView.this, android.R.layout.simple_spinner_dropdown_item,logisticsLIst);
+        //logistics db reference
+        reference.child("Logistics").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                logisticsLIst.clear();
+                idList.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    final Logistics logistics = dataSnapshot.getValue(Logistics.class);
+                    String logisticsName = logistics.getFullName();
+                    String logID = logistics.getLogisticsID();
+                    idList.add(logID);
+                    logisticsLIst.add(logisticsName);
+                    logAdapter.notifyDataSetChanged();
+                }
+                Shipper.setAdapter(logAdapter);
+                Shipper.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        Object value = adapterView.getSelectedItemPosition();
+                        int position = (int) value;
+                        logisticsId = idList.get(position);
+                        Toast.makeText(ProducerPreparedOrderView.this, logisticsId, Toast.LENGTH_SHORT).show();
+
+                        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Logistics");
+                        dbRef.child(logisticsId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Logistics courier = snapshot.getValue(Logistics.class);
+                                cAddress.setText("Courier Address: "+courier.getHouse());
+                                cMobile.setText("Mobile: "+courier.getMobile());
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        ProducerorderdishesView(logisticsId);
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ProducerPreparedOrderView.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void ProducerorderdishesView() {
-
+    private void ProducerorderdishesView(String logisticsId) {
         RandomUID = getIntent().getStringExtra("RandomUID");
         //TODO this is the database for the ChefFinalOrders
         reference = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
@@ -106,7 +173,6 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                 }
                 if (producerFinalOrdersList.size() == 0) {
                     l1.setVisibility(View.INVISIBLE);
-
                 } else {
                     l1.setVisibility(View.VISIBLE);
                     Prepared.setOnClickListener(new View.OnClickListener() {
@@ -271,9 +337,9 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ProducerFinalOrders1 producerFinalOrders1 = dataSnapshot.getValue(ProducerFinalOrders1.class);
                 grandtotal.setText("₱ " + producerFinalOrders1.getGrandTotalPrice());
-                address.setText(producerFinalOrders1.getAddress());
-                name.setText(producerFinalOrders1.getName());
-                number.setText(producerFinalOrders1.getMobileNumber());
+                address.setText("Delivery Address: "+producerFinalOrders1.getAddress());
+                name.setText("Retailer Name: "+producerFinalOrders1.getName());
+                number.setText("Mobile: "+ producerFinalOrders1.getMobileNumber());
 
             }
 
