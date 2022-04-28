@@ -147,9 +147,8 @@ public class SendOTPProducer extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                             progress.dismiss();
+                            startActivity(new Intent(SendOTPProducer.this, ProductPanelBottomNavigation_Producer.class));
                             Toast.makeText(SendOTPProducer.this, "Logged In", Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(SendOTPProducer.this, ProductPanelBottomNavigation_Producer.class);
-                            startActivity(intent);
                             finish();
                         }
                         else

@@ -138,6 +138,7 @@ public class RegistrationRetailer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(RegistrationRetailer.this, MainMenu.class));
                 finish();
             }
         });
@@ -504,6 +505,7 @@ public class RegistrationRetailer extends AppCompatActivity {
                                                                             public void onClick(DialogInterface dialog, int which) {
                                                                                 dialog.dismiss();
                                                                                 startActivity(new Intent(RegistrationRetailer.this, VerifyPhoneRetailer.class).putExtra("phonenumber", phonenumber));
+                                                                                finish();
                                                                             }
                                                                         });
                                                                         AlertDialog alert = builder.create();

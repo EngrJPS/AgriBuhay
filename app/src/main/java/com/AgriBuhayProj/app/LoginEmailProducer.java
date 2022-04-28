@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +52,7 @@ public class LoginEmailProducer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(LoginEmailProducer.this, MainMenu.class));
                 finish();
             }
         });
@@ -68,6 +71,7 @@ public class LoginEmailProducer extends AppCompatActivity {
             Signout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    hideKeyboard();
 
                     em = email.getEditText().getText().toString().trim();
                     pwd = pass.getEditText().getText().toString().trim();
@@ -134,7 +138,6 @@ public class LoginEmailProducer extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(LoginEmailProducer.this, ForgotPasswordProducer.class));
-                    finish();
                 }
             });
 
@@ -175,8 +178,17 @@ public class LoginEmailProducer extends AppCompatActivity {
         } else {
             isvalidpassword = true;
         }
-        isvalid = (isvalidemail && isvalidpassword) ? true : false;
+        isvalid = isvalidemail && isvalidpassword;
         return isvalid;
+    }
+
+    //HIDE KEYBOARD
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager hide = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            hide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     public void onBackPressed(){ }

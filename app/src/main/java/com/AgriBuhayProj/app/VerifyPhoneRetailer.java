@@ -49,7 +49,7 @@ public class VerifyPhoneRetailer extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Verify");
+        getSupportActionBar().setTitle("Verify Mobile Number");
 
         //PROGRESS DIALOG
         progress = new ProgressDialog(VerifyPhoneRetailer.this);

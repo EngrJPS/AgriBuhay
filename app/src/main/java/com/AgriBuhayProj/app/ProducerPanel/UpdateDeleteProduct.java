@@ -132,8 +132,8 @@ public class UpdateDeleteProduct extends AppCompatActivity {
                                 product.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-
-                                        startActivity(new Intent(UpdateDeleteProduct.this, ProductPanelBottomNavigation_Producer.class));
+                                        //startActivity(new Intent(UpdateDeleteProduct.this, ProductPanelBottomNavigation_Producer.class));
+                                        finish();
                                     }
                                 });
                                 AlertDialog alertt = product.create();
@@ -285,6 +285,7 @@ public class UpdateDeleteProduct extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 progressDialog.dismiss();
                 Toast.makeText(UpdateDeleteProduct.this, "Product Updated Successfully", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

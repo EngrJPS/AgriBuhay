@@ -119,9 +119,6 @@
         <activity
             android:name=".RetailerPanel.RetailerForgotPassword"
             android:label="Password" />
-        <activity
-            android:name=".RetailerPanel.RetailerPassword"
-            android:label="Password" />
         <activity android:name=".RetailerPanel.OrderProduct" />
         <activity
             android:name=".ProducerPanel.UpdateDeleteProduct"

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,6 +65,11 @@ public class RetailerPayment extends AppCompatActivity {
         CashPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProgressDialog  progressDialog = new ProgressDialog(RetailerPayment.this);
+                progressDialog.setCancelable(false);
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.setMessage("Processing...");
+                progressDialog.show();
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -165,6 +171,7 @@ public class RetailerPayment extends AppCompatActivity {
                                                                                         }).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                             @Override
                                                                                             public void onSuccess(Void aVoid) {
+                                                                                                progressDialog.dismiss();
                                                                                                 AlertDialog.Builder builder = new AlertDialog.Builder(RetailerPayment.this);
                                                                                                 builder.setMessage("Payment mode confirmed, Now you can track your order.");
                                                                                                 builder.setCancelable(false);

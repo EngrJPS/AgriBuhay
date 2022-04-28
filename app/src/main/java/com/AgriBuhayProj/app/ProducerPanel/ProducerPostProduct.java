@@ -215,6 +215,7 @@ public class ProducerPostProduct extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     progressDialog.dismiss();
                                     Toast.makeText(ProducerPostProduct.this, "Product posted successfully", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
                             });
                         }

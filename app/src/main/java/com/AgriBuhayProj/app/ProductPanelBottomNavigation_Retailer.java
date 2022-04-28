@@ -7,7 +7,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.AgriBuhayProj.app.RetailerPanel.RetailerCartFragment;
 import com.AgriBuhayProj.app.RetailerPanel.RetailerHomeFragment;
@@ -95,5 +98,28 @@ public class ProductPanelBottomNavigation_Retailer extends AppCompatActivity imp
 
         }
         return loadFragment(fragment);
+    }
+
+    private boolean pressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
+        if(navigationView.getSelectedItemId()==R.id.Home){
+            if(pressedOnce){
+                super.onBackPressed();
+            }
+
+            this.pressedOnce = true;
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    pressedOnce = false;
+                }
+            },2000);
+        }else{
+            navigationView.setSelectedItemId(R.id.Home);
+        }
     }
 }

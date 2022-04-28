@@ -85,6 +85,7 @@ public class ChooseRole extends AppCompatActivity {
     }
 
     public void onBackPressed(){
+        startActivity(new Intent(ChooseRole.this, MainMenu.class));
         finish();
     }
 }

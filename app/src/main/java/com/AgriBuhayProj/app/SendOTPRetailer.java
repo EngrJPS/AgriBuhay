@@ -145,16 +145,14 @@ public class SendOTPRetailer extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 progress.dismiss();
+                                startActivity(new Intent(SendOTPRetailer.this, ProductPanelBottomNavigation_Retailer.class));
                                 Toast.makeText(SendOTPRetailer.this, "Logged In", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SendOTPRetailer.this, ProductPanelBottomNavigation_Retailer.class);
-                                startActivity(intent);
                                 finish();
                             } else {
                                 ReusableCodeForAll.ShowAlert(SendOTPRetailer.this,"Error",task.getException().getMessage());
                             }
                         }
                     });
-
     }
 
     //SEND VERIFICATION CODE

@@ -47,6 +47,8 @@ public class SplashScreen extends AppCompatActivity {
         pic1.setVisibility(View.VISIBLE);
         pic1.setAnimation(slide);
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
         slide.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -67,25 +69,23 @@ public class SplashScreen extends AppCompatActivity {
                         if (fAuth.getCurrentUser() != null) {
                             if (fAuth.getCurrentUser().isEmailVerified()) {
                                 fAuth = FirebaseAuth.getInstance();
-                                databaseReference = firebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getUid() + "/Role");
+                                databaseReference = firebaseDatabase.getReference("User").child(FirebaseAuth.getInstance().getUid() + "/Role");
                                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         String role = dataSnapshot.getValue(String.class);
-                                        //Todo database name role path Customer, Chef, DeliveryPerson
+                                        assert  role != null;
+
                                         if (role.equals("Retailer")) {
-                                            Intent n = new Intent(SplashScreen.this, ProductPanelBottomNavigation_Retailer.class);
-                                            startActivity(n);
+                                            startActivity(new Intent(SplashScreen.this, ProductPanelBottomNavigation_Retailer.class));
                                             finish();
                                         }
                                         if (role.equals("Producer")) {
-                                            Intent a = new Intent(SplashScreen.this, ProductPanelBottomNavigation_Producer.class);
-                                            startActivity(a);
+                                            startActivity(new Intent(SplashScreen.this, ProductPanelBottomNavigation_Producer.class));
                                             finish();
                                         }
                                         if (role.equals("Logistics")) {
-                                            Intent intent = new Intent(SplashScreen.this, ProductPanelBottomNavigation_Logistics.class);
-                                            startActivity(intent);
+                                            startActivity(new Intent(SplashScreen.this, ProductPanelBottomNavigation_Logistics.class));
                                             finish();
                                         }
                                     }
@@ -103,12 +103,9 @@ public class SplashScreen extends AppCompatActivity {
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-
                                         dialog.dismiss();
-                                        Intent intent = new Intent(SplashScreen.this, MainMenu.class);
-                                        startActivity(intent);
+                                        startActivity(new Intent(SplashScreen.this, MainMenu.class));
                                         finish();
-
                                     }
                                 });
                                 AlertDialog alert = builder.create();
@@ -117,8 +114,7 @@ public class SplashScreen extends AppCompatActivity {
                             }
                         } else {
                             //new user
-                            Intent intent = new Intent(SplashScreen.this, MainMenu.class);
-                            startActivity(intent);
+                            startActivity(new Intent(SplashScreen.this, MainMenu.class));
                             finish();
 
                         }

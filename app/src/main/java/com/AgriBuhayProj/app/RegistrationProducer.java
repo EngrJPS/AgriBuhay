@@ -140,6 +140,7 @@ public class RegistrationProducer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(RegistrationProducer.this, MainMenu.class));
                 finish();
             }
         });
@@ -510,6 +511,7 @@ public class RegistrationProducer extends AppCompatActivity {
                                                                         public void onClick(DialogInterface dialog, int which) {
                                                                             dialog.dismiss();
                                                                             startActivity(new Intent(RegistrationProducer.this, VerifyPhoneProducer.class).putExtra("phonenumber", phonenumber));
+                                                                            finish();
                                                                         }
                                                                     });
                                                                     AlertDialog alert = builder.create();

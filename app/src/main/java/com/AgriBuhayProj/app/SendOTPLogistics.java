@@ -145,9 +145,8 @@ public class SendOTPLogistics extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progress.dismiss();
+                            startActivity(new Intent(SendOTPLogistics.this, ProductPanelBottomNavigation_Logistics.class));
                             Toast.makeText(SendOTPLogistics.this, "Logged In", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SendOTPLogistics.this, ProductPanelBottomNavigation_Logistics.class);
-                            startActivity(intent);
                             finish();
                         } else {
                             progress.dismiss();
@@ -174,26 +173,18 @@ public class SendOTPLogistics extends AppCompatActivity {
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
-
             verificationId = s;
-
         }
-
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
-
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 entercode.setText(code);
                 /*verifyCode(code);*/
-
             }
         }
-
         @Override
         public void onVerificationFailed(FirebaseException e) {
-
             Toast.makeText(SendOTPLogistics.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };

@@ -94,7 +94,6 @@ public class RetailerCartFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 cartModelList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Cart cart = snapshot.getValue(Cart.class);

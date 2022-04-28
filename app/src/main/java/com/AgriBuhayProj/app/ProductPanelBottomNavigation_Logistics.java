@@ -3,9 +3,13 @@ package com.AgriBuhayProj.app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.AgriBuhayProj.app.LogisticsPanel.LogisticsPendingOrderFragment;
 import com.AgriBuhayProj.app.LogisticsPanel.LogisticsShipOrderFragment;
@@ -33,7 +37,6 @@ public class ProductPanelBottomNavigation_Logistics extends AppCompatActivity im
             {
                 loadlogisticsfragment(new LogisticsPendingOrderFragment());
             }
-
         } else {
             loadlogisticsfragment(new LogisticsPendingOrderFragment());
         }
@@ -41,7 +44,6 @@ public class ProductPanelBottomNavigation_Logistics extends AppCompatActivity im
     }
 
     private void UpdateToken() {
-
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String refreshToken = FirebaseInstanceId.getInstance().getToken();
         Token token = new Token(refreshToken);
@@ -53,7 +55,6 @@ public class ProductPanelBottomNavigation_Logistics extends AppCompatActivity im
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             return true;
         }
-
         return false;
     }
 
@@ -68,8 +69,30 @@ public class ProductPanelBottomNavigation_Logistics extends AppCompatActivity im
             case R.id.shiporders:
                 fragment = new LogisticsShipOrderFragment();
                 break;
-
         }
         return loadlogisticsfragment(fragment);
+    }
+
+    private boolean pressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        BottomNavigationView navigationView = findViewById(R.id.delivery_bottom_navigation);
+        if(navigationView.getSelectedItemId() == R.id.pendingorders){
+            if(pressedOnce){
+                super.onBackPressed();
+            }
+
+            this.pressedOnce = true;
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+            
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    pressedOnce = false;
+                }
+            },2000);
+        }else{
+            navigationView.setSelectedItemId(R.id.pendingorders);
+        }
     }
 }

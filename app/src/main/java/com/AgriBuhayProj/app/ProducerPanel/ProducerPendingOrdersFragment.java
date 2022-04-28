@@ -33,14 +33,17 @@ public class ProducerPendingOrdersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setTitle("Pending Orders");
         v = inflater.inflate(R.layout.fragment_producer_pendingorders, null);
+
         recyclerView = v.findViewById(R.id.Recycle_orders);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         producerPendingOrders1List = new ArrayList<>();
         swipeRefreshLayout = v.findViewById(R.id.Swipe_layoutt);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.green);
+
         adapter = new ProducerPendingOrdersAdapter(getContext(), producerPendingOrders1List);
         recyclerView.setAdapter(adapter);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -52,6 +55,7 @@ public class ProducerPendingOrdersFragment extends Fragment {
                 producerorders();
             }
         });
+
         producerorders();
         return v;
     }
@@ -87,7 +91,6 @@ public class ProducerPendingOrdersFragment extends Fragment {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

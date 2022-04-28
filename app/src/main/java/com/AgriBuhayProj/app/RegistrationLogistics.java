@@ -150,6 +150,7 @@ public class RegistrationLogistics extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(RegistrationLogistics.this, MainMenu.class));
                 finish();
             }
         });
@@ -500,6 +501,7 @@ public class RegistrationLogistics extends AppCompatActivity {
                                                                         public void onClick(DialogInterface dialog, int which) {
                                                                             dialog.dismiss();
                                                                             startActivity(new Intent(RegistrationLogistics.this, VerifyPhoneLogistics.class).putExtra("phonenumber", phonenumber));
+                                                                            finish();
                                                                         }
                                                                     });
                                                                     AlertDialog alert = builder.create();

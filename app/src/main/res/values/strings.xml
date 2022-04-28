@@ -4,12 +4,68 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
-    <string-array name="State">
+    <string-array name="Province">
         <item>Davao de Oro</item>
         <item>Davao del Sur</item>
         <item>Davao del Norte</item>
         <item>Davao Oriental</item>
         <item>Davao Occidental</item>
+    </string-array>
+
+    <string-array name="City">
+        //davao de oro
+        <item>Compostela</item>
+        <item>Laak</item>
+        <item>Mabini</item>
+        <item>Maco</item>
+        <item>Maragusan</item>
+        <item>Mawab</item>
+        <item>Monkayo</item>
+        <item>Montivista</item>
+        <item>Nabunturan</item>
+        <item>New Bataan</item>
+        <item>Pantukan</item>
+        //davao del sur
+        <item>Bansalan</item>
+        <item>Davao City</item>
+        <item>Digos</item>
+        <item>Hagonoy</item>
+        <item>Kiblawan</item>
+        <item>Magsaysay</item>
+        <item>Malalag</item>
+        <item>Matanao</item>
+        <item>Padada</item>
+        <item>Santa Cruz</item>
+        <item>Sulop</item>
+        //davao del norte
+        <item>Asuncion</item>
+        <item>Baraulio E. Dujali</item>
+        <item>Carmen</item>
+        <item>Kapalong</item>
+        <item>New Corella</item>
+        <item>Panabo</item>
+        <item>Samal</item>
+        <item>San Isidro</item>
+        <item>Santo Tomas</item>
+        <item>Tagum</item>
+        <item>Talaingod</item>
+        //davao oriental
+        <item>Baganga</item>
+        <item>Banaybanay</item>
+        <item>Boston</item>
+        <item>Caraga</item>
+        <item>Cateel</item>
+        <item>Governor Generoso</item>
+        <item>Lupon</item>
+        <item>Manay</item>
+        <item>Mati</item>
+        <item>San Isidro (Oriental)</item>
+        //davao occidental
+        <item>Don Marcelino</item>
+        <item>Jose Abad Santos</item>
+        <item>Malita</item>
+        <item>Santa Maria</item>
+        <item>Sarangani</item>
     </string-array>
 
     <string-array name="shipper">

@@ -27,28 +27,24 @@ public class MainMenu extends AppCompatActivity {
         signinemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent signemail = new Intent(MainMenu.this, ChooseRole.class);
-                signemail.putExtra("Home", "Email");
-                startActivity(signemail);
+                startActivity(new Intent(MainMenu.this, ChooseRole.class).putExtra("Home", "Email"));
+                finish();
             }
         });
 
         signinphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signphone = new Intent(MainMenu.this, ChooseRole.class);
-                signphone.putExtra("Home", "Phone");
-                startActivity(signphone);
+                startActivity(new Intent(MainMenu.this, ChooseRole.class).putExtra("Home", "Phone"));
+                finish();
             }
         });
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signup = new Intent(MainMenu.this, ChooseRole.class);
-                signup.putExtra("Home", "SignUp");
-                startActivity(signup);
+                startActivity(new Intent(MainMenu.this, ChooseRole.class).putExtra("Home", "SignUp"));
+                finish();
             }
         });
 
@@ -65,8 +61,7 @@ public class MainMenu extends AppCompatActivity {
     //EXIT APP
     public void onBackPressed(){
         if(backPress){
-            /*super.onBackPressed();*/
-            fAuth.signOut();
+            finishAffinity();
         }
         Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
         backPress = true;

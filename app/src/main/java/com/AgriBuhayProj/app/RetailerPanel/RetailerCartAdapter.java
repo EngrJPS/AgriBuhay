@@ -72,7 +72,6 @@ public class RetailerCartAdapter extends RecyclerView.Adapter<RetailerCartAdapte
         });
         RetailerCartFragment.grandt.setText("Total: ₱ " + total);
         FirebaseDatabase.getInstance().getReference("Cart").child("GrandTotal").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("GrandTotal").setValue(String.valueOf(total));
-
     }
 
     @Override

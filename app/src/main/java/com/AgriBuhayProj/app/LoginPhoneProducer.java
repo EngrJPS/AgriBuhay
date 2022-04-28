@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,6 +46,7 @@ public class LoginPhoneProducer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(LoginPhoneProducer.this, MainMenu.class));
                 finish();
             }
         });
@@ -52,7 +55,7 @@ public class LoginPhoneProducer extends AppCompatActivity {
         sendotp=(Button)findViewById(R.id.otp);
         cpp=(CountryCodePicker)findViewById(R.id.CountryCode);
         signinemail=(Button)findViewById(R.id.btnEmail);
-        txtsignup=(TextView)findViewById(R.id.acsignup);
+        txtsignup=(TextView)findViewById(R.id.pPReg);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
@@ -64,6 +67,7 @@ public class LoginPhoneProducer extends AppCompatActivity {
         sendotp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
 
                 numberr=num.getText().toString().trim();
                 String phonenumber= cpp.getSelectedCountryCodeWithPlus() + numberr;
@@ -110,8 +114,7 @@ public class LoginPhoneProducer extends AppCompatActivity {
         txtsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a=new Intent(LoginPhoneProducer.this, RegistrationProducer.class);
-                startActivity(a);
+                startActivity(new Intent(LoginPhoneProducer.this, RegistrationProducer.class));
                 finish();
             }
         });
@@ -119,13 +122,20 @@ public class LoginPhoneProducer extends AppCompatActivity {
         signinemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent em=new Intent(LoginPhoneProducer.this, LoginEmailProducer.class);
-                startActivity(em);
+                startActivity(new Intent(LoginPhoneProducer.this, LoginEmailProducer.class));
                 finish();
             }
         });
 
+    }
+
+    //HIDE KEYBOARD
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager hide = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            hide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     public void onBackPressed(){  }
