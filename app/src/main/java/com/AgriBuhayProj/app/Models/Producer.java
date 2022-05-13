@@ -1,11 +1,13 @@
 package com.AgriBuhayProj.app.Models;
 
 public class Producer {
-
+    //VARIABLES
     private String Province,City,Baranggay,House,Area,PostCode,FirstName,LastName,FullName,EmailID,Mobile;
 
+    //OBJECT INSTANCE
     public Producer() { }
 
+    //OBJECT CONSTRUCTOR
     public Producer(String province, String city, String baranggay, String house, String area, String postCode, String firstName, String lastName, String fullName, String emailID, String mobile) {
         Province = province;
         City = city;
@@ -20,6 +22,7 @@ public class Producer {
         Mobile = mobile;
     }
 
+    //GETTER-SETTER
     public String getProvince() {
         return Province;
     }

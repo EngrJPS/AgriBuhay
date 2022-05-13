@@ -1,11 +1,13 @@
 package com.AgriBuhayProj.app.Models;
 
 public class Retailer {
-
+    //VARIABLES
     private String Province,City,Baranggay,LocalAddress,FirstName,LastName,FullName,EmailID,Mobile;
 
+    //OBJECT INSTANCE
     public Retailer() { }
 
+    //OBJECT CONSTRUCTOR
     public Retailer(String province, String city, String baranggay, String localAddress, String firstName, String lastName, String fullName, String emailID, String mobile) {
         Province = province;
         City = city;
@@ -18,6 +20,7 @@ public class Retailer {
         Mobile = mobile;
     }
 
+    //GETTER-SETTER
     public String getProvince() {
         return Province;
     }

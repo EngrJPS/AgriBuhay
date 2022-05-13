@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.RetailerPanel;
 
+//PREPARED ORDERS PRODUCT MODEL
 public class RetailerFinalOrders {
 
     private String ProducerId, ProductId, ProductName, ProductPrice, ProductQuantity,RandomUID,TotalPrice,UserId;

@@ -18,13 +18,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//PENDING ORDERS LIST
 public class PendingOrders extends AppCompatActivity {
-
+    //VARIABLES
     RecyclerView recyclerView;
     private List<RetailerPendingOrders> retailerPendingOrdersList;
     private PendingOrdersAdapter adapter;
     DatabaseReference databaseReference;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +37,27 @@ public class PendingOrders extends AppCompatActivity {
         RetailerpendingOrders();
     }
 
+    //LIST PENDING ORDERS
     private void RetailerpendingOrders() {
-
+        //RetailerPendingOrders db reference
         databaseReference = FirebaseDatabase.getInstance().getReference("RetailerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 retailerPendingOrdersList.clear();
+                //list pending orders
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    //RetailerPendingOrders products reference
                     DatabaseReference data = FirebaseDatabase.getInstance().getReference("RetailerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("Products");
                     data.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            //list products ordered
                             for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
                                 RetailerPendingOrders retailerPendingOrders = snapshot1.getValue(RetailerPendingOrders.class);
                                 retailerPendingOrdersList.add(retailerPendingOrders);
                             }
+                            //set adapter
                             adapter = new PendingOrdersAdapter(PendingOrders.this, retailerPendingOrdersList);
                             recyclerView.setAdapter(adapter);
                         }

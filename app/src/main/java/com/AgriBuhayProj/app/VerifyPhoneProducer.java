@@ -33,21 +33,24 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class VerifyPhoneProducer extends AppCompatActivity {
-
-    String verificationId;
-    FirebaseAuth FAuth;
+    //DECLARE VARIABLES
+    //xml
     Button verify;
     Button Resend;
     TextView txt;
     EditText entercode;
-    String phonenumber;
     ProgressDialog progress;
+    //strings
+    String verificationId;
+    String phonenumber;
+    //firebase
+    FirebaseAuth FAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.verify_phone_producer);
-
+        //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Verify Mobile Number");
@@ -57,13 +60,17 @@ public class VerifyPhoneProducer extends AppCompatActivity {
         progress.setCancelable(false);
         progress.setCanceledOnTouchOutside(false);
 
+        //GET MOBILE STRING
         phonenumber = getIntent().getStringExtra("phonenumber").trim();
 
-        entercode = (EditText) findViewById(R.id.phoneno);
-        txt = (TextView) findViewById(R.id.text);
-        Resend = (Button) findViewById(R.id.Resendotp);
+        //XML
+        entercode = findViewById(R.id.phoneno);
+        txt = findViewById(R.id.text);
+        Resend = findViewById(R.id.Resendotp);
+        verify = findViewById(R.id.Verify);
+
+        //FIREBASE INSTANCE
         FAuth = FirebaseAuth.getInstance();
-        verify = (Button) findViewById(R.id.Verify);
 
         //STARTUP (OTP)
         //send otp
@@ -77,6 +84,7 @@ public class VerifyPhoneProducer extends AppCompatActivity {
                 Resend.setVisibility(View.INVISIBLE);
                 //show timer
                 txt.setVisibility(View.VISIBLE);
+                //counter
                 txt.setText("Resend Code within " + millisUntilFinished/1000 + " Seconds");
             }
             @Override
@@ -88,13 +96,21 @@ public class VerifyPhoneProducer extends AppCompatActivity {
             }
         }.start();
 
+        //BUTTON EVENTS
+        //verify clicked
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //hide keyboard
                 hideKeyboard();
+
+                //get string code
                 String code = entercode.getText().toString().trim();
+
+                //hide resend button
                 Resend.setVisibility(View.INVISIBLE);
 
+                //check validity
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
                     if (code.isEmpty() && code.length() < 6) {
                         entercode.setError("Enter code");
@@ -102,10 +118,12 @@ public class VerifyPhoneProducer extends AppCompatActivity {
                         return;
                     }
                 }
+
+                //verify code
                 verifyCode(code);
             }
         });
-
+        //resend clicked
         Resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,23 +150,29 @@ public class VerifyPhoneProducer extends AppCompatActivity {
 
     }
 
+    //RESEND OTP
     private void resendOTP(String phonenumber) {
         sendVerificationCode(phonenumber);
     }
 
-
+    //VERIFY CODE
     private void verifyCode(String code) {
+        //get credential
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         linkCredential(credential);
     }
 
+    //LINK MOBILE CREDENTIAL
     private void linkCredential(PhoneAuthCredential credential) {
         progress.setMessage("Verifying....");
         progress.show();
+
+        //link mobile number
         FAuth.getCurrentUser().linkWithCredential(credential)
                 .addOnCompleteListener(VerifyPhoneProducer.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //check linked account
                         if (task.isSuccessful()) {
                             progress.dismiss();
                             AlertDialog.Builder builder = new AlertDialog.Builder(VerifyPhoneProducer.this);
@@ -157,6 +181,7 @@ public class VerifyPhoneProducer extends AppCompatActivity {
                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    //direct to main menu
                                     startActivity(new Intent(VerifyPhoneProducer.this,MainMenu.class));
                                     finish();
                                 }
@@ -165,6 +190,7 @@ public class VerifyPhoneProducer extends AppCompatActivity {
                             alertDialog.show();
                         } else {
                             progress.dismiss();
+                            //not linked
                             ReusableCodeForAll.ShowAlert(VerifyPhoneProducer.this,"Error",task.getException().getMessage());
                         }
                     }
@@ -183,16 +209,22 @@ public class VerifyPhoneProducer extends AppCompatActivity {
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
+    //PHONE CALLBACKS
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
             mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+            //resend-token
             super.onCodeSent(s, forceResendingToken);
+            //otp
             verificationId = s;
         }
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+            //get otp
             String code = phoneAuthCredential.getSmsCode();
+
+            //auto-fill
             if (code != null) {
                 entercode.setText(code);
             }
@@ -200,6 +232,7 @@ public class VerifyPhoneProducer extends AppCompatActivity {
         @Override
         public void onVerificationFailed(FirebaseException e) {
             progress.dismiss();
+            //otp error
             Toast.makeText(VerifyPhoneProducer.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };

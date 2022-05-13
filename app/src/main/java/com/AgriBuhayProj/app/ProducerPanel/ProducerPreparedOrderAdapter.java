@@ -14,16 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.AgriBuhayProj.app.R;
 import java.util.List;
 
+//PREPARED ORDER ADAPTER
 public class ProducerPreparedOrderAdapter extends RecyclerView.Adapter<ProducerPreparedOrderAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context context;
     private List<ProducerFinalOrders1> producerFinalOrders1List;
 
+    //ADAPTER
     public ProducerPreparedOrderAdapter(Context context, List<ProducerFinalOrders1> producerFinalOrders1List) {
         this.producerFinalOrders1List = producerFinalOrders1List;
         this.context = context;
     }
 
+    //CREATE VIEW HOLDER
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,12 +34,16 @@ public class ProducerPreparedOrderAdapter extends RecyclerView.Adapter<ProducerP
         return new ProducerPreparedOrderAdapter.ViewHolder(view);
     }
 
+    //DISPLAY ORDER
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        //display order
         final ProducerFinalOrders1 producerFinalOrders1 = producerFinalOrders1List.get(position);
         holder.Address.setText(producerFinalOrders1.getAddress());
         holder.grandtotalprice.setText("Total: ₱ " + producerFinalOrders1.getGrandTotalPrice());
         final String random = producerFinalOrders1.getRandomUID();
+
+        //view order
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,11 +56,13 @@ public class ProducerPreparedOrderAdapter extends RecyclerView.Adapter<ProducerP
 
     }
 
+    //ARRAY LIST SIZE
     @Override
     public int getItemCount() {
         return producerFinalOrders1List.size();
     }
 
+    //CONNECT XML
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView Address, grandtotalprice;

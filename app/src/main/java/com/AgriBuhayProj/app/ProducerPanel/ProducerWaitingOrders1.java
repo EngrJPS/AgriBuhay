@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.ProducerPanel;
 
+//ORDER TO BE PREPARED OTHER INFO MODEL
 public class ProducerWaitingOrders1 {
 
     private String Address,GrandTotalPrice,MobileNumber,Name,Note,RandomUID,Status;

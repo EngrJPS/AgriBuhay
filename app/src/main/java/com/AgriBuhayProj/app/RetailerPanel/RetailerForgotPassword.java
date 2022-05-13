@@ -22,33 +22,42 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+//CHANGE PASSWORD
 public class RetailerForgotPassword extends AppCompatActivity {
-
-
+    //VARIABLES
     TextInputLayout emaillid;
     Button Reset;
+
     FirebaseAuth Fauth;
+
     private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.retailer_forgot_password);
+        //CONNECT XML
+        emaillid = findViewById(R.id.email);
+        Reset = findViewById(R.id.reset);
 
-        emaillid=(TextInputLayout)findViewById(R.id.email);
-        Reset=(Button)findViewById(R.id.reset);
-
+        //INSTANCE
         Fauth=FirebaseAuth.getInstance();
 
+        //SET ERROR
         emaillid.setErrorEnabled(false);
         emaillid.setError("");
 
+        //RESET PASSWORD
         Reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //hide keyboard
                 hideKeyboard();
 
+                //get string value
                 email = emaillid.getEditText().getText().toString();
+
+                //string validation
                 if(email.isEmpty()){
                     emaillid.setErrorEnabled(true);
                     emaillid.setError("Empty Field");
@@ -56,12 +65,14 @@ public class RetailerForgotPassword extends AppCompatActivity {
                     emaillid.setErrorEnabled(true);
                     emaillid.setError("Invalid email format");
                 }else{
+                    //progress dialog
                     final ProgressDialog progressDialog = new ProgressDialog(RetailerForgotPassword.this);
                     progressDialog.setCancelable(false);
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.setMessage("Sending password reset link...");
                     progressDialog.show();
 
+                    //send reset password
                     Fauth.sendPasswordResetEmail(emaillid.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -75,8 +86,11 @@ public class RetailerForgotPassword extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
+                                        //logout user
                                         Fauth.signOut();
+                                        //direct to main menu
                                         startActivity(new Intent(RetailerForgotPassword.this, MainMenu.class));
+                                        finish();
                                     }
                                 });
                                 AlertDialog alert = builder.create();
@@ -101,6 +115,7 @@ public class RetailerForgotPassword extends AppCompatActivity {
         }
     }
 
+    //BACK PRESS
     @Override
     public void onBackPressed() {
         finish();

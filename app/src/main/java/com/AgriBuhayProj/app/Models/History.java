@@ -3,10 +3,13 @@ package com.AgriBuhayProj.app.Models;
 import android.net.Uri;
 
 public class History {
+    //VARIABLES
     private String trackingNumber,deliveryDate,retailerAddress,totalPrice,producerName,producerMobile,retailerName,retailerMobile,logisticsName,logisticsMobile,deliveryImage,producerID,retailerID,logisticsID;
 
+    //OBJECT INSTANCE
     public History(){ }
 
+    //OBJECT CONSTRUCTOR
     public History(String trackingNumber, String deliveryDate, String retailerAddress, String totalPrice, String producerName, String producerMobile, String retailerName, String retailerMobile, String logisticsName, String logisticsMobile, String deliveryImage, String producerID, String retailerID, String logisticsID) {
         this.trackingNumber = trackingNumber;
         this.deliveryDate = deliveryDate;
@@ -24,6 +27,7 @@ public class History {
         this.logisticsID = logisticsID;
     }
 
+    //GETTER-SETTER
     public String getTrackingNumber() {
         return trackingNumber;
     }

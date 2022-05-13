@@ -49,69 +49,78 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//PREPARED ORDER VIEW
 public class ProducerPreparedOrderView extends AppCompatActivity {
-
+    //VARIABLES
     RecyclerView recyclerViewproduct;
-    private List<ProducerFinalOrders> producerFinalOrdersList;
-    private ProducerPreparedOrderViewAdapter adapter;
-    String RandomUID, userid, productid;
     TextView grandtotal, address, name, number;
     TextView cAddress,cMobile;
     LinearLayout l1;
     Button Prepared;
     private Button printOrder;
     private ProgressDialog progressDialog;
-    private APIService apiService;
     Spinner Shipper;
+
+    private List<ProducerFinalOrders> producerFinalOrdersList;
+    private ProducerPreparedOrderViewAdapter adapter;
 
     ArrayList<String> logisticsLIst;
     ArrayList<String> idList;
     ArrayAdapter<String> logAdapter;
 
+    private APIService apiService;
+
     DatabaseReference reference;
 
-    String logisticsId/* = "1cn9AWGK42ew9mIkKpIoEQ2yLrt2"*/;
+    String RandomUID, userid, productid, logisticsId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.producer_prepared_order_view);
-        //XML
+        //CONNECT XML
         recyclerViewproduct = findViewById(R.id.Recycle_viewOrder);
-
         grandtotal = findViewById(R.id.Gtotal);
         address = findViewById(R.id.Cadress);
         name = findViewById(R.id.Cname);
         number = findViewById(R.id.Cnumber);
-
         cAddress = findViewById(R.id.cAdd);
         cMobile = findViewById(R.id.cNum);
-
         l1 = findViewById(R.id.linear);
         Shipper = findViewById(R.id.shipper);
         Prepared = findViewById(R.id.prepared);
         printOrder = findViewById(R.id.print);
 
+        //DB REFERENCE
         reference = FirebaseDatabase.getInstance().getReference();
 
+        //NOTIFICATION
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
+        //PROGRESS DIALOG
         progressDialog = new ProgressDialog(ProducerPreparedOrderView.this);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
+
+        //RECYCLER VIEW
         recyclerViewproduct.setHasFixedSize(true);
         recyclerViewproduct.setLayoutManager(new LinearLayoutManager(ProducerPreparedOrderView.this));
+
+        //ARRAY LIST INSTANCE
         producerFinalOrdersList = new ArrayList<>();
 
-        //logistics array
+        //LIST AVAILABLE LOGISTICS
         logisticsLIst = new ArrayList<>();
         idList = new ArrayList<>();
         logAdapter = new ArrayAdapter<>(ProducerPreparedOrderView.this, android.R.layout.simple_spinner_dropdown_item,logisticsLIst);
-        //logistics db reference
+
+        //LOGISTICS REFERENCE
         reference.child("Logistics").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 logisticsLIst.clear();
                 idList.clear();
+                //get logistics
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     final Logistics logistics = dataSnapshot.getValue(Logistics.class);
                     String logisticsName = logistics.getFullName();
@@ -120,7 +129,9 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                     logisticsLIst.add(logisticsName);
                     logAdapter.notifyDataSetChanged();
                 }
+                //set spinner adapter
                 Shipper.setAdapter(logAdapter);
+                //logistics selected
                 Shipper.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -129,10 +140,12 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                         logisticsId = idList.get(position);
                         Toast.makeText(ProducerPreparedOrderView.this, logisticsId, Toast.LENGTH_SHORT).show();
 
+                        //logistics reference
                         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Logistics");
                         dbRef.child(logisticsId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                //display logistics info
                                 Logistics courier = snapshot.getValue(Logistics.class);
                                 cAddress.setText("Courier Address: "+courier.getHouse());
                                 cMobile.setText("Mobile: "+courier.getMobile());
@@ -143,6 +156,7 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                             }
                         });
 
+                        //assign order to logistics
                         ProducerorderdishesView(logisticsId);
                     }
                     @Override
@@ -158,41 +172,52 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
         });
     }
 
+    //ASSIGN ORDER TO SELECTED LOGISTICS
     private void ProducerorderdishesView(String logisticsId) {
+        //tracking number
         RandomUID = getIntent().getStringExtra("RandomUID");
-        //TODO this is the database for the ChefFinalOrders
+        //producer products prepared order reference
         reference = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 producerFinalOrdersList.clear();
 
+                //list products ordered
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ProducerFinalOrders producerFinalOrders = snapshot.getValue(ProducerFinalOrders.class);
                     producerFinalOrdersList.add(producerFinalOrders);
                 }
+                //check order
                 if (producerFinalOrdersList.size() == 0) {
                     l1.setVisibility(View.INVISIBLE);
                 } else {
                     l1.setVisibility(View.VISIBLE);
+
+                    //order prepared
                     Prepared.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             progressDialog.setMessage("Please wait...");
                             progressDialog.show();
-                            //TODO this is the database for the Chef
+
+                            //Producer db reference
                             DatabaseReference data = FirebaseDatabase.getInstance().getReference("Producer").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             data.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    //get db values
                                     final Producer producer = dataSnapshot.getValue(Producer.class);
                                     final String ProducerName = producer.getFirstName() + " " + producer.getLastName();
-                                    //TODO this is the database for the ChefFinalOrders
+
+                                    //ProducerFinalOrders product db reference
                                     DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
                                     databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            //get all reference children
                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                                //get values
                                                 final ProducerFinalOrders producerFinalOrders = dataSnapshot1.getValue(ProducerFinalOrders.class);
                                                 HashMap<String, String> hashMap = new HashMap<>();
                                                 productid = producerFinalOrders.getProductId();
@@ -205,14 +230,15 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                                                 hashMap.put("RandomUID", RandomUID);
                                                 hashMap.put("TotalPrice", producerFinalOrders.getTotalPrice());
                                                 hashMap.put("UserId", producerFinalOrders.getUserId());
-                                                //TODO this is the database for the DeliveryShipOrders
+                                                //save product value to LogisticsShipOrders db
                                                 FirebaseDatabase.getInstance().getReference("LogisticsShipOrders").child(logisticsId).child(RandomUID).child("Products").child(productid).setValue(hashMap);
                                             }
-                                            //TODO this is the database for the ChefFinalOrders
+                                            //ProducerFinalOrders other info db reference
                                             DatabaseReference data = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
                                             data.addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    //get data
                                                     final ProducerFinalOrders1 producerFinalOrders1 = dataSnapshot.getValue(ProducerFinalOrders1.class);
                                                     HashMap<String, String> hashMap1 = new HashMap<>();
                                                     String producerid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -225,19 +251,22 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                                                     hashMap1.put("RandomUID", RandomUID);
                                                     hashMap1.put("Status", "Order is Prepared");
                                                     hashMap1.put("UserId", userid);
-                                                    //TODO this is the database for the DeliveryShipOrders
+
+                                                    //save other info value to LogisticsShipOrders db
                                                     FirebaseDatabase.getInstance().getReference("LogisticsShipOrders").child(logisticsId).child(RandomUID).child("OtherInformation").setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
-                                                            //TODO this is the database for the CustomerFinalOrders
+                                                            //RetailerFinalOrders change order status
                                                             FirebaseDatabase.getInstance().getReference("RetailerFinalOrders").child(userid).child(RandomUID).child("OtherInformation").child("Status").setValue("Order is Prepared...").addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
-                                                                    //TODO this is the database for the Tokens
+                                                                    //retailer token
                                                                     FirebaseDatabase.getInstance().getReference().child("Tokens").child(userid).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
                                                                         @Override
                                                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                            //get token
                                                                             String usertoken = dataSnapshot.getValue(String.class);
+                                                                            //notify retailer
                                                                             sendNotifications(usertoken, "Estimated Time", "Your Order is Prepared", "Prepared");
                                                                         }
 
@@ -250,10 +279,13 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                                                             }).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
+                                                                    //logistics token reference
                                                                     FirebaseDatabase.getInstance().getReference().child("Tokens").child(logisticsId).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
                                                                         @Override
                                                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                            //get token
                                                                             String usertoken = dataSnapshot.getValue(String.class);
+                                                                            //notify logistics
                                                                             sendNotifications(usertoken, "New Order", "You have a New Order", "DeliveryOrder");
                                                                             progressDialog.dismiss();
                                                                             AlertDialog.Builder builder = new AlertDialog.Builder(ProducerPreparedOrderView.this);
@@ -263,6 +295,7 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
                                                                                 @Override
                                                                                 public void onClick(DialogInterface dialog, int which) {
                                                                                     dialog.dismiss();
+                                                                                    //direct to prepared order list
                                                                                     Intent b = new Intent(ProducerPreparedOrderView.this, ProducerPreparedOrder.class);
                                                                                     startActivity(b);
                                                                                     finish();
@@ -309,16 +342,21 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
 
                         }
                     });
+
+                    //print order
                     printOrder.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(getApplicationContext(), ProducerPrintOrder.class);
+                            //attach tracking number
                             intent.putExtra("RandomUIID", RandomUID);
                             startActivity(intent);
                         }
                     });
 
                 }
+
+                //set adapter
                 adapter = new ProducerPreparedOrderViewAdapter(ProducerPreparedOrderView.this, producerFinalOrdersList);
                 recyclerViewproduct.setAdapter(adapter);
 
@@ -329,12 +367,13 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
 
             }
         });
-        //TODO this is the database for the ChefFinalOrders
+        //ProducerFinalOrders other info reference
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //display db values
                 ProducerFinalOrders1 producerFinalOrders1 = dataSnapshot.getValue(ProducerFinalOrders1.class);
                 grandtotal.setText("₱ " + producerFinalOrders1.getGrandTotalPrice());
                 address.setText("Delivery Address: "+producerFinalOrders1.getAddress());
@@ -350,6 +389,7 @@ public class ProducerPreparedOrderView extends AppCompatActivity {
         });
     }
 
+    //NOTIFY USER
     private void sendNotifications(String usertoken, String title, String message, String prepared) {
         Data data = new Data(title, message, prepared);
         NotificationSender sender = new NotificationSender(data, usertoken);

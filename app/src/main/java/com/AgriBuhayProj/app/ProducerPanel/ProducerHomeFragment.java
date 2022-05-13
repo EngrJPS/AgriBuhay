@@ -29,10 +29,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//PRODUCTS LIST
 public class ProducerHomeFragment extends Fragment {
-
-
+    //VARIABLES
     RecyclerView recyclerView;
     private List<UpdateProductModel> updateProductModelList;
     private ProducerHomeAdapter adapter;
@@ -75,17 +74,18 @@ public class ProducerHomeFragment extends Fragment {
         return v;
     }
 
-
+    //DISPLAY PRODUCER POSTED PRODUCTS
     private void producerProducts() {
 
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        //TODO this is the database for the FoodSupplyDetails
+        //product supply reference
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ProductSupplyDetails").child(province).child(city).child(baranggay).child(userID);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 updateProductModelList.clear();
+                //display posted products
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UpdateProductModel updateProductModel = snapshot.getValue(UpdateProductModel.class);
                     updateProductModelList.add(updateProductModel);
@@ -103,14 +103,17 @@ public class ProducerHomeFragment extends Fragment {
 
     }
 
+    //OPTIONS
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.logout, menu);
     }
 
+    //OPTIONS CLICKED
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int idd = item.getItemId();
+
         if (idd == R.id.LogOut) {
             Logout();
             return true;
@@ -118,6 +121,7 @@ public class ProducerHomeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    //LOGOUT USER
     private void Logout() {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), MainMenu.class);

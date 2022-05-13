@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.LogisticsPanel;
 
+//PENDING ORDER PRODUCTS MODEL
 public class LogisticsShipOrders {
 
     private String ProducerId, ProductId, ProductName, ProductPrice, ProductQuantity,RandomUID,TotalPrice,UserId;

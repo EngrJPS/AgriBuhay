@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//PENDING ORDERS FRAGMENT
 public class ProducerPendingOrdersFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -33,17 +34,19 @@ public class ProducerPendingOrdersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setTitle("Pending Orders");
         v = inflater.inflate(R.layout.fragment_producer_pendingorders, null);
-
+        //RECYCLER VIEW
         recyclerView = v.findViewById(R.id.Recycle_orders);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //ARRAY LIST INSTANCE
         producerPendingOrders1List = new ArrayList<>();
+        //REFRESH
         swipeRefreshLayout = v.findViewById(R.id.Swipe_layoutt);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.green);
-
+        //SET ADAPTER
         adapter = new ProducerPendingOrdersAdapter(getContext(), producerPendingOrders1List);
         recyclerView.setAdapter(adapter);
-
+        //REFRESH
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -60,16 +63,19 @@ public class ProducerPendingOrdersFragment extends Fragment {
         return v;
     }
 
+    //LIST PENDING ORDERS
     private void producerorders() {
-        //TODO this is the database for the ChefPendingOrders
+        //ProducerPendingOrders reference
         databaseReference = FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //check existence
                 if(dataSnapshot.exists()){
                 producerPendingOrders1List.clear();
+                //list available orders
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    //TODO this is the database for the ChefPendingOrders
+                    //ProducerPendingOrders product reference
                     DatabaseReference data = FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("OtherInformation");
                     data.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

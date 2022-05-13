@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.ProducerPanel;
 
+//SHIPPED ORDERS (OTHER INFO)
 public class ProducerFinalOrders1 {
 
     private String Address,GrandTotalPrice,MobileNumber,Name,RandomUID,Status;

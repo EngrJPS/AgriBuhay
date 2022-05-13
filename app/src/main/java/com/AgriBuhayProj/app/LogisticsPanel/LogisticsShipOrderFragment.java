@@ -22,14 +22,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//SHIP ORDERS FRAGMENT
 public class LogisticsShipOrderFragment extends Fragment {
-
-
+    //VARIABLES
     private RecyclerView recyclerView;
     private List<LogisticsShipFinalOrders1> logisticsShipFinalOrders1List;
     private LogisticsShipOrderFragmentAdapter adapter;
     private DatabaseReference databaseReference;
 
+    //CREATE RECYCLER VIEW
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,13 +44,15 @@ public class LogisticsShipOrderFragment extends Fragment {
         return view;
     }
 
+    //LIST CURRENT SHIPPING ORDERS
     private void LogisticsShipfinalOrder() {
-
+        //order db reference
         databaseReference = FirebaseDatabase.getInstance().getReference("LogisticsShipFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 logisticsShipFinalOrders1List.clear();
+                //list available orders
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     DatabaseReference data = FirebaseDatabase.getInstance().getReference("LogisticsShipFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("OtherInformation");
                     data.addListenerForSingleValueEvent(new ValueEventListener() {

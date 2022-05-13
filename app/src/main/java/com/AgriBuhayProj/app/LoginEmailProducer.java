@@ -31,12 +31,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 public class LoginEmailProducer extends AppCompatActivity {
-
+    //DECLARE VARIABLES
+    //xml
     TextInputLayout email, pass;
     Button Signout, Signinphone;
     TextView Forgotpassword;
     TextView txt;
+
+    //firebase
     FirebaseAuth FAuth;
+
+    //strings
     String em;
     String pwd;
 
@@ -45,6 +50,7 @@ public class LoginEmailProducer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_email_producer);
 
+        //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Login As Producer");
@@ -52,72 +58,103 @@ public class LoginEmailProducer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //direct to main menu
                 startActivity(new Intent(LoginEmailProducer.this, MainMenu.class));
                 finish();
             }
         });
 
         try {
-            email = (TextInputLayout) findViewById(R.id.Lemail);
-            pass = (TextInputLayout) findViewById(R.id.Lpassword);
-            Signout = (Button) findViewById(R.id.button4);
-            txt = (TextView) findViewById(R.id.textView3);
-            Forgotpassword = (TextView) findViewById(R.id.forgotpass);
-            Signinphone = (Button) findViewById(R.id.btnphone);
+            //CONNECT XML
+            email = findViewById(R.id.Lemail);
+            pass = findViewById(R.id.Lpassword);
+            Signout = findViewById(R.id.button4);
+            txt = findViewById(R.id.textView3);
+            Forgotpassword = findViewById(R.id.forgotpass);
+            Signinphone = findViewById(R.id.btnphone);
 
-
+            //FIREBASE INSTANCE
             FAuth = FirebaseAuth.getInstance();
 
+            //BUTTON EVENTS
+            //login clicked
             Signout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //hide keyboard
                     hideKeyboard();
 
+                    //get input strings
                     em = email.getEditText().getText().toString().trim();
                     pwd = pass.getEditText().getText().toString().trim();
+
+                    //check input validity
                     if (isValid()) {
 
+                        //show progress dialog
                         final ProgressDialog mDialog = new ProgressDialog(LoginEmailProducer.this);
                         mDialog.setCanceledOnTouchOutside(false);
                         mDialog.setCancelable(false);
                         mDialog.setMessage("Logging in...");
                         mDialog.show();
 
+                        //login account
                         FAuth.signInWithEmailAndPassword(em, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                //check if logged in
                                 if (task.isSuccessful()) {
+                                    //get user ID
                                     final String loginID = FAuth.getCurrentUser().getUid();
+
+                                    //database reference
                                     final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("User");
+
+                                    //get data
                                     dbRef.child(loginID).child("Role").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            //check if producer account
                                             if(Objects.equals(snapshot.getValue(), "Producer")){
+                                                //disable error
                                                 email.setErrorEnabled(false);
+
+                                                //check if email verified
                                                 if (FAuth.getCurrentUser().isEmailVerified()) {
                                                     mDialog.dismiss();
                                                     Toast.makeText(LoginEmailProducer.this, "You are logged in", Toast.LENGTH_SHORT).show();
+
+                                                    //direct to producer home
                                                     startActivity(new Intent(LoginEmailProducer.this, ProductPanelBottomNavigation_Producer.class));
                                                     finish();
                                                 } else {
                                                     mDialog.dismiss();
+                                                    //not verified
                                                     ReusableCodeForAll.ShowAlert(LoginEmailProducer.this, "", "Please Verify your Email");
                                                 }
                                             }else{
                                                 mDialog.dismiss();
+
+                                                //not producer
                                                 email.setErrorEnabled(true);
                                                 email.setError("Account is not a Producer");
+
+                                                //sign out current user
                                                 FAuth.signOut();
                                             }
                                         }
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
                                             mDialog.dismiss();
+
+                                            //database error
                                             Toast.makeText(LoginEmailProducer.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 } else {
                                     mDialog.dismiss();
+
+                                    //login failed
                                     ReusableCodeForAll.ShowAlert(LoginEmailProducer.this, "Error", task.getException().getMessage());
                                 }
                             }
@@ -126,24 +163,30 @@ public class LoginEmailProducer extends AppCompatActivity {
                 }
             });
 
+            //registration clicked
             txt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //direct to registration
                     startActivity(new Intent(LoginEmailProducer.this, RegistrationProducer.class));
                     finish();
                 }
             });
 
+            //forgot password clicked
             Forgotpassword.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //direct to forgot password
                     startActivity(new Intent(LoginEmailProducer.this, ForgotPasswordProducer.class));
                 }
             });
 
+            //phone login clicked
             Signinphone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //direct to phone login
                     startActivity(new Intent(LoginEmailProducer.this, LoginPhoneProducer.class));
                     finish();
                 }
@@ -153,6 +196,7 @@ public class LoginEmailProducer extends AppCompatActivity {
         }
     }
 
+    //CHECK INPUT VALIDITY
     public boolean isValid() {
         email.setErrorEnabled(false);
         email.setError("");
@@ -160,10 +204,13 @@ public class LoginEmailProducer extends AppCompatActivity {
         pass.setError("");
 
         boolean isvalidemail = false, isvalidpassword = false, isvalid;
+
+        //check if empty email
         if (TextUtils.isEmpty(em)) {
             email.setErrorEnabled(true);
             email.setError("Email is required");
         } else {
+            //check email pattern
             if (Patterns.EMAIL_ADDRESS.matcher(em).matches()) {
                 isvalidemail = true;
             } else {
@@ -172,12 +219,16 @@ public class LoginEmailProducer extends AppCompatActivity {
             }
 
         }
+
+        //check if empty password
         if (TextUtils.isEmpty(pwd)) {
             pass.setErrorEnabled(true);
             pass.setError("Password is required");
         } else {
             isvalidpassword = true;
         }
+
+        //return true/false
         isvalid = isvalidemail && isvalidpassword;
         return isvalid;
     }
@@ -191,6 +242,7 @@ public class LoginEmailProducer extends AppCompatActivity {
         }
     }
 
+    //DISABLE BACK PRESS
     public void onBackPressed(){ }
 }
 

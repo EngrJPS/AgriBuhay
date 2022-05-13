@@ -17,8 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hbb20.CountryCodePicker;
 
+//CHANGE PHONE NUMBER
 public class RetailerPhoneNumber extends AppCompatActivity {
-
+    //VARIABLES
     EditText num;
     CountryCodePicker cpp;
     Button SendOTP;
@@ -28,24 +29,29 @@ public class RetailerPhoneNumber extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.retailer_phonenumber);
+        //CONNECT XML
+        num = findViewById(R.id.phonenumber);
+        cpp = findViewById(R.id.Countrycode);
+        SendOTP = findViewById(R.id.sendotp);
 
-        num=(EditText)findViewById(R.id.phonenumber);
-        cpp=(CountryCodePicker)findViewById(R.id.Countrycode);
-        SendOTP=(Button)findViewById(R.id.sendotp);
-
+        //SEND OTP
         SendOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //hide keyboard
                 hideKeyboard();
 
+                //get string value
                 number=num.getText().toString().trim();
                 String phonenumber= cpp.getSelectedCountryCodeWithPlus() + number;
 
+                //string validation
                 if(number.isEmpty()){
                     num.setError("Empty Field");
                 }else if(number.length() <10){
                     num.setError("Invalid mobile number");
                 }else{
+                    //direct to send otp
                     startActivity(new Intent(RetailerPhoneNumber.this, RetailerPhoneSendOTP.class).putExtra("phonenumber",phonenumber));
                     finish();
                 }
@@ -62,6 +68,7 @@ public class RetailerPhoneNumber extends AppCompatActivity {
         }
     }
 
+    //BACK PRESS
     @Override
     public void onBackPressed() {
         finish();

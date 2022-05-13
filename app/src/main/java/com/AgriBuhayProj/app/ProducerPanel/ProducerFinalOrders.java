@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.ProducerPanel;
 
+//SHIPPED ORDERS (PRODUCTS)
 public class ProducerFinalOrders {
 
     private String ProducerId, ProductId, ProductName, ProductPrice, ProductQuantity,RandomUID,TotalPrice,UserId;

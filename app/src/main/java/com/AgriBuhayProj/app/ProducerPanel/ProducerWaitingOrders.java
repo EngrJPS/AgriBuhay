@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.ProducerPanel;
 
+//ORDER TO BE PREPARED PRODUCT MODEL
 public class ProducerWaitingOrders {
 
     private String ProducerId, ProductId, ProductName, ProductPrice, ProductQuantity,RandomUID,TotalPrice,UserId;

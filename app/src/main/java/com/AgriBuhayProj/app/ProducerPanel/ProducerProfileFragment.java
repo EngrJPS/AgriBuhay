@@ -17,8 +17,9 @@ import androidx.fragment.app.Fragment;
 
 import com.AgriBuhayProj.app.R;
 
+//PROFILE FRAGMENT
 public class ProducerProfileFragment extends Fragment {
-
+    //VARIABLES
     Button post;
     ConstraintLayout bgimage;
 
@@ -28,9 +29,13 @@ public class ProducerProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_producer_profile, container, false);
         getActivity().setTitle("Post Product");
 
+        //SET OPTIONS
         setHasOptionsMenu(true);
 
-        post = (Button) v.findViewById(R.id.post_dish);
+        //CONNECT XML
+        post = v.findViewById(R.id.post_dish);
+
+        //POST PRODUCT
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,11 +46,13 @@ public class ProducerProfileFragment extends Fragment {
         return v;
     }
 
+    //OPTIONS
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.add_crop, menu);
     }
 
+    //OPTION SELECTED
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int idd = item.getItemId();
@@ -56,7 +63,9 @@ public class ProducerProfileFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    //ADD CROP
     private void addCrop() {
+        //direct to add crop
         Intent intent = new Intent(getActivity(), ProducerAddCropList.class);
         startActivity(intent);
     }

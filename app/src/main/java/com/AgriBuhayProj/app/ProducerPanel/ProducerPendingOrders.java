@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.ProducerPanel;
 
+//PENDING ORDERS PRODUCT MODEL
 public class ProducerPendingOrders {
 
     private String ProducerId, ProductId, ProductName, ProductQuantity,Price,RandomUID,TotalPrice,UserId;

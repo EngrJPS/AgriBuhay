@@ -105,44 +105,52 @@ public class RegistrationLogistics extends AppCompatActivity {
     String [] Santa_Maria = {"Basiawan","Cadaatan","Kidadan","Kisulad","Mamacao","Ogpao","Pongpong","San Agustin","Tanglad","Santo Rosaio","San Roque","Datu Taligasao","Datu Intan","Kinilidan"};
     String [] Sarangani = {"Batuganding","Konel","Lipol","Mabila","Tinina","Gomtago","Tagen","Tucal","Patuco","Laker","Camahual","Camalig"};
 
-
+    //DECLARE VARIABLES
+    //xml
     TextInputLayout Fname, Lname, Pass, cfpass, mobileno, houseno, area, postcode, Email;
     Spinner statespin, Cityspin, Suburban;
     Button signup, Emaill, Phone;
     CountryCodePicker Cpp;
+
+    //firebase
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth FAuth;
-    String role = "Logistics";
-    String statee, cityy, suburban, fname, lname, mobile, confirmpassword, password, Area, Postcode, house, emailid;
 
+    //string
+    String role = "Logistics";
+    String fname, lname, mobile, confirmpassword, password, Area, Postcode, house, emailid;
+    String statee, cityy, suburban;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_logistics);
 
-        Fname = (TextInputLayout) findViewById(R.id.fname);
-        Lname = (TextInputLayout) findViewById(R.id.lname);
-        Pass = (TextInputLayout) findViewById(R.id.password);
-        Email = (TextInputLayout) findViewById(R.id.Emailid);
-        cfpass = (TextInputLayout) findViewById(R.id.confirmpassword);
-        mobileno = (TextInputLayout) findViewById(R.id.mobileno);
-        houseno = (TextInputLayout) findViewById(R.id.Houseno);
-        area = (TextInputLayout) findViewById(R.id.Areaa);
-        postcode = (TextInputLayout) findViewById(R.id.Postcodee);
-        statespin = (Spinner) findViewById(R.id.State);
-        Cityspin = (Spinner) findViewById(R.id.City);
-        Emaill = (Button) findViewById(R.id.emaillid);
-        Suburban = (Spinner) findViewById(R.id.suburban);
-        signup = (Button) findViewById(R.id.Signupp);
-        Phone = (Button) findViewById(R.id.Phonenumber);
-        Cpp = (CountryCodePicker) findViewById(R.id.ctrycode);
+        //CONNECT XML
+        Fname = findViewById(R.id.fname);
+        Lname = findViewById(R.id.lname);
+        Pass = findViewById(R.id.password);
+        Email = findViewById(R.id.Emailid);
+        cfpass = findViewById(R.id.confirmpassword);
+        mobileno = findViewById(R.id.mobileno);
+        houseno = findViewById(R.id.Houseno);
+        area = findViewById(R.id.Areaa);
+        postcode = findViewById(R.id.Postcodee);
+        statespin = findViewById(R.id.State);
+        Cityspin = findViewById(R.id.City);
+        Emaill = findViewById(R.id.emaillid);
+        Suburban = findViewById(R.id.suburban);
+        signup = findViewById(R.id.Signupp);
+        Phone = findViewById(R.id.Phonenumber);
+        Cpp = findViewById(R.id.ctrycode);
 
+        //PROGRESS DIALOG
         final ProgressDialog mDialog = new ProgressDialog(RegistrationLogistics.this);
         mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
 
+        //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Register As Logistics");
@@ -150,6 +158,7 @@ public class RegistrationLogistics extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to main menu
                 startActivity(new Intent(RegistrationLogistics.this, MainMenu.class));
                 finish();
             }
@@ -159,10 +168,19 @@ public class RegistrationLogistics extends AppCompatActivity {
         statespin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //get spinner data
                 Object value = parent.getItemAtPosition(position);
+
+                //spinner data - string
                 statee = value.toString().trim();
+
+                //create array list
                 ArrayList<String> list = new ArrayList<>();
+
+                //set array to display
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationLogistics.this, android.R.layout.simple_spinner_item, list);
+
+                //check selected province
                 switch (statee){
                     case "Davao de Oro":
                         Collections.addAll(list, Davao_de_Oro);
@@ -195,10 +213,19 @@ public class RegistrationLogistics extends AppCompatActivity {
         Cityspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //get spinner data
                 Object value = parent.getItemAtPosition(position);
+
+                //spinner data - string
                 cityy = value.toString().trim();
+
+                //create array list
                 ArrayList<String> list = new ArrayList<>();
+
+                //set array to display
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationLogistics.this, android.R.layout.simple_spinner_item, list);
+
+                //check selected city
                 switch (cityy){
                     //davao de oro
                     case "Compostela":
@@ -408,7 +435,10 @@ public class RegistrationLogistics extends AppCompatActivity {
         Suburban.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //get spinner data
                 Object value = parent.getItemAtPosition(position);
+
+                //spinner data - string
                 suburban = value.toString().trim();
             }
             @Override
@@ -417,15 +447,19 @@ public class RegistrationLogistics extends AppCompatActivity {
             }
         });
 
-        //db instances
+        //DATABASE INSTANCES
         firebaseDatabase = FirebaseDatabase.getInstance();
         FAuth = FirebaseAuth.getInstance();
 
+        //BUTTON EVENTS
+        //sign up clicked
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //hide keyboard
                 hideKeyboard();
 
+                //get string value
                 fname = Fname.getEditText().getText().toString().trim();
                 lname = Lname.getEditText().getText().toString().trim();
                 mobile = mobileno.getEditText().getText().toString().trim();
@@ -439,37 +473,47 @@ public class RegistrationLogistics extends AppCompatActivity {
                 String fullName = fname+" "+lname;
                 String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
 
+                //check if valid
                 if (isValid()) {
                     mDialog.setMessage("Registration in progress...");
                     mDialog.show();
 
+                    //create user
                     FAuth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            //check if user created
                             if (task.isSuccessful()) {
+                                //get user id
                                 String logisticsID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                //user db
+
+                                //user reference
                                 databaseReference = firebaseDatabase.getReference("User").child(logisticsID);
+
                                 //user values
                                 final HashMap<String, String> userMap = new HashMap<>();
                                 userMap.put("Role", role);
-                                //set user values
+
+                                //set value to reference
                                 databaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        //mobile db
+                                        //mobile reference
                                         databaseReference = firebaseDatabase.getReference("Mobile").child(phonenumber);
+
                                         //mobile values
                                         final  HashMap<String, String> phoneMap = new HashMap<>();
                                         phoneMap.put("mobile", phonenumber);
                                         phoneMap.put("id", logisticsID);
                                         phoneMap.put("role", role);
-                                        //put mobile values
+
+                                        //set value to reference
                                         databaseReference.setValue(phoneMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                //logistics db
+                                                //logistics database
                                                 databaseReference = firebaseDatabase.getReference("Logistics");
+
                                                 //logistics values
                                                 HashMap<String, String> logisticsMap = new HashMap<>();
                                                 logisticsMap.put("Province", statee);
@@ -484,14 +528,18 @@ public class RegistrationLogistics extends AppCompatActivity {
                                                 logisticsMap.put("FullName", fullName);
                                                 logisticsMap.put("Mobile", phonenumber);
                                                 logisticsMap.put("LogisticsID", logisticsID);
-                                                //put logistics values
+
+                                                //set value to reference
                                                 databaseReference.child(logisticsID).setValue(logisticsMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         mDialog.dismiss();
+
+                                                        //send email verification
                                                         FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
+                                                                //check email sent
                                                                 if (task.isSuccessful()) {
                                                                     AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationLogistics.this);
                                                                     builder.setMessage("Registered Successfully,Please Verify your Email");
@@ -500,6 +548,7 @@ public class RegistrationLogistics extends AppCompatActivity {
                                                                         @Override
                                                                         public void onClick(DialogInterface dialog, int which) {
                                                                             dialog.dismiss();
+                                                                            //direct to phone verification + phone number attached
                                                                             startActivity(new Intent(RegistrationLogistics.this, VerifyPhoneLogistics.class).putExtra("phonenumber", phonenumber));
                                                                             finish();
                                                                         }
@@ -508,6 +557,7 @@ public class RegistrationLogistics extends AppCompatActivity {
                                                                     alert.show();
                                                                 } else {
                                                                     mDialog.dismiss();
+                                                                    //email not sent
                                                                     ReusableCodeForAll.ShowAlert(RegistrationLogistics.this, "Error", task.getException().getMessage());
                                                                 }
                                                             }
@@ -520,6 +570,7 @@ public class RegistrationLogistics extends AppCompatActivity {
                                 });
                             } else {
                                 mDialog.dismiss();
+                                //registration failed
                                 ReusableCodeForAll.ShowAlert(RegistrationLogistics.this, "Error", task.getException().getMessage());
                             }
                         }
@@ -528,6 +579,7 @@ public class RegistrationLogistics extends AppCompatActivity {
             }
         });
 
+        //phone login clicked
         Phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -536,6 +588,7 @@ public class RegistrationLogistics extends AppCompatActivity {
             }
         });
 
+        //email login clicked
         Emaill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -545,8 +598,10 @@ public class RegistrationLogistics extends AppCompatActivity {
         });
     }
 
+    //EMAIL PATTERN
     String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
+    //CHECK VALIDITY
     public boolean isValid() {
         Fname.setErrorEnabled(false);
         Fname.setError("");
@@ -574,6 +629,7 @@ public class RegistrationLogistics extends AppCompatActivity {
         } else {
             isValidname = true;
         }
+
         if (TextUtils.isEmpty(lname)) {
             Lname.setErrorEnabled(true);
             Lname.setError("Lastname is required");
@@ -604,6 +660,7 @@ public class RegistrationLogistics extends AppCompatActivity {
                 isvalidpassword = true;
             }
         }
+
         if (TextUtils.isEmpty(confirmpassword)) {
             cfpass.setErrorEnabled(true);
             cfpass.setError("Confirm Password is required");
@@ -649,7 +706,7 @@ public class RegistrationLogistics extends AppCompatActivity {
         }
 
         isvalid = isValidname && isvalidpostcode && isValidemail && isvalidlname && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isvalidarea && isvalidhousestreetno;
-        return isvalid;
+        return isvalid; //return true/false
     }
 
     //HIDE KEYBOARD
@@ -661,5 +718,6 @@ public class RegistrationLogistics extends AppCompatActivity {
         }
     }
 
+    //DISABLE BACK PRESS
     public void onBackPressed(){}
 }

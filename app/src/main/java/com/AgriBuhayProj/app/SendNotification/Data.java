@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.SendNotification;
 
+//NOTIFICATION DATA MODEL
 public class Data {
 
     private String Title;

@@ -22,40 +22,50 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//SHIPPING ORDER LIST + DETAILS
 public class LogisticsShipOrderView extends AppCompatActivity {
-
-    RecyclerView recyclerViewproduct;
-    private List<LogisticsShipFinalOrders> logisticsShipFinalOrdersList;
-    private LogisticsShipOrderViewAdapter adapter;
-    DatabaseReference reference;
-    String RandomUID;
+    //VARIABLES
     private TextView grandtotal, address, name, number;
     private TextView producerName,producerAddress,producerMobile;
     LinearLayout l1;
+    RecyclerView recyclerViewproduct;
+
+    private List<LogisticsShipFinalOrders> logisticsShipFinalOrdersList;
+
+    private LogisticsShipOrderViewAdapter adapter;
+
+    DatabaseReference reference;
+
+    String RandomUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.logistics_ship_order_view);
+        //CONNECT XML
         recyclerViewproduct = findViewById(R.id.delishipvieworder);
+        l1 = findViewById(R.id.linear2);
+        grandtotal = findViewById(R.id.Shiptotal);
+        address = findViewById(R.id.ShipAddress);
+        name = findViewById(R.id.ShipName);
+        number = findViewById(R.id.ShipNumber);
+        producerName = findViewById(R.id.shipPName);
+        producerAddress = findViewById(R.id.shipPAdd);
+        producerMobile = findViewById(R.id.shipPNum);
+        //RECYCLER VIEW
         recyclerViewproduct.setHasFixedSize(true);
         recyclerViewproduct.setLayoutManager(new LinearLayoutManager(LogisticsShipOrderView.this));
-        l1 = (LinearLayout) findViewById(R.id.linear2);
-        grandtotal = (TextView) findViewById(R.id.Shiptotal);
-        address = (TextView) findViewById(R.id.ShipAddress);
-        name = (TextView) findViewById(R.id.ShipName);
-        number = (TextView) findViewById(R.id.ShipNumber);
-        producerName = (TextView) findViewById(R.id.shipPName);
-        producerAddress = (TextView) findViewById(R.id.shipPAdd);
-        producerMobile = (TextView) findViewById(R.id.shipPNum);
+
         logisticsShipFinalOrdersList = new ArrayList<>();
+
         logisticsfinalorders();
     }
 
+    //SHIPPING ORDER  DETAILS
     private void logisticsfinalorders() {
-
         RandomUID = getIntent().getStringExtra("RandomUID");
 
+        //list products
         reference = FirebaseDatabase.getInstance().getReference("LogisticsShipFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -81,6 +91,7 @@ public class LogisticsShipOrderView extends AppCompatActivity {
             }
         });
 
+        //list order information
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("LogisticsShipFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

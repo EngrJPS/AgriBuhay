@@ -22,22 +22,36 @@ import com.AgriBuhayProj.app.SplashScreen;
 
 import java.util.Random;
 
+//SHOW NOTIFICATION
 public class ShowNotification {
-
+    //SHOW NOTIFICATION
     public static void ShowNotif(Context context, String title, String message, String page) {
         String CHANNEL_ID = "NOTICE";
         String CHANNEL_NAME = "NOTICE";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //notification chaneel
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+
+            //on screen
             channel.enableLights(true);
+            //phone vibrate
             channel.enableVibration(true);
+            //show notification on lock screen
             channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+            //notification manager
             NotificationManager manager = context.getSystemService(NotificationManager.class);
+            //set notification channel
             manager.createNotificationChannel(channel);
         }
+
+        //NOTIFICATION NAVIGATION
+        //splashcreen starts
         Intent acIntent = new Intent(context, SplashScreen.class);
         acIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        //check page type
         if (page.trim().equalsIgnoreCase("Order")) {
             acIntent = new Intent(context, ProductPanelBottomNavigation_Producer.class).putExtra("PAGE", "Orderpage");
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
@@ -87,7 +101,7 @@ public class ShowNotification {
             pendingIntent = PendingIntent.getActivity(context, 0, acIntent, PendingIntent.FLAG_ONE_SHOT);
         }
 
-
+        //NOTIFICATION DISPLAY
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context, CHANNEL_ID).setSmallIcon(R.drawable.ic_baseline_agriculture_24)
                 .setColor(ContextCompat.getColor(context,R.color.Red))
                 .setContentTitle(title)

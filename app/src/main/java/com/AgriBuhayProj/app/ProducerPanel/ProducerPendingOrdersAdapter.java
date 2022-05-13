@@ -38,8 +38,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//PENDING ORDERS ADAPTER
 public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerPendingOrdersAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context context;
     private List<ProducerPendingOrders1> producerPendingOrders1List;
     private ProgressDialog progressDialog;
@@ -47,12 +48,13 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
     private APIService apiService;
     String userid, productid;
 
-
+    //ADAPTER
     public ProducerPendingOrdersAdapter(Context context, List<ProducerPendingOrders1> producerPendingOrders1List) {
         this.producerPendingOrders1List = producerPendingOrders1List;
         this.context = context;
     }
 
+    //VIEW HOLDER
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,15 +66,16 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final ProducerPendingOrders1 producerPendingOrders1 = producerPendingOrders1List.get(position);
-        holder.Address.setText(producerPendingOrders1.getAddress());
-        holder.grandtotalprice.setText("Total Price: ₱" + producerPendingOrders1.getGrandTotalPrice());
-
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
 
+        holder.Address.setText(producerPendingOrders1.getAddress());
+        holder.grandtotalprice.setText("Total Price: ₱" + producerPendingOrders1.getGrandTotalPrice());
+
         final String random = producerPendingOrders1.getRandomUID();
 
+        //view order
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,17 +85,19 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
             }
         });
 
+        //accept order
         holder.Accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressDialog.setMessage("Accepting Order...");
                 progressDialog.show();
 
-                //ProducerPendingOrders db
+                //pending orders product reference
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(random).child("Products");
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //get all products ordered
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             final ProducerPendingOrders producerPendingOrders = snapshot.getValue(ProducerPendingOrders.class);
                             HashMap<String, String> hashMap = new HashMap<>();
@@ -106,14 +111,15 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
                             hashMap.put("RandomUID", random);
                             hashMap.put("TotalPrice", producerPendingOrders.getTotalPrice());
                             hashMap.put("UserId", producerPendingOrders.getUserId());
-                            //put values to ProducerPaymentOrders db (Products)
+                            //save product values to payment orders db
                             FirebaseDatabase.getInstance().getReference("ProducerPaymentOrders").child(producerid).child(random).child("Products").child(productid).setValue(hashMap);
                         }
-                        //ProducerPendingOrders db
+                        //pending orders other info db reference
                         DatabaseReference data = FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(random).child("OtherInformation");
                         data.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                //get values
                                 ProducerPendingOrders1 producerPendingOrders1 = dataSnapshot.getValue(ProducerPendingOrders1.class);
                                 HashMap<String, String> hashMap1 = new HashMap<>();
                                 hashMap1.put("Address", producerPendingOrders1.getAddress());
@@ -122,16 +128,16 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
                                 hashMap1.put("Name", producerPendingOrders1.getName());
                                 hashMap1.put("Note", producerPendingOrders1.getNote());
                                 hashMap1.put("RandomUID", random);
-                                //put values to ProducerPaymentOrders db (Other Information)
+                                //save values to payment orders other info
                                 FirebaseDatabase.getInstance().getReference("ProducerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(random).child("OtherInformation").setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        //ProducerPendingOrders db
+                                        //producer pending order product reference
                                         DatabaseReference Reference = FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(random).child("Products");
                                         Reference.addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                                                //get all data from reference
                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                     final ProducerPendingOrders producerPendingOrders = snapshot.getValue(ProducerPendingOrders.class);
                                                     HashMap<String, String> hashMap2 = new HashMap<>();
@@ -145,7 +151,7 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
                                                     hashMap2.put("RandomUID", random);
                                                     hashMap2.put("TotalPrice", producerPendingOrders.getTotalPrice());
                                                     hashMap2.put("UserId", producerPendingOrders.getUserId());
-                                                    //put values to RetailerPaymentOrders db (Products)
+                                                    //save values to RetailerPaymentOrders products db
                                                     FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(userid).child(random).child("Products").child(productid).setValue(hashMap2);
                                                 }
                                                 //ProducerPendingOrders db (Other Information)
@@ -153,6 +159,7 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
                                                 dataa.addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        //get values
                                                         ProducerPendingOrders1 producerPendingOrders1 = dataSnapshot.getValue(ProducerPendingOrders1.class);
                                                         HashMap<String, String> hashMap3 = new HashMap<>();
                                                         hashMap3.put("Address", producerPendingOrders1.getAddress());
@@ -161,7 +168,7 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
                                                         hashMap3.put("Name", producerPendingOrders1.getName());
                                                         hashMap3.put("Note", producerPendingOrders1.getNote());
                                                         hashMap3.put("RandomUID", random);
-                                                        //put values to RetailerPaymentOrders db (Other Information)
+                                                        //save values to RetailerPaymentOrders db (Other Information)
                                                         FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(userid).child(random).child("OtherInformation").setValue(hashMap3).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
@@ -173,20 +180,22 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
                                                                         FirebaseDatabase.getInstance().getReference("RetailerPendingOrders").child(userid).child(random).child("OtherInformation").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                             @Override
                                                                             public void onComplete(@NonNull Task<Void> task) {
-                                                                                //TODO this is the database for the ChefPendingOrders
+                                                                                //ProducerPendingOrders remove products
                                                                                 FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(random).child("Products").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                     @Override
                                                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                                                        //TODO this is the database for the ChefPendingOrders
+                                                                                        //ProducerPendingOrders remove other info
                                                                                         FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(random).child("OtherInformation").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                             @Override
                                                                                             public void onSuccess(Void aVoid) {
-                                                                                                //TODO this is the database for the Tokens
+                                                                                                //retailer token reference
                                                                                                 FirebaseDatabase.getInstance().getReference().child("Tokens").child(userid).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
                                                                                                     @Override
                                                                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                                                                         progressDialog.dismiss();
+                                                                                                        //get token
                                                                                                         String usertoken = dataSnapshot.getValue(String.class);
+                                                                                                        //send notification
                                                                                                         sendNotifications(usertoken, "Order Accepted", "Your Order has been Accepted by the Producer, Now make Payment for Order", "Payment");
                                                                                                         ReusableCodeForAll.ShowAlert(context,"Order Accepted","Wait for the Retailer to make Payment");
                                                                                                     }
@@ -246,35 +255,41 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
             }
         });
 
+        //reject order
         holder.Reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressDialog.setMessage("Rejecting Order...");
                 progressDialog.show();
 
-                //TODO this is the database for the ChefPendingOrders
+                //ProducerPendingOrders product reference
                 DatabaseReference Reference = FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(random).child("Products");
                 Reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            //get values
                             final ProducerPendingOrders producerPendingOrders = snapshot.getValue(ProducerPendingOrders.class);
                             userid = producerPendingOrders.getUserId();
                             productid = producerPendingOrders.getProductId();
                         }
-                        //TODO this is the database for the tokens
+                        //retailer token reference
                         FirebaseDatabase.getInstance().getReference().child("Tokens").child(userid).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                //get token
                                 String usertoken = dataSnapshot.getValue(String.class);
+                                //notify retailer
                                 sendNotifications(usertoken, "Order Rejected", "Your Order has been Rejected by the producer due to some Circumstances", "Home");
-
+                                //RetailerPendingOrders remove order
                                 FirebaseDatabase.getInstance().getReference("RetailerPendingOrders").child(userid).child(random).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        //ProducerPendingOrders remove order
                                         FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(random).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
+                                                //change order status
                                                 FirebaseDatabase.getInstance().getReference("AlreadyOrdered").child(userid).child("isOrdered").setValue("false").addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
@@ -307,6 +322,7 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
         });
     }
 
+    //NOTIFY USER
     private void sendNotifications(String usertoken, String title, String message, String order) {
 
         Data data = new Data(title, message, order);
@@ -329,11 +345,13 @@ public class ProducerPendingOrdersAdapter extends RecyclerView.Adapter<ProducerP
 
     }
 
+    //ARRAY LIST SIZE
     @Override
     public int getItemCount() {
         return producerPendingOrders1List.size();
     }
 
+    //CONNECT XML
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView Address, grandtotalprice;

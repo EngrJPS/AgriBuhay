@@ -30,21 +30,26 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import java.util.concurrent.TimeUnit;
 
 public class SendOTPProducer extends AppCompatActivity {
-
-    String verificationId;
-    FirebaseAuth FAuth;
+    //DECLARE VARIABLES
+    //xml
     Button verify;
     TextView txt;
-    String phonenumber;
     Button Resend;
     EditText entercode;
     ProgressDialog progress;
+
+    //strings
+    String phonenumber;
+    String verificationId;
+
+    //firebase
+    FirebaseAuth FAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_otp_producer);
-
+        //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("OTP Verification");
@@ -54,13 +59,17 @@ public class SendOTPProducer extends AppCompatActivity {
         progress.setCancelable(false);
         progress.setCanceledOnTouchOutside(false);
 
+        //GET MOBILE STRING
         phonenumber = getIntent().getStringExtra("phonenumber").trim();
 
-        entercode = (EditText) findViewById(R.id.phoneno);
-        txt = (TextView) findViewById(R.id.text);
-        Resend = (Button) findViewById(R.id.Resendotp);
+        //CONNECT XML
+        entercode = findViewById(R.id.phoneno);
+        txt = findViewById(R.id.text);
+        Resend = findViewById(R.id.Resendotp);
+        verify = findViewById(R.id.Verify);
+
+        //FIREBASE INSTANCE
         FAuth = FirebaseAuth.getInstance();
-        verify = (Button) findViewById(R.id.Verify);
 
         //STARTUP (OTP)
         //send otp
@@ -74,6 +83,7 @@ public class SendOTPProducer extends AppCompatActivity {
                 Resend.setVisibility(View.INVISIBLE);
                 //show timer
                 txt.setVisibility(View.VISIBLE);
+                //countdown
                 txt.setText("Resend Code within " + millisUntilFinished/1000 + " Seconds");
             }
             @Override
@@ -85,22 +95,33 @@ public class SendOTPProducer extends AppCompatActivity {
             }
         }.start();
 
+        //BUTTON EVENTS
+        //verify clicked
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //hide keyboard
                 hideKeyboard();
+
+                //hide resend button
                 Resend.setVisibility(View.INVISIBLE);
+
+                //get string
                 String code = entercode.getText().toString().trim();
 
+                //check validity
                 if (code.isEmpty() && code.length() < 6) {
                     entercode.setError("Enter code");
                     entercode.requestFocus();
                     return;
                 }
+
+                //verify code
                 verifyCode(code);
             }
         });
 
+        //resend clicked
         Resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,26 +148,36 @@ public class SendOTPProducer extends AppCompatActivity {
         });
     }
 
+    //RESEND OTP
     private void resendOTP(String phonenumber) {
         sendVerificationCode(phonenumber);
     }
 
+    //VERIFY CODE
     private void verifyCode(String code)
     {
+        //get credential
         PhoneAuthCredential credential= PhoneAuthProvider.getCredential(verificationId,code);
+
         signInwithCredential(credential);
     }
 
+    //LOGIN
     private void signInwithCredential(PhoneAuthCredential credential) {
         progress.setMessage("Verifying....");
         progress.show();
+
+        //sign in with credential
         FAuth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //signed in
                         if (task.isSuccessful())
                         {
                             progress.dismiss();
+
+                            //direct to producer home
                             startActivity(new Intent(SendOTPProducer.this, ProductPanelBottomNavigation_Producer.class));
                             Toast.makeText(SendOTPProducer.this, "Logged In", Toast.LENGTH_SHORT).show();
                             finish();
@@ -154,6 +185,7 @@ public class SendOTPProducer extends AppCompatActivity {
                         else
                         {
                             progress.dismiss();
+                            //not signed in
                             ReusableCodeForAll.ShowAlert(SendOTPProducer.this,"Error",task.getException().getMessage());
                         }
                     }
@@ -173,21 +205,24 @@ public class SendOTPProducer extends AppCompatActivity {
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
+    //PHONE CALL BACKS
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
             mCallBack=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+            //re-send token
             super.onCodeSent(s, forceResendingToken);
 
+            //otp
             verificationId=s;
-
         }
 
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
-
+            //get otp
             String code=phoneAuthCredential.getSmsCode();
+
+            //auto-fill
             if (code !=null)
             {
                 entercode.setText(code);
@@ -198,7 +233,7 @@ public class SendOTPProducer extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
-
+            //otp error
             Toast.makeText(SendOTPProducer.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };

@@ -18,8 +18,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//PREPARED ORDER LIST
 public class ProducerPreparedOrder extends AppCompatActivity {
-
+    //VARIABLES
     private RecyclerView recyclerView;
     private List<ProducerFinalOrders1> producerFinalOrders1List;
     private ProducerPreparedOrderAdapter adapter;
@@ -29,28 +30,37 @@ public class ProducerPreparedOrder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.producer_prepared_order);
+        //RECYCLER VIEW
         recyclerView = findViewById(R.id.Recycle_preparedOrders);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ProducerPreparedOrder.this));
+        //ARRAY LIST INSTANCE
         producerFinalOrders1List = new ArrayList<>();
+        //LIST PREPARED ORDERS
         ProducerPrepareOrders();
     }
 
+    //LIST PREPARED ORDERS
     private void ProducerPrepareOrders() {
-        //TODO this is the database for the ChefFinalOrders
+        //prepared orders db reference
         databaseReference = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //clear list
                 producerFinalOrders1List.clear();
+                //populate recycler view
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    //TODO this is the database for the ChefFinalOrders
+                    //prepared orders other info reference
                     DatabaseReference data = FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("OtherInformation");
                     data.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            //get orders
                             ProducerFinalOrders1 producerFinalOrders1 = dataSnapshot.getValue(ProducerFinalOrders1.class);
+                            //add orders to list
                             producerFinalOrders1List.add(producerFinalOrders1);
+                            //set adapter
                             adapter = new ProducerPreparedOrderAdapter(ProducerPreparedOrder.this, producerFinalOrders1List);
                             recyclerView.setAdapter(adapter);
                         }

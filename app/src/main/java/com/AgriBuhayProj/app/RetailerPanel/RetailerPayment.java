@@ -36,47 +36,60 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//PAYMENT METHOD
 public class RetailerPayment extends AppCompatActivity {
-
+    //VARIABLES
     TextView OnlinePayment, CashPayment;
+
     String RandomUID, ProducerID;
+
     private APIService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.retailer_payment);
+        //CONNECT XML
+        OnlinePayment = findViewById(R.id.online);
+        CashPayment = findViewById(R.id.cash);
 
-        OnlinePayment = (TextView) findViewById(R.id.online);
-        CashPayment = (TextView) findViewById(R.id.cash);
+        //GET TRACKING NUMBER
         RandomUID = getIntent().getStringExtra("RandomUID");
+
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
+        //CARD PAYMENT
         OnlinePayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to card payment
                 Intent intent = new Intent(RetailerPayment.this, RetailerOnlinePayment.class);
                 intent.putExtra("randomUID", RandomUID);
                 startActivity(intent);
             }
         });
 
-
+        //CASH PAYMENT
         CashPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //progress dialog
                 ProgressDialog  progressDialog = new ProgressDialog(RetailerPayment.this);
                 progressDialog.setCancelable(false);
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.setMessage("Processing...");
                 progressDialog.show();
 
+                //RetailerPaymentOrders product reference
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //get all ordered products
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                             final RetailerPaymentOrders retailerPaymentOrders = dataSnapshot1.getValue(RetailerPaymentOrders.class);
+
+                            //set values
                             HashMap<String, String> hashMap = new HashMap<>();
                             String productid = retailerPaymentOrders.getProductId();
                             hashMap.put("ProducerId", retailerPaymentOrders.getProducerId());
@@ -87,14 +100,19 @@ public class RetailerPayment extends AppCompatActivity {
                             hashMap.put("RandomUID", RandomUID);
                             hashMap.put("TotalPrice", retailerPaymentOrders.getTotalPrice());
                             hashMap.put("UserId", retailerPaymentOrders.getUserId());
+
+                            //add products to RetailerFinalOrders
                             FirebaseDatabase.getInstance().getReference("RetailerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products").child(productid).setValue(hashMap);
                         }
+
+                        //RetailerPaymentOrders other info reference
                         DatabaseReference data = FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
                         data.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                                //get values
                                 final RetailerPaymentOrders1 retailerPaymentOrders1 = dataSnapshot.getValue(RetailerPaymentOrders1.class);
+                                //set values
                                 HashMap<String, String> hashMap1 = new HashMap<>();
                                 hashMap1.put("Address", retailerPaymentOrders1.getAddress());
                                 hashMap1.put("GrandTotalPrice", retailerPaymentOrders1.getGrandTotalPrice());
@@ -103,16 +121,20 @@ public class RetailerPayment extends AppCompatActivity {
                                 hashMap1.put("Note", retailerPaymentOrders1.getNote());
                                 hashMap1.put("RandomUID", RandomUID);
                                 hashMap1.put("Status", "Your order is waiting to be prepared by Farmers...");
+
+                                //add info to RetailerFinalOrders
                                 FirebaseDatabase.getInstance().getReference("RetailerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation").setValue(hashMap1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+                                        //products
                                         DatabaseReference Reference = FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
                                         Reference.addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                                                //get all products
                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                     final RetailerPaymentOrders retailerPaymentOrderss = snapshot.getValue(RetailerPaymentOrders.class);
+                                                    //set values
                                                     HashMap<String, String> hashMap2 = new HashMap<>();
                                                     String productid = retailerPaymentOrderss.getProductId();
                                                     ProducerID = retailerPaymentOrderss.getProducerId();
@@ -124,13 +146,17 @@ public class RetailerPayment extends AppCompatActivity {
                                                     hashMap2.put("RandomUID", RandomUID);
                                                     hashMap2.put("TotalPrice", retailerPaymentOrderss.getTotalPrice());
                                                     hashMap2.put("UserId", retailerPaymentOrderss.getUserId());
+
+                                                    //add product values to ProducerWaitingOrders
                                                     FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(ProducerID).child(RandomUID).child("Products").child(productid).setValue(hashMap2);
                                                 }
+                                                //other info
                                                 DatabaseReference dataa = FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
                                                 dataa.addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                         RetailerPaymentOrders1 retailerPaymentOrders11 = dataSnapshot.getValue(RetailerPaymentOrders1.class);
+                                                        //set values
                                                         HashMap<String, String> hashMap3 = new HashMap<>();
                                                         hashMap3.put("Address", retailerPaymentOrders11.getAddress());
                                                         hashMap3.put("GrandTotalPrice", retailerPaymentOrders11.getGrandTotalPrice());
@@ -139,25 +165,33 @@ public class RetailerPayment extends AppCompatActivity {
                                                         hashMap3.put("Note", retailerPaymentOrders11.getNote());
                                                         hashMap3.put("RandomUID", RandomUID);
                                                         hashMap3.put("Status", "Your order is waiting to be prepared by Farmers...");
+                                                        //add other info to ProducerWaitingOrders
                                                         FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(ProducerID).child(RandomUID).child("OtherInformation").setValue(hashMap3).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
+                                                                //remove product order from ProducerPaymentOrders
                                                                 FirebaseDatabase.getInstance().getReference("ProducerPaymentOrders").child(ProducerID).child(RandomUID).child("Products").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                     @Override
                                                                     public void onComplete(@NonNull Task<Void> task) {
+                                                                        //remove other info order from ProducerPaymentOrders
                                                                         FirebaseDatabase.getInstance().getReference("ProducerPaymentOrders").child(ProducerID).child(RandomUID).child("OtherInformation").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                             @Override
                                                                             public void onComplete(@NonNull Task<Void> task) {
+                                                                                //remove product order from RetailerPaymentOrders
                                                                                 FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                     @Override
                                                                                     public void onComplete(@NonNull Task<Void> task) {
+                                                                                        //remove other info order from RetailerPaymentOrders
                                                                                         FirebaseDatabase.getInstance().getReference("RetailerPaymentOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                             @Override
                                                                                             public void onSuccess(Void aVoid) {
+                                                                                                //producer token reference
                                                                                                 FirebaseDatabase.getInstance().getReference().child("Tokens").child(ProducerID).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
                                                                                                     @Override
                                                                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                                        //get token
                                                                                                         String usertoken = dataSnapshot.getValue(String.class);
+                                                                                                        //notify producer
                                                                                                         sendNotifications(usertoken, "Order Confirmed", "Payment mode is confirmed by user, Now you can start the order", "Confirm");
                                                                                                     }
 
@@ -178,7 +212,7 @@ public class RetailerPayment extends AppCompatActivity {
                                                                                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                                                                     @Override
                                                                                                     public void onClick(DialogInterface dialog, int which) {
-
+                                                                                                        //direct to home
                                                                                                         dialog.dismiss();
                                                                                                         Intent b = new Intent(RetailerPayment.this, ProductPanelBottomNavigation_Retailer.class);
                                                                                                         b.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -239,6 +273,7 @@ public class RetailerPayment extends AppCompatActivity {
         });
     }
 
+    //NOTIFY USER
     private void sendNotifications(String usertoken, String title, String message, String confirm) {
         Data data = new Data(title, message, confirm);
         NotificationSender sender = new NotificationSender(data, usertoken);

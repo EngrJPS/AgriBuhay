@@ -27,8 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+//CROP LIST
 public class ProducerAddCropList extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
+    //VARIABLES
     FloatingActionButton add;
     RecyclerView cropView;
     SearchView searchView;
@@ -42,16 +43,20 @@ public class ProducerAddCropList extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.producer_add_crop_list);
-
+        //CONNECT XML
         add = findViewById(R.id.floatBtn);
         cropView = findViewById(R.id.cropView);
 
+        //RECYCLER VIEW
         cropView.setHasFixedSize(true);
         cropView.setLayoutManager(new LinearLayoutManager(ProducerAddCropList.this));
 
+        //ARRAY INSTANCE
         cropList = new ArrayList<>();
 
+        //CROPS REFERENCE
         dbRef = FirebaseDatabase.getInstance().getReference("Crops");
+        //DB DATA
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -64,6 +69,7 @@ public class ProducerAddCropList extends AppCompatActivity implements AdapterVie
             }
         });
 
+        //BUTTON EVENTS
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

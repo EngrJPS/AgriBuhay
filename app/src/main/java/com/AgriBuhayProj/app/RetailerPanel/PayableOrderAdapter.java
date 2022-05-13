@@ -12,16 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.AgriBuhayProj.app.R;
 import java.util.List;
 
+//PAYABLE ORDERS ADAPTER
 public class PayableOrderAdapter extends RecyclerView.Adapter<PayableOrderAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context context;
     private List<RetailerPaymentOrders> retailerPaymentOrderslist;
 
+    //ADAPTER
     public PayableOrderAdapter(Context context, List<RetailerPaymentOrders> retailerPendingOrderslist) {
         this.retailerPaymentOrderslist = retailerPendingOrderslist;
         this.context = context;
     }
 
+    //VIEW HOLDER
     @NonNull
     @Override
     public PayableOrderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,7 +34,7 @@ public class PayableOrderAdapter extends RecyclerView.Adapter<PayableOrderAdapte
 
     @Override
     public void onBindViewHolder(@NonNull PayableOrderAdapter.ViewHolder holder, int position) {
-
+        //DISPLAY PRODUCT DETAILS
         final RetailerPaymentOrders retailerPaymentOrders = retailerPaymentOrderslist.get(position);
         holder.Productname.setText(retailerPaymentOrders.getProductName());
         holder.Price.setText("Price: ₱ " + retailerPaymentOrders.getProductPrice());

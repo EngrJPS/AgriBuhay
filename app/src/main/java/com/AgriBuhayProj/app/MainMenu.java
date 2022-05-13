@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainMenu extends AppCompatActivity {
-
+    //DECLARE VARIABLES
     Button signinemail, signinphone, signup;
 
 
@@ -20,29 +20,35 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        //CONNECT XML
         signinemail = (Button) findViewById(R.id.SignwithEmail);
         signinphone = (Button) findViewById(R.id.SignwithPhone);
         signup = (Button) findViewById(R.id.SignUp);
 
+        //BUTTON EVENTS
+        //email clicked
         signinemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to email login + home string
                 startActivity(new Intent(MainMenu.this, ChooseRole.class).putExtra("Home", "Email"));
                 finish();
             }
         });
-
+        //phone clicked
         signinphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to choose role + home string
                 startActivity(new Intent(MainMenu.this, ChooseRole.class).putExtra("Home", "Phone"));
                 finish();
             }
         });
-
+        //registration clicked
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to choose role + home string
                 startActivity(new Intent(MainMenu.this, ChooseRole.class).putExtra("Home", "SignUp"));
                 finish();
             }
@@ -56,9 +62,8 @@ public class MainMenu extends AppCompatActivity {
         System.gc();
     }
 
-    FirebaseAuth fAuth;
-    private Boolean backPress = false;
     //EXIT APP
+    private Boolean backPress = false;
     public void onBackPressed(){
         if(backPress){
             finishAffinity();

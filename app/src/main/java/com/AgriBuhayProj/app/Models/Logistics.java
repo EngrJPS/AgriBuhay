@@ -1,11 +1,14 @@
 package com.AgriBuhayProj.app.Models;
 
 public class Logistics {
+    //VARIABLES
     private String Province,City,Baranggay,House,Area,PostCode,FirstName,LastName,FullName,EmailID,Mobile,LogisticsID;
 
+    //OBJECT INSTANCE
     public Logistics() {
     }
 
+    //OBJECT CONSTRUCTOR
     public Logistics(String province, String baranggay, String city, String area, String firstName, String lastName, String fullName, String emailID, String mobile) {
         Province = province;
         Baranggay = baranggay;
@@ -18,6 +21,7 @@ public class Logistics {
         Mobile = mobile;
     }
 
+    //GETTER-SETTER
     public String getProvince() {
         return Province;
     }

@@ -12,16 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.AgriBuhayProj.app.R;
 import java.util.List;
 
+//PREPARED ORDER ADAPTER
 public class ProducerPreparedOrderViewAdapter extends RecyclerView.Adapter<ProducerPreparedOrderViewAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context mcontext;
     private List<ProducerFinalOrders> producerFinalOrderslist;
 
+    //ADAPTER
     public ProducerPreparedOrderViewAdapter(Context context, List<ProducerFinalOrders> producerFinalOrderslist) {
         this.producerFinalOrderslist = producerFinalOrderslist;
         this.mcontext = context;
     }
 
+    //VIEW HOLDER
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,7 +34,7 @@ public class ProducerPreparedOrderViewAdapter extends RecyclerView.Adapter<Produ
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        //display product values
         final ProducerFinalOrders producerFinalOrders = producerFinalOrderslist.get(position);
         holder.productname.setText(producerFinalOrders.getProductName());
         holder.price.setText("Price: ₱ " + producerFinalOrders.getProductPrice());

@@ -24,15 +24,19 @@ import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
 public class LoginPhoneLogistics extends AppCompatActivity {
-
-
+    //DECLARE VARIABLES
+    //xml
     EditText num;
     Button sendotp, signinemail;
     TextView txtsignup;
     CountryCodePicker cpp;
     ProgressDialog progressDialog;
+
+    //firebase
     FirebaseAuth FAuth;
     DatabaseReference dbRef;
+
+    //string
     String numberr;
 
     @Override
@@ -40,6 +44,7 @@ public class LoginPhoneLogistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_phone_delivery);
 
+        //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Login As Logistics");
@@ -47,42 +52,59 @@ public class LoginPhoneLogistics extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //direct to main menu
                 startActivity(new Intent(LoginPhoneLogistics.this,MainMenu.class));
                 finish();
             }
         });
 
-        num = (EditText) findViewById(R.id.Dphonenumber);
-        sendotp = (Button) findViewById(R.id.Sendotp);
-        cpp = (CountryCodePicker) findViewById(R.id.countrycode);
-        signinemail = (Button) findViewById(R.id.DbtnEmail);
-        txtsignup = (TextView) findViewById(R.id.pLReg);
+        //CONNECT XML
+        num = findViewById(R.id.Dphonenumber);
+        sendotp = findViewById(R.id.Sendotp);
+        cpp = findViewById(R.id.countrycode);
+        signinemail = findViewById(R.id.DbtnEmail);
+        txtsignup = findViewById(R.id.pLReg);
 
+        //PROGRESS DIALOG
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
 
+        //DATABASE INSTANCE
         FAuth = FirebaseAuth.getInstance();
+        //database reference
         dbRef = FirebaseDatabase.getInstance().getReference("Mobile");
 
+        //BUTTON EVENTS
+        //send otp
         sendotp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //hide keyboard
                 hideKeyboard();
 
+                //get string
                 numberr = num.getText().toString().trim();
                 String phonenumber = cpp.getSelectedCountryCodeWithPlus() + numberr;
 
+                //check if empty
                 if(!numberr.isEmpty()){ //field not empty
+                    //check length
                     if(!(numberr.length()<10)){ //number not <10
                         progressDialog.setMessage("Verifying...");
                         progressDialog.show();
+
+                        //get data from reference
                         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                //check if mobile exists
                                 if(snapshot.child(phonenumber).exists()){
+
+                                    //check if logistics account
                                     if(snapshot.child(phonenumber).child("role").getValue().equals("Logistics")){
                                         progressDialog.dismiss();
+                                        //direct to otp verification w/ mobile
                                         startActivity(new Intent(LoginPhoneLogistics.this, SendOTPLogistics.class).putExtra("phonenumber",phonenumber));
                                         finish();
                                     }else{ //non-logistics number
@@ -97,6 +119,7 @@ public class LoginPhoneLogistics extends AppCompatActivity {
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
                                 progressDialog.dismiss();
+                                //database error
                                 Toast.makeText(LoginPhoneLogistics.this, error.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
@@ -112,18 +135,21 @@ public class LoginPhoneLogistics extends AppCompatActivity {
             }
         });
 
-
+        //registration clicked
         txtsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to registration
                 startActivity(new Intent(LoginPhoneLogistics.this, RegistrationLogistics.class));
                 finish();
             }
         });
 
+        //email login clicked
         signinemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to email login
                 startActivity(new Intent(LoginPhoneLogistics.this, LoginEmailLogistics.class));
                 finish();
             }
@@ -140,5 +166,6 @@ public class LoginPhoneLogistics extends AppCompatActivity {
         }
     }
 
+    //DISABLE BACK PRES
     public void onBackPressed(){  }
 }

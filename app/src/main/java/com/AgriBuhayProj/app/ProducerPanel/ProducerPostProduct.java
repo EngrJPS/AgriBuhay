@@ -46,8 +46,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+//POST PRODUCT
 public class ProducerPostProduct extends AppCompatActivity {
-
+    //VARIABLES
     ImageButton imageButton;
     Button post_product;
     Spinner Products;
@@ -76,14 +77,12 @@ public class ProducerPostProduct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.producer_post_product);
-
+        //PROGRESS DIALOG
         progressDialog = new ProgressDialog(ProducerPostProduct.this);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference("ProductSupply");
-
+        //CONNECT XML
         desc = findViewById(R.id.description);
         qty = findViewById(R.id.quantity);
         pri = findViewById(R.id.price);
@@ -92,11 +91,15 @@ public class ProducerPostProduct extends AppCompatActivity {
         imageButton = findViewById(R.id.imageupload);
         Products = findViewById(R.id.products);
 
+        //FIREBASE INSTANCE
+        storage = FirebaseStorage.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-
         fbAuth = FirebaseAuth.getInstance();
 
-        //TODO this is the database for the FoodSupplyDetails
+        //REFERENCE
+        //product image reference
+        storageReference = storage.getReference("ProductSupply");
+        //product supply
         databaseReference = firebaseDatabase.getReference("ProductSupplyDetails");
 
         //SPINNER LIST
@@ -110,16 +113,21 @@ public class ProducerPostProduct extends AppCompatActivity {
         spinnerList();
 
         try {
+            //get producer id
             String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            //producer reference
             dataaa = firebaseDatabase.getReference("Producer").child(userid);
             dataaa.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    //get db values
                     Producer producer = dataSnapshot.getValue(Producer.class);
                     province = producer.getProvince();
                     city = producer.getCity();
                     baranggay = producer.getBaranggay();
 
+                    //select image
                     imageButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -127,17 +135,20 @@ public class ProducerPostProduct extends AppCompatActivity {
                         }
                     });
 
-
+                    //post product
                     post_product.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            //get string values
                             products = Products.getSelectedItem().toString().trim();
                             description = desc.getEditText().getText().toString().trim();
                             quantity = qty.getEditText().getText().toString().trim();
                             price = pri.getEditText().getText().toString().trim();
                             mobile = num.getEditText().getText().toString().trim();
 
+                            //check validity
                             if (isValid()) {
+                                //upload product
                                 uploadImage();
                             }
                         }
@@ -155,6 +166,7 @@ public class ProducerPostProduct extends AppCompatActivity {
         }
     }
 
+    //VALIDATION
     private boolean isValid() {
         desc.setErrorEnabled(false);
         desc.setError("");
@@ -190,25 +202,31 @@ public class ProducerPostProduct extends AppCompatActivity {
 
     //UPLOAD IMAGE
     private void uploadImage() {
+        //check image
         if (imageURI != null) {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
+            //product id
             randomUID = UUID.randomUUID().toString();
 
+            //producer id
             producerID = fbAuth.getCurrentUser().getUid();
 
+            //save image to db
             ref = storageReference.child(producerID).child(randomUID);
             ref.putFile(imageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    //get image db link
                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
+                            //convert link to string
                             imageURL = uri.toString();
                             //Added Mobile
                             ProductSupplyDetails info = new ProductSupplyDetails(products,quantity,price,description,imageURL,randomUID,producerID,mobile);
-                            //TODO Product Supply Details database
+                            //ProductSupplyDetails reference
                             firebaseDatabase.getReference("ProductSupplyDetails").child(province).child(city).child(baranggay).child(producerID).child(randomUID)
                                     .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -225,11 +243,13 @@ public class ProducerPostProduct extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressDialog.dismiss();
+                    //upload failed
                     Toast.makeText(ProducerPostProduct.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    //progress dialog with percentage
                     double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                     progressDialog.setMessage("Uploaded " + (int) progress + "%");
                     progressDialog.setCanceledOnTouchOutside(false);
@@ -238,16 +258,20 @@ public class ProducerPostProduct extends AppCompatActivity {
         }
     }
 
-
+    //SELECT IMAGE
     private void onSelectImageClick(View v) {
         CropImage.startPickImageActivity(this);
     }
 
+    //CHOOSE SOURCE
     @Override
     @SuppressLint("NewApi")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //check source picked
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            //get image
             imageURI = CropImage.getPickImageResultUri(this, data);
+            //crop image permission
             if (CropImage.isReadExternalStoragePermissionsRequired(this, imageURI)) {
                 cropURI = imageURI;
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
@@ -255,9 +279,13 @@ public class ProducerPostProduct extends AppCompatActivity {
                 startCropImageActivity(imageURI);
             }
         }
+        //check crop activity
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            //get cropped image
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            //check result
             if (resultCode == RESULT_OK) {
+                //display image
                 ((ImageButton) findViewById(R.id.imageupload)).setImageURI(result.getUri());
                 Toast.makeText(this, "Cropped Successfully", Toast.LENGTH_SHORT).show();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -267,6 +295,7 @@ public class ProducerPostProduct extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //CROP PERMISSION
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -290,6 +319,7 @@ public class ProducerPostProduct extends AppCompatActivity {
         spinRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //list crops added
                 for(DataSnapshot item:snapshot.getChildren()){
                     Crops cropModel = item.getValue(Crops.class);
                     cropList.add(cropModel);

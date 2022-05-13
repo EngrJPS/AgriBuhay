@@ -34,8 +34,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+//PROFILE FRAGMENT
 public class RetailerProfileFragment extends Fragment {
-
 
     //SPINNER
     //PROVINCE - CITY/MUNICIPALITY
@@ -108,57 +108,66 @@ public class RetailerProfileFragment extends Fragment {
     String [] Santa_Maria = {"Basiawan","Cadaatan","Kidadan","Kisulad","Mamacao","Ogpao","Pongpong","San Agustin","Tanglad","Santo Rosaio","San Roque","Datu Taligasao","Datu Intan","Kinilidan"};
     String [] Sarangani = {"Batuganding","Konel","Lipol","Mabila","Tinina","Gomtago","Tagen","Tucal","Patuco","Laker","Camahual","Camalig"};
 
+    //VARIABLES
     EditText firstname, lastname, address;
     Spinner Province, City, Baranggay;
     TextView mobileno, Email;
     Button Update;
     LinearLayout password, LogOut;
+
     DatabaseReference databaseReference, data;
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
-    String province, city, baranggay, email, passwordd, confirmpass;
 
+    String province, city, baranggay, email, passwordd, confirmpass;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setTitle("Profile");
         View v = inflater.inflate(R.layout.fragment_retailerprofile, null);
+        //CONNECT XML
+        firstname = v.findViewById(R.id.fnamee);
+        lastname = v.findViewById(R.id.lnamee);
+        address = v.findViewById(R.id.address);
+        Email = v.findViewById(R.id.emailID);
+        Province = v.findViewById(R.id.rState);
+        City = v.findViewById(R.id.rCity);
+        Baranggay = v.findViewById(R.id.rBar);
+        mobileno = v.findViewById(R.id.mobilenumber);
+        Update = v.findViewById(R.id.update);
+        password = v.findViewById(R.id.passwordlayout);
+        LogOut = v.findViewById(R.id.logout_layout);
 
-        firstname = (EditText) v.findViewById(R.id.fnamee);
-        lastname = (EditText) v.findViewById(R.id.lnamee);
-        address = (EditText) v.findViewById(R.id.address);
-        Email = (TextView) v.findViewById(R.id.emailID);
-        Province = (Spinner) v.findViewById(R.id.rState);
-        City = (Spinner) v.findViewById(R.id.rCity);
-        Baranggay = (Spinner) v.findViewById(R.id.rBar);
-        mobileno = (TextView) v.findViewById(R.id.mobilenumber);
-        Update = (Button) v.findViewById(R.id.update);
-        password = (LinearLayout) v.findViewById(R.id.passwordlayout);
-        LogOut = (LinearLayout) v.findViewById(R.id.logout_layout);
-
+        //AUTHENTICATION
         firebaseAuth = FirebaseAuth.getInstance();
         String userid = firebaseAuth.getCurrentUser().getUid();
 
+        //GET RETAILER
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //GET RETAILER PHONE NUMBER
         String mobile = user.getPhoneNumber();
 
+        //RETAILER REFERENCE
         databaseReference = FirebaseDatabase.getInstance().getReference("Retailer").child(userid);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final Retailer retailer = dataSnapshot.getValue(Retailer.class);
 
+                //set values
                 firstname.setText(retailer.getFirstName());
                 lastname.setText(retailer.getLastName());
                 address.setText(retailer.getLocalAddress());
                 mobileno.setText(mobile);
                 Email.setText(retailer.getEmailID());
-                
+
+                //set spinner values
                 Province.setSelection(getIndexByString(Province, retailer.getProvince()));
                 City.setSelection(getIndexByString(City, retailer.getCity()));
                 Baranggay.setSelection(getIndexByString(Baranggay, retailer.getBaranggay()));
 
+                //province selected
                 Province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -167,6 +176,7 @@ public class RetailerProfileFragment extends Fragment {
                         ArrayList<String> list = new ArrayList<>();
                         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, list);
 
+                        //display city
                         switch (province){
                             case "Davao de Oro":
                                 Collections.addAll(list, Davao_de_Oro);
@@ -190,7 +200,7 @@ public class RetailerProfileFragment extends Fragment {
                                 break;
                         }
 
-                        /*City.setSelection(getIndexByString(City, retailer.getCity()));*/
+                        City.setSelection(getIndexByString(City, retailer.getCity()));
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -198,6 +208,7 @@ public class RetailerProfileFragment extends Fragment {
                     }
                 });
 
+                //city selected
                 City.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -206,6 +217,7 @@ public class RetailerProfileFragment extends Fragment {
                         ArrayList<String> list = new ArrayList<>();
                         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, list);
 
+                        //display baranggay
                         switch (city){
                             //davao de oro
                             case "Compostela":
@@ -413,7 +425,7 @@ public class RetailerProfileFragment extends Fragment {
 
                     }
                 });
-
+                //baranggay selected
                 Baranggay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -433,17 +445,17 @@ public class RetailerProfileFragment extends Fragment {
             }
         });
 
+        //update information
         updateinformation();
         return v;
     }
-
+    //TODO INCOMPLETE
     private void updateinformation() {
-
-
+        //update information
         Update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //get retailer id
                 String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 data = FirebaseDatabase.getInstance().getReference("Retailer").child(useridd);
                 data.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -451,6 +463,7 @@ public class RetailerProfileFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Retailer retailer = dataSnapshot.getValue(Retailer.class);
 
+                        //get values
                         email = retailer.getEmailID();
                         long mobilenoo = Long.parseLong(retailer.getMobile());
 
@@ -459,6 +472,7 @@ public class RetailerProfileFragment extends Fragment {
                         String fullName = Fname+" "+Lname;
                         String Address = address.getText().toString().trim();
 
+                        //set new values
                         HashMap<String, String> hashMappp = new HashMap<>();
                         hashMappp.put("EmailID", email);
                         hashMappp.put("FirstName", Fname);
@@ -469,6 +483,8 @@ public class RetailerProfileFragment extends Fragment {
                         hashMappp.put("Province", province);
                         hashMappp.put("City", city);
                         hashMappp.put("Baranggay", baranggay);
+
+                        //add to retailer db
                         firebaseDatabase.getInstance().getReference("Retailer").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(hashMappp);
                     }
 
@@ -482,6 +498,7 @@ public class RetailerProfileFragment extends Fragment {
             }
         });
 
+        //reset password
         password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -489,6 +506,7 @@ public class RetailerProfileFragment extends Fragment {
             }
         });
 
+        //change mobile no
         mobileno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -496,6 +514,7 @@ public class RetailerProfileFragment extends Fragment {
             }
         });
 
+        //logout user
         LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -504,7 +523,9 @@ public class RetailerProfileFragment extends Fragment {
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //logout user
                         firebaseAuth.signOut();
+                        //direct to main menu
                         Intent intent = new Intent(getActivity(), MainMenu.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
@@ -523,6 +544,7 @@ public class RetailerProfileFragment extends Fragment {
 
     }
 
+    //GET ARRAY INDEX BY STRING
     private int getIndexByString(Spinner st, String spist) {
         int index = 0;
         for (int i = 0; i < st.getCount(); i++) {

@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.ProducerPanel;
 
+//PRODUCT UPDATE MODEL
 public class UpdateProductModel {
 
     String Products,RandomUID,Description,Quantity,Price,ImageURL,ProducerID,Mobile;

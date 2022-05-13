@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.Printer;
 
+//PRINTER FORMATTER
 public class UnicodeFormatter {
 
     static public String byteToHex(byte b) {

@@ -1,8 +1,13 @@
 package com.AgriBuhayProj.app.Models;
 
 public class Crops {
+    //VARIABLES
     private String crop,tempMin,tempMax,humidMin,humidMax,carbonMin,carbonMax;
 
+    //OBJECT INSTANCE
+    public Crops(){}
+
+    //OBJECT CONSTRUCTOR
     public Crops(String crop,String tempMin, String tempMax, String humidMin, String humidMax, String carbonMin, String carbonMax) {
         this.crop = crop;
         this.tempMin = tempMin;
@@ -13,8 +18,7 @@ public class Crops {
         this.carbonMax = carbonMax;
     }
 
-    public Crops(){}
-
+    //GETTER-SETTER
     public String getCrop() {
         return crop;
     }

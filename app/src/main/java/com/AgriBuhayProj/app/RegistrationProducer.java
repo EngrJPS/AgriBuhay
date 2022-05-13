@@ -105,34 +105,29 @@ public class RegistrationProducer extends AppCompatActivity {
     String [] Santa_Maria = {"Basiawan","Cadaatan","Kidadan","Kisulad","Mamacao","Ogpao","Pongpong","San Agustin","Tanglad","Santo Rosaio","San Roque","Datu Taligasao","Datu Intan","Kinilidan"};
     String [] Sarangani = {"Batuganding","Konel","Lipol","Mabila","Tinina","Gomtago","Tagen","Tucal","Patuco","Laker","Camahual","Camalig"};
 
+    //DECLARE VARIABLES
+    //xml
     TextInputLayout Fname, Lname, Email, Pass, cfpass, mobileno, houseno, area, postcode;
     Spinner statespin, Cityspin, Suburban;
     Button signup, Emaill, Phone;
     CountryCodePicker Cpp;
+
+    //firebase
     FirebaseAuth FAuth;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
 
-    String fname;
-    String lname;
-    String emailid;
-    String password;
-    String confirmpassword;
-    String mobile;
-    String house;
-    String Area;
-    String Postcode;
+    //string
     String role = "Producer";
-    String statee;
-    String cityy;
-    String suburban;
-
+    String fname,lname,emailid,password,confirmpassword,mobile,house,Area,Postcode;
+    String statee,cityy,suburban;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_producer);
 
+        //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Register As Producer");
@@ -140,36 +135,47 @@ public class RegistrationProducer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to main menu
                 startActivity(new Intent(RegistrationProducer.this, MainMenu.class));
                 finish();
             }
         });
 
-        Fname = (TextInputLayout) findViewById(R.id.Firstname);
-        Lname = (TextInputLayout) findViewById(R.id.Lastname);
-        Email = (TextInputLayout) findViewById(R.id.Email);
-        Pass = (TextInputLayout) findViewById(R.id.Pwd);
-        cfpass = (TextInputLayout) findViewById(R.id.Cpass);
-        mobileno = (TextInputLayout) findViewById(R.id.Mobileno);
-        houseno = (TextInputLayout) findViewById(R.id.houseNo);
-        area = (TextInputLayout) findViewById(R.id.Area);
-        postcode = (TextInputLayout) findViewById(R.id.Postcode);
-        statespin = (Spinner) findViewById(R.id.Statee);
-        Cityspin = (Spinner) findViewById(R.id.Citys);
-        Suburban = (Spinner) findViewById(R.id.Suburban);
-        signup = (Button) findViewById(R.id.Signup);
-        Emaill = (Button) findViewById(R.id.emaill);
-        Phone = (Button) findViewById(R.id.phone);
-        Cpp = (CountryCodePicker) findViewById(R.id.CountryCode);
+        //CONNECT XML
+        Fname = findViewById(R.id.Firstname);
+        Lname = findViewById(R.id.Lastname);
+        Email = findViewById(R.id.Email);
+        Pass = findViewById(R.id.Pwd);
+        cfpass = findViewById(R.id.Cpass);
+        mobileno = findViewById(R.id.Mobileno);
+        houseno = findViewById(R.id.houseNo);
+        area = findViewById(R.id.Area);
+        postcode = findViewById(R.id.Postcode);
+        statespin = findViewById(R.id.Statee);
+        Cityspin = findViewById(R.id.Citys);
+        Suburban = findViewById(R.id.Suburban);
+        signup = findViewById(R.id.Signup);
+        Emaill = findViewById(R.id.emaill);
+        Phone = findViewById(R.id.phone);
+        Cpp = findViewById(R.id.CountryCode);
 
         //PROVINCE SPIN
         statespin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //get spinner data
                 Object value = parent.getItemAtPosition(position);
+
+                //spinner data - string
                 statee = value.toString().trim();
+
+                //create array list
                 ArrayList<String> list = new ArrayList<>();
+
+                //set array to display
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegistrationProducer.this, android.R.layout.simple_spinner_item, list);
+
+                //check selected item
                 switch (statee){
                     case "Davao de Oro":
                         Collections.addAll(list, Davao_de_Oro);
@@ -202,6 +208,7 @@ public class RegistrationProducer extends AppCompatActivity {
         Cityspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 Object value = parent.getItemAtPosition(position);
                 cityy = value.toString().trim();
                 ArrayList<String> list = new ArrayList<>();
@@ -424,15 +431,19 @@ public class RegistrationProducer extends AppCompatActivity {
             }
         });
 
-        //db instances
+        //DATABASE INSTANCES
         firebaseDatabase = FirebaseDatabase.getInstance();
         FAuth = FirebaseAuth.getInstance();
 
+        //BUTTON EVENTS
+        //sign up clicked
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //hide keyboard
                 hideKeyboard();
 
+                //get string value
                 fname = Fname.getEditText().getText().toString().trim();
                 lname = Lname.getEditText().getText().toString().trim();
                 emailid = Email.getEditText().getText().toString().trim();
@@ -446,7 +457,7 @@ public class RegistrationProducer extends AppCompatActivity {
                 String fullName = fname+" "+lname;
                 String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
 
-
+                //check if valid
                 if (isValid()) {
                     final ProgressDialog mDialog = new ProgressDialog(RegistrationProducer.this);
                     mDialog.setCancelable(false);
@@ -454,33 +465,42 @@ public class RegistrationProducer extends AppCompatActivity {
                     mDialog.setMessage("Registration in progress..");
                     mDialog.show();
 
+                    //create user
                     FAuth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            //check if user created
                             if (task.isSuccessful()) {
+                                //get user id
                                 String producerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                //user db
+
+                                //user reference
                                 databaseReference = FirebaseDatabase.getInstance().getReference("User").child(producerID);
+
                                 //user values
                                 final HashMap<String,String> userMap = new HashMap<>();
                                 userMap.put("Role", role);
-                                //set user values
+
+                                //set value to reference
                                 databaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        //mobile db
+                                        //mobile reference
                                         databaseReference = firebaseDatabase.getReference("Mobile").child(phonenumber);
+
                                         //mobile values
                                         final  HashMap<String, String> phoneMap = new HashMap<>();
                                         phoneMap.put("mobile", phonenumber);
                                         phoneMap.put("id", producerID);
                                         phoneMap.put("role", role);
-                                        //put mobile values
+
+                                        //set value to reference
                                         databaseReference.setValue(phoneMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                //producer db
+                                                //producer reference
                                                 databaseReference = firebaseDatabase.getReference("Producer");
+
                                                 //producer values
                                                 HashMap<String, String> producerMap = new HashMap<>();
                                                 producerMap.put("Province", statee);
@@ -494,14 +514,18 @@ public class RegistrationProducer extends AppCompatActivity {
                                                 producerMap.put("LastName", lname);
                                                 producerMap.put("FullName", fullName);
                                                 producerMap.put("Mobile", phonenumber);
-                                                //put producer values
+
+                                                //set value to reference
                                                 databaseReference.child(producerID).setValue(producerMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         mDialog.dismiss();
+
+                                                        //send email verification
                                                         FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
+                                                                //check email sent
                                                                 if (task.isSuccessful()) {
                                                                     AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationProducer.this);
                                                                     builder.setMessage("Registered Successfully,Please Verify your Email");
@@ -510,6 +534,7 @@ public class RegistrationProducer extends AppCompatActivity {
                                                                         @Override
                                                                         public void onClick(DialogInterface dialog, int which) {
                                                                             dialog.dismiss();
+                                                                            //direct to phone verification + phone number attached
                                                                             startActivity(new Intent(RegistrationProducer.this, VerifyPhoneProducer.class).putExtra("phonenumber", phonenumber));
                                                                             finish();
                                                                         }
@@ -518,6 +543,7 @@ public class RegistrationProducer extends AppCompatActivity {
                                                                     alert.show();
                                                                 } else {
                                                                     mDialog.dismiss();
+                                                                    //email not sent
                                                                     ReusableCodeForAll.ShowAlert(RegistrationProducer.this, "Error", task.getException().getMessage());
 
                                                                 }
@@ -531,6 +557,7 @@ public class RegistrationProducer extends AppCompatActivity {
                                 });
                             } else {
                                 mDialog.dismiss();
+                                //registration failed
                                 ReusableCodeForAll.ShowAlert(RegistrationProducer.this, "Error", task.getException().getMessage());
                             }
                         }
@@ -539,6 +566,7 @@ public class RegistrationProducer extends AppCompatActivity {
             }
         });
 
+        //email login clicked
         Emaill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -547,6 +575,7 @@ public class RegistrationProducer extends AppCompatActivity {
             }
         });
 
+        //phone login clicked
         Phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -556,8 +585,10 @@ public class RegistrationProducer extends AppCompatActivity {
         });
     }
 
+    //EMAIL PATTERN
     String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
+    //CHECK VALIDITY
     public boolean isValid() {
         Email.setErrorEnabled(false);
         Email.setError("");
@@ -659,7 +690,7 @@ public class RegistrationProducer extends AppCompatActivity {
         }
 
         isvalid = isValidname && isvalidpostcode && isvalidlname && isValidemail && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isvalidarea && isvalidhousestreetno;
-        return isvalid;
+        return isvalid; //return true/false
     }
 
     //HIDE KEYBOARD
@@ -671,5 +702,6 @@ public class RegistrationProducer extends AppCompatActivity {
         }
     }
 
+    //DISABLE BACK PRESS
     public void onBackPressed(){}
 }

@@ -1,8 +1,8 @@
 package com.AgriBuhayProj.app.RetailerPanel;
 
+//PRODUCT CART MODEL
 public class Cart {
 
-    //TODO add mobile number in this model
     private String ProducerId,ProductID,ProductName,ProductQuantity,Price,TotalPrice,Mobile;
 
     public Cart() {

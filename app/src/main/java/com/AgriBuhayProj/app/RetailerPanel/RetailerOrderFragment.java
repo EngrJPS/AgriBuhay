@@ -12,8 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.AgriBuhayProj.app.R;
-public class RetailerOrderFragment extends Fragment {
 
+//ORDER FRAGMENT
+public class RetailerOrderFragment extends Fragment {
+    //VARIABLE
     TextView Pendingorder, Payableorder;
 
     @Nullable
@@ -22,22 +24,25 @@ public class RetailerOrderFragment extends Fragment {
         getActivity().setTitle("Orders");
         View v = inflater.inflate(R.layout.fragment_retailerorder, null);
 
-        Pendingorder = (TextView) v.findViewById(R.id.pendingorder);
-        Payableorder = (TextView) v.findViewById(R.id.payableorder);
+        //CONNECT XML
+        Pendingorder = v.findViewById(R.id.pendingorder);
+        Payableorder = v.findViewById(R.id.payableorder);
 
+        //pending orders
         Pendingorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //direct to pending orders
                 Intent intent = new Intent(getContext(), PendingOrders.class);
                 startActivity(intent);
             }
         });
 
-
+        //payable orders
         Payableorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to payable orders
                 Intent i = new Intent(getContext(), PayableOrders.class);
                 startActivity(i);
             }

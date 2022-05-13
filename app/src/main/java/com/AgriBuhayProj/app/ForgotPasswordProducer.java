@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordProducer extends AppCompatActivity {
-
+    //DECLARE VARIABLES
     TextInputLayout forgetpassword;
     Button Reset;
     FirebaseAuth FAuth;
@@ -29,27 +29,37 @@ public class ForgotPasswordProducer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_password_producer);
+        //CONNECT XML
+        forgetpassword = findViewById(R.id.Emailid);
+        Reset = findViewById(R.id.button2);
 
-        forgetpassword = (TextInputLayout) findViewById(R.id.Emailid);
-        Reset = (Button) findViewById(R.id.button2);
-
+        //FIREBASE AUTHENTICATION INSTANCE
         FAuth = FirebaseAuth.getInstance();
+
+        //BUTTON EVENT
         Reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //hide keyboard
                 hideKeyboard();
 
+                //show progress dialog
                 final ProgressDialog mDialog = new ProgressDialog(ForgotPasswordProducer.this);
                 mDialog.setCancelable(false);
                 mDialog.setCanceledOnTouchOutside(false);
                 mDialog.setMessage("Sending password reset link...");
                 mDialog.show();
 
+                //send reset link to email
                 FAuth.sendPasswordResetEmail(forgetpassword.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        //check if link was sent
                         if (task.isSuccessful()) {
+                            //close progress dialog
                             mDialog.dismiss();
+
+                            //show alert dialog
                             AlertDialog.Builder builder = new AlertDialog.Builder(ForgotPasswordProducer.this);
                             builder.setCancelable(false);
                             builder.setMessage("Password reset link sent. Check your email");
@@ -57,6 +67,7 @@ public class ForgotPasswordProducer extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
+                                    //direct to main menu
                                     startActivity(new Intent(ForgotPasswordProducer.this, MainMenu.class));
                                     finish();
                                 }
@@ -64,7 +75,9 @@ public class ForgotPasswordProducer extends AppCompatActivity {
                             AlertDialog alertDialog = builder.create();
                             alertDialog.show();
                         } else {
+                            //close progress dialog
                             mDialog.dismiss();
+                            //show error
                             ReusableCodeForAll.ShowAlert(ForgotPasswordProducer.this, "Error", task.getException().getMessage());
                         }
                     }
@@ -82,6 +95,7 @@ public class ForgotPasswordProducer extends AppCompatActivity {
         }
     }
 
+    //BACK PRESS
     @Override
     public void onBackPressed() {finish();}
 }

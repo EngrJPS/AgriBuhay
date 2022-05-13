@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.RetailerPanel;
 
+//PAYABLE ORDERS PRODUCT MODEL
 public class RetailerPaymentOrders {
 
     private String ProducerId, ProductId, ProductName, ProductPrice, ProductQuantity,RandomUID,TotalPrice,UserId;

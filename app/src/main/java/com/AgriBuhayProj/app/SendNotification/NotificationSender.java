@@ -1,6 +1,7 @@
 package com.AgriBuhayProj.app.SendNotification;
 
 
+//NOTIFICATION SENDER MODEL
 public class NotificationSender {
 
     public Data data;

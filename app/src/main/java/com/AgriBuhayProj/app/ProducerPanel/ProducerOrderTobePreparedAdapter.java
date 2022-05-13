@@ -14,16 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.AgriBuhayProj.app.R;
 import java.util.List;
 
+//TO BE PREPARED ADAPTER
 public class ProducerOrderTobePreparedAdapter extends RecyclerView.Adapter<ProducerOrderTobePreparedAdapter.ViewHolder> {
-
+    //VARIABLE
     private Context context;
     private List<ProducerWaitingOrders1> producerWaitingOrders1List;
 
+    //ADAPTER
     public ProducerOrderTobePreparedAdapter(Context context, List<ProducerWaitingOrders1> producerWaitingOrders1List) {
         this.producerWaitingOrders1List = producerWaitingOrders1List;
         this.context = context;
     }
 
+    //VIEW HOLDER
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,16 +34,21 @@ public class ProducerOrderTobePreparedAdapter extends RecyclerView.Adapter<Produ
         return new ProducerOrderTobePreparedAdapter.ViewHolder(view);
     }
 
+    //DISPLAY VALUES
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProducerWaitingOrders1 producerWaitingOrders1 = producerWaitingOrders1List.get(position);
         holder.Address.setText(producerWaitingOrders1.getAddress());
         holder.grandtotalprice.setText("Total Price: ₱ " + producerWaitingOrders1.getGrandTotalPrice());
         final String random = producerWaitingOrders1.getRandomUID();
+
+        //adapter clicked
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to pending order details
                 Intent intent = new Intent(context, ProducerOrdertobePrepareView.class);
+                //attach tracking number
                 intent.putExtra("RandomUID", random);
                 context.startActivity(intent);
                 ((ProducerOrderTobePrepared) context).finish();
@@ -48,11 +56,13 @@ public class ProducerOrderTobePreparedAdapter extends RecyclerView.Adapter<Produ
         });
     }
 
+    //ARRAY LIST SIZE
     @Override
     public int getItemCount() {
         return producerWaitingOrders1List.size();
     }
 
+    //CONNECT XML
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView Address, grandtotalprice;

@@ -14,17 +14,20 @@ import com.AgriBuhayProj.app.R;
 
 import java.util.List;
 
+//PRODUCTS ADAPTER
 public class ProducerHomeAdapter extends RecyclerView.Adapter<ProducerHomeAdapter.ViewHolder> {
-
+   //VARIABLES
    private Context mcont;
    private List<UpdateProductModel> updateProductModellist;
 
+   //ADAPTER
    public ProducerHomeAdapter(Context context, List<UpdateProductModel> updateProductModellist)
    {
        this.updateProductModellist = updateProductModellist;
        this.mcont=context;
    }
 
+   //CREATE VIEW HOLDER
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,6 +36,7 @@ public class ProducerHomeAdapter extends RecyclerView.Adapter<ProducerHomeAdapte
 
     }
 
+    //DISPLAY POSTED PRODUCTS
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
        final UpdateProductModel updateProductModel = updateProductModellist.get(position);
@@ -49,12 +53,13 @@ public class ProducerHomeAdapter extends RecyclerView.Adapter<ProducerHomeAdapte
        });
     }
 
-
+    //ARRAY LIST SIZE
     @Override
     public int getItemCount() {
         return updateProductModellist.size();
     }
 
+    //CONNECT XML
     public class ViewHolder extends RecyclerView.ViewHolder {
 
        TextView products;

@@ -19,8 +19,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//TO BE PREPARED LIST
 public class ProducerOrderTobePrepared extends AppCompatActivity {
-
+    //VARIALES
     private RecyclerView recyclerView;
     private List<ProducerWaitingOrders1> producerWaitingOrders1List;
     private ProducerOrderTobePreparedAdapter adapter;
@@ -31,16 +32,21 @@ public class ProducerOrderTobePrepared extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.producer_order_to_be_prepared_list);
-
+        //RECYCLER VIEW
         recyclerView = findViewById(R.id.Recycle_orderstobeprepared);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ProducerOrderTobePrepared.this));
+        //ARRAY LIST INSTANCE
         producerWaitingOrders1List = new ArrayList<>();
+        //REFRESH
         swipeRefreshLayout = findViewById(R.id.Swipe1);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.green);
+        //ADAPTER
         adapter = new ProducerOrderTobePreparedAdapter(ProducerOrderTobePrepared.this, producerWaitingOrders1List);
+        //SET ADAPTER
         recyclerView.setAdapter(adapter);
 
+        //REFRESH LIST
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -53,19 +59,21 @@ public class ProducerOrderTobePrepared extends AppCompatActivity {
             }
         });
         producerorderstobePrepare();
-
     }
 
+    //LIST PENDING ORDERS
     private void producerorderstobePrepare() {
-        //TODO this is the database for the ChefWaitingOrders
+        //pending orders reference
         databaseReference = FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //check orders
                 if (dataSnapshot.exists()) {
                     producerWaitingOrders1List.clear();
+                    //list orders
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        //TODO this is the database for the ChefWaitingOrders
+                        //pending orders reference
                         DatabaseReference data = FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("OtherInformation");
                         data.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override

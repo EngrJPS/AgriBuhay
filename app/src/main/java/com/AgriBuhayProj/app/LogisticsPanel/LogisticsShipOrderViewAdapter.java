@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.AgriBuhayProj.app.R;
 import java.util.List;
 
+//SHIPPING ORDER ADAPTER
 public class LogisticsShipOrderViewAdapter extends RecyclerView.Adapter<LogisticsShipOrderViewAdapter.ViewHolder> {
-
-
+    //VARIABLES
     private Context mcontext;
     private List<LogisticsShipFinalOrders> logisticsShipFinalOrderslist;
 
+    //SET ADAPTER
     public LogisticsShipOrderViewAdapter(Context context, List<LogisticsShipFinalOrders> logisticsShipFinalOrderslist) {
         this.logisticsShipFinalOrderslist = logisticsShipFinalOrderslist;
         this.mcontext = context;
@@ -30,6 +31,7 @@ public class LogisticsShipOrderViewAdapter extends RecyclerView.Adapter<Logistic
         return new LogisticsShipOrderViewAdapter.ViewHolder(view);
     }
 
+    //DISPLAY VALUES
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -45,6 +47,7 @@ public class LogisticsShipOrderViewAdapter extends RecyclerView.Adapter<Logistic
         return logisticsShipFinalOrderslist.size();
     }
 
+    //CONNECT XML
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView productname, price, totalprice, quantity;

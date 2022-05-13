@@ -18,8 +18,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//PENDING ORDERS
 public class ProducerOrderProducts extends AppCompatActivity {
-
+    //VARIABLES
     RecyclerView recyclerViewproduct;
     private List<ProducerPendingOrders> producerPendingOrdersList;
     private ProducerOrderProductsAdapter adapter;
@@ -35,20 +36,22 @@ public class ProducerOrderProducts extends AppCompatActivity {
         recyclerViewproduct.setHasFixedSize(true);
         recyclerViewproduct.setLayoutManager(new LinearLayoutManager(this));
         producerPendingOrdersList = new ArrayList<>();
-        Cheforderdishes();
-
+        pendingOrders();
     }
 
-    private void Cheforderdishes() {
-
+    //DISPLAY PENDING ORDERS
+    private void pendingOrders() {
+        //get tracking number
         RandomUID = getIntent().getStringExtra("RandomUID");
-        //TODO this is the database for the ChefPendingOrders
+
+        //pending orders reference
         reference = FirebaseDatabase.getInstance().getReference("ProducerPendingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 producerPendingOrdersList.clear();
 
+                //list all pending orders
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ProducerPendingOrders producerPendingOrders = snapshot.getValue(ProducerPendingOrders.class);
                     producerPendingOrdersList.add(producerPendingOrders);

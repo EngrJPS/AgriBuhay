@@ -12,8 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.AgriBuhayProj.app.R;
-public class ProducerOrderFragment extends Fragment {
 
+//ORDER FRAGMENT
+public class ProducerOrderFragment extends Fragment {
+    //VARIABLES
     TextView OrdertobePrepare, Preparedorders,DeliveredOrders;
 
     @Nullable
@@ -21,13 +23,17 @@ public class ProducerOrderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setTitle("Orders");
         View v = inflater.inflate(R.layout.fragment_producer_order, null);
-        OrdertobePrepare=(TextView)v.findViewById(R.id.ordertobe);
-        Preparedorders=(TextView)v.findViewById(R.id.prepareorder);
-        DeliveredOrders=(TextView)v.findViewById(R.id.delivered);
 
+        //CONNECT XML
+        OrdertobePrepare= v.findViewById(R.id.ordertobe);
+        Preparedorders= v.findViewById(R.id.prepareorder);
+        DeliveredOrders= v.findViewById(R.id.delivered);
+
+        //BUTTON EVENTS
         OrdertobePrepare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to pending orders
                 Intent i=new Intent(getContext(), ProducerOrderTobePrepared.class);
                 startActivity(i);
             }
@@ -36,6 +42,7 @@ public class ProducerOrderFragment extends Fragment {
         Preparedorders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to prepared orders
                 Intent intent=new Intent(getContext(), ProducerPreparedOrder.class);
                 startActivity(intent);
             }
@@ -44,6 +51,7 @@ public class ProducerOrderFragment extends Fragment {
         DeliveredOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to delivered orders
                 Intent intent=new Intent(getContext(), ProducerDeliveredOrdersList.class);
                 startActivity(intent);
             }

@@ -23,7 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+//UPDATE CROP
 public class ProducerAddCropUpdate extends AppCompatActivity {
+    //VARIABLES
     private TextInputLayout minT,maxT,minH,maxH,minC,maxC;
     private TextView cName;
     private Button upCrop;
@@ -48,7 +50,7 @@ public class ProducerAddCropUpdate extends AppCompatActivity {
         minC = findViewById(R.id.cMin);
         maxC = findViewById(R.id.cMax);
         upCrop = findViewById(R.id.btnUpdateCrop);
-        //STRING
+        //GET SELECTED CROP NAME
         intent = getIntent();
         crop = intent.getStringExtra("cropName").trim();
         //PROGRESS DIALOG
@@ -113,6 +115,7 @@ public class ProducerAddCropUpdate extends AppCompatActivity {
         });
     }
 
+    //STRING VALIDITY
     private boolean isValid(){
         final boolean isValid,validtMin,validtMax,validhMin,validhMax,validcMin,validcMax;
         minT.setErrorEnabled(false);

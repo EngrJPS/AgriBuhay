@@ -13,11 +13,13 @@ import com.AgriBuhayProj.app.R;
 import java.util.List;
 
 public class LogisticsPendingOrderViewAdapter extends RecyclerView.Adapter<LogisticsPendingOrderViewAdapter.ViewHolder> {
-
-
+    //VARIABLES
+    //context
     private Context mcontext;
+    //array list
     private List<LogisticsShipOrders> logisticsShipOrderslist;
 
+    //adapter
     public LogisticsPendingOrderViewAdapter(Context context, List<LogisticsShipOrders> logisticsShipOrderslist) {
         this.logisticsShipOrderslist = logisticsShipOrderslist;
         this.mcontext = context;
@@ -32,8 +34,9 @@ public class LogisticsPendingOrderViewAdapter extends RecyclerView.Adapter<Logis
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        //get position of item
         final LogisticsShipOrders logisticsShipOrders = logisticsShipOrderslist.get(position);
+        //display values from db
         holder.productname.setText(logisticsShipOrders.getProductName());
         holder.price.setText("Price: ₱ " + logisticsShipOrders.getProductPrice());
         holder.quantity.setText("× " + logisticsShipOrders.getProductQuantity());
@@ -46,11 +49,12 @@ public class LogisticsPendingOrderViewAdapter extends RecyclerView.Adapter<Logis
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        //xml
         TextView productname, price, totalprice, quantity;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            //connect xml
             productname = itemView.findViewById(R.id.Product1);
             price = itemView.findViewById(R.id.Price1);
             totalprice = itemView.findViewById(R.id.Total1);

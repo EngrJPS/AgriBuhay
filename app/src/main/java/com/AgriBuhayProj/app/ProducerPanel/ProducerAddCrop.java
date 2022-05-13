@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+//ADD CROP
 public class ProducerAddCrop extends AppCompatActivity {
 
     private TextInputLayout cropName,tMin,tMax,hMin,hMax,cMin,cMax;
@@ -71,15 +72,17 @@ public class ProducerAddCrop extends AppCompatActivity {
                 carbonMin = cMin.getEditText().getText().toString();
                 carbonMax = cMax.getEditText().getText().toString();
 
+                //check string validity
                 if (isValid()){
                     progress.setMessage("Adding crop...");
                     progress.show();
-                    //set database
+                    //set database reference
                     dbRef = fbDB.getReference("Crops");
                     //find existing crop
                     dbRef.orderByChild("crop").equalTo(crop).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            //check crop exists
                             if(snapshot.exists()){
                                 progress.dismiss();
                                 cropName.setErrorEnabled(true);
@@ -125,6 +128,7 @@ public class ProducerAddCrop extends AppCompatActivity {
         });
     }
 
+    //CHECK VALIDIDTY
     private boolean isValid(){
         final boolean isValid,validCrop,validtMin,validtMax,validhMin,validhMax,validcMin,validcMax;
         cropName.setErrorEnabled(false);

@@ -1,8 +1,8 @@
 package com.AgriBuhayProj.app.ProducerPanel;
 
+//POSTED PRODUCT MODEL
 public class ProductSupplyDetails {
 
-    //Added mobile phone
     private String Products,Quantity,Price,Description,ImageURL,RandomUID, ProducerID, Mobile;
 
     public ProductSupplyDetails() {

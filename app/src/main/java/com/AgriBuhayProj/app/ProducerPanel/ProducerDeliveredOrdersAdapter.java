@@ -16,15 +16,19 @@ import com.AgriBuhayProj.app.R;
 
 import java.util.List;
 
+//DELIVERED ORDERS ADAPTER
 public class ProducerDeliveredOrdersAdapter extends RecyclerView.Adapter<ProducerDeliveredOrdersAdapter.ViewHolder> {
+    //VARIABLES
     private Context context;
     private List<History> historyModel;
 
+    //ADAPTER
     public ProducerDeliveredOrdersAdapter(Context context, List<History> historyModel) {
         this.context = context;
         this.historyModel = historyModel;
     }
 
+    //CREATE VIEW HOLDER
     @NonNull
     @Override
     public ProducerDeliveredOrdersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,7 +36,7 @@ public class ProducerDeliveredOrdersAdapter extends RecyclerView.Adapter<Produce
         return new ProducerDeliveredOrdersAdapter.ViewHolder(view);
     }
 
-    //TODO: provide string format for holder
+    //DISPLAY FINISHED ORDERS
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ProducerDeliveredOrdersAdapter.ViewHolder holder, int position) {
@@ -44,18 +48,22 @@ public class ProducerDeliveredOrdersAdapter extends RecyclerView.Adapter<Produce
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //direct to delivered order details
                 Intent intent = new Intent(context,ProducerDeliveredOrdersDetails.class);
+                //attached tracking number
                 intent.putExtra("trackingNumber",display.getTrackingNumber());
                 context.startActivity(intent);
             }
         });
     }
 
+    //ARRAY SIZE
     @Override
     public int getItemCount() {
         return historyModel.size();
     }
 
+    //CONNECT XML
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView trackingNumber,logisticsName,retailerName,totalPrice;

@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.SendNotification;
 
+//TOKEN MODEL
 public class Token {
 
     private String token;

@@ -31,18 +31,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//SHIP ORDERS FRAGMENT ADAPTER
 public class LogisticsShipOrderFragmentAdapter extends RecyclerView.Adapter<LogisticsShipOrderFragmentAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context context;
     private List<LogisticsShipFinalOrders1> logisticsShipFinalOrders1List;
     private APIService apiService;
 
-
+    //FRAGMENT ADAPTER
     public LogisticsShipOrderFragmentAdapter(Context context, List<LogisticsShipFinalOrders1> logisticsShipFinalOrders1List) {
         this.logisticsShipFinalOrders1List = logisticsShipFinalOrders1List;
         this.context = context;
     }
 
+    //CREATE VIEW HOLDER
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,15 +53,18 @@ public class LogisticsShipOrderFragmentAdapter extends RecyclerView.Adapter<Logi
         return new LogisticsShipOrderFragmentAdapter.ViewHolder(view);
     }
 
+    //SHOW ADAPTER
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         final LogisticsShipFinalOrders1 logisticsShipFinalOrders1 = logisticsShipFinalOrders1List.get(position);
         holder.Address.setText(logisticsShipFinalOrders1.getAddress());
         holder.grandtotalprice.setText("Total Price: ₱" + logisticsShipFinalOrders1.getGrandTotalPrice());
         holder.mobilenumber.setText(logisticsShipFinalOrders1.getMobileNumber());
+
         final String random = logisticsShipFinalOrders1.getRandomUID();
         final String userid = logisticsShipFinalOrders1.getUserId();
+
+        //BUTTON EVENTS
         holder.Vieworder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,21 +73,21 @@ public class LogisticsShipOrderFragmentAdapter extends RecyclerView.Adapter<Logi
                 context.startActivity(intent);
             }
         });
-
         holder.ShipOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //add delivery status to db
                 FirebaseDatabase.getInstance().getReference("RetailerFinalOrders").child(userid).child(random).child("OtherInformation").child("Status").setValue("Your Order is on the way...").addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        //retailer token ref
                         FirebaseDatabase.getInstance().getReference().child("Tokens").child(userid).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String usertoken = dataSnapshot.getValue(String.class);
+                                //notify retailer
                                 sendNotifications(usertoken, "Estimated Time", "Your Order has been collected by Delivery Person, your product is on the way", "DeliverOrder");
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -92,6 +97,7 @@ public class LogisticsShipOrderFragmentAdapter extends RecyclerView.Adapter<Logi
                 }).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        //direct to shipping
                         Intent intent = new Intent(context, LogisticsShippingOrder.class);
                         intent.putExtra("RandomUID",random);
                         context.startActivity(intent);
@@ -103,6 +109,7 @@ public class LogisticsShipOrderFragmentAdapter extends RecyclerView.Adapter<Logi
 
     }
 
+    //SEND NOTIFICATION
     private void sendNotifications(String usertoken, String title, String message, String order) {
 
         Data data = new Data(title, message, order);
@@ -124,13 +131,14 @@ public class LogisticsShipOrderFragmentAdapter extends RecyclerView.Adapter<Logi
         });
     }
 
+    //GET ARRAY SIZE
     @Override
     public int getItemCount() {
         return logisticsShipFinalOrders1List.size();
     }
 
+    //XML CONNECT
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         TextView Address, grandtotalprice, mobilenumber;
         Button Vieworder, ShipOrder;
 

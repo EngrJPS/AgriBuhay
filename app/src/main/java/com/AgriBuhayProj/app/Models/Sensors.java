@@ -1,10 +1,13 @@
 package com.AgriBuhayProj.app.Models;
 
 public class Sensors {
+    //VARIABLES
     private Double CO2_PPM,Humid_Value,Temp_Value,Weight_Value;
 
+    //OBJECT INSTANCE
     public Sensors(){}
 
+    //OBJECT VALUES
     public Sensors(Double cO2_PPM, Double humid_Value, Double temp_Value, Double weight_Value) {
         CO2_PPM = cO2_PPM;
         Humid_Value = humid_Value;
@@ -12,6 +15,7 @@ public class Sensors {
         Weight_Value = weight_Value;
     }
 
+    //GETTER-SETTER
     public Double getCO2_PPM() {
         return CO2_PPM;
     }

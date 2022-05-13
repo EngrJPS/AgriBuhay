@@ -23,7 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//DELIVERED ORDERS LIST
 public class ProducerDeliveredOrdersList extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    //VARIABLES
     RecyclerView orderedView;
 
     private List<History> deliveredList;
@@ -39,15 +41,18 @@ public class ProducerDeliveredOrdersList extends AppCompatActivity implements Ad
         super.onCreate(savedInstanceState);
         setContentView(R.layout.producer_delivered_orders_list);
 
+        //PRODUCER ID
         fbAuth = FirebaseAuth.getInstance();
         producerID = fbAuth.getCurrentUser().getUid();
 
+        //CONNECT XML
         orderedView = findViewById(R.id.orderedView);
-
         orderedView.setHasFixedSize(true);
         orderedView.setLayoutManager(new LinearLayoutManager(ProducerDeliveredOrdersList.this));
 
+        //ARRAY INSTANCE
         deliveredList = new ArrayList<>();
+
 
         dbRef = FirebaseDatabase.getInstance().getReference("DeliveryHistory").child(producerID);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -69,6 +74,7 @@ public class ProducerDeliveredOrdersList extends AppCompatActivity implements Ad
 
     }
 
+    //DISPLAY DELIVERED OREDERS
     private void deliveredOrders(){
         //database reference
         dbRef = FirebaseDatabase.getInstance().getReference("DeliveryHistory").child(producerID);

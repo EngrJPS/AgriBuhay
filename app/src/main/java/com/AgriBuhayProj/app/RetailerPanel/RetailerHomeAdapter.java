@@ -20,9 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
+//HOME FRAGMENT ADAPTER
 public class RetailerHomeAdapter extends RecyclerView.Adapter<RetailerHomeAdapter.ViewHolder> {
-
-
+    //VARIABLES
     private Context mcontext;
     private List<UpdateProductModel> updateProductModellist;
     DatabaseReference databaseReference;
@@ -42,23 +42,28 @@ public class RetailerHomeAdapter extends RecyclerView.Adapter<RetailerHomeAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-
         final UpdateProductModel updateProductModel = updateProductModellist.get(position);
+        //display product image
         Glide.with(mcontext).load(updateProductModel.getImageURL()).into(holder.imageView);
+        //display product
         holder.Productname.setText(updateProductModel.getProducts());
         String randomUID = updateProductModel.getRandomUID();
         String producerID = updateProductModel.getProducerID();
         String mobile = updateProductModel.getMobile();
         holder.price.setText("Price: ₱ " + updateProductModel.getPrice());
+
+        //item clicked
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //direct to order product
                 Intent intent=new Intent(mcontext, OrderProduct.class);
+                //attach string
+                //product id
                 intent.putExtra("ProductMenu", randomUID);
-                //TODO putExtra chef ID
+                //producer id
                 intent.putExtra("ProducerId", producerID);
-                //TODO putExtra phonenum here
+                //producer mobile number
                 intent.putExtra("ProducerPhoneNum", mobile);
                 mcontext.startActivity(intent);
             }

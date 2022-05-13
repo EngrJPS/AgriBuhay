@@ -18,12 +18,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.List;
 
+//CART ADAPTER
 public class RetailerCartAdapter extends RecyclerView.Adapter<RetailerCartAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context mcontext;
     private List<Cart> cartModellist;
     static int total = 0;
 
+    //ADAPTER
     public RetailerCartAdapter(Context context, List<Cart> cartModellist) {
         this.cartModellist = cartModellist;
         this.mcontext = context;
@@ -40,21 +42,28 @@ public class RetailerCartAdapter extends RecyclerView.Adapter<RetailerCartAdapte
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        //displaay product details
         final Cart cart = cartModellist.get(position);
         holder.productname.setText(cart.getProductName());
         holder.PricePhp.setText("Price: ₱ " + cart.getPrice());
         holder.Qty.setText("× " + cart.getProductQuantity());
         holder.Totalphp.setText("Total: ₱ " + cart.getTotalPrice());
+
+        //add total by quantity
         total += Integer.parseInt(cart.getTotalPrice());
         holder.elegantNumberButton.setNumber(cart.getProductQuantity());
+
         final int productprice = Integer.parseInt(cart.getPrice());
 
+        //oder quantity
         holder.elegantNumberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
                 int num = newValue;
                 int totalprice = num * productprice;
+                //check item ordered
                 if (num != 0) {
+                    //set values
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("ProductID", cart.getProductID());
                     hashMap.put("ProductName", cart.getProductName());
@@ -64,13 +73,19 @@ public class RetailerCartAdapter extends RecyclerView.Adapter<RetailerCartAdapte
                     hashMap.put("ProducerId",cart.getProducerId());
                     hashMap.put("Mobile",cart.getMobile());
 
+                    //add values to cart items
                     FirebaseDatabase.getInstance().getReference("Cart").child("CartItems").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(cart.getProductID()).setValue(hashMap);
                 } else {
+                    //remove values from cart items
                     FirebaseDatabase.getInstance().getReference("Cart").child("CartItems").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(cart.getProductID()).removeValue();
                 }
             }
         });
+
+        //display total price
         RetailerCartFragment.grandt.setText("Total: ₱ " + total);
+
+        //add value to cart total price
         FirebaseDatabase.getInstance().getReference("Cart").child("GrandTotal").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("GrandTotal").setValue(String.valueOf(total));
     }
 

@@ -41,23 +41,30 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//TO BE PREPARED DETAILS VIEW
 public class ProducerOrdertobePrepareView extends AppCompatActivity {
-
+    //VARIABLES
     RecyclerView recyclerViewproduct;
-    private List<ProducerWaitingOrders> producerWaitingOrdersList;
-    private ProducerOrderToBePreparedViewAdapter adapter;
-    DatabaseReference reference;
-    String RandomUID, userid;
     TextView grandtotal, note, address, name, number;
     LinearLayout l1;
     Button Preparing;
     private ProgressDialog progressDialog;
+
+    private List<ProducerWaitingOrders> producerWaitingOrdersList;
+
+    private ProducerOrderToBePreparedViewAdapter adapter;
+
+    DatabaseReference reference;
+
+    String RandomUID, userid;
+
     private APIService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.producer_ordertobe_prepare_view);
+        //CONNECT XML
         recyclerViewproduct = findViewById(R.id.Recycle_viewOrder);
         grandtotal = findViewById(R.id.rupees);
         note = findViewById(R.id.NOTE);
@@ -66,26 +73,36 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
         number = findViewById(R.id.num);
         l1 = findViewById(R.id.button1);
         Preparing = findViewById(R.id.preparing);
+
+        //NOTIFICATIONS
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
+        //PROGRESS DIALOG
         progressDialog = new ProgressDialog(ProducerOrdertobePrepareView.this);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
+
+        //RECYCLER VIEW
         recyclerViewproduct.setHasFixedSize(true);
         recyclerViewproduct.setLayoutManager(new LinearLayoutManager(ProducerOrdertobePrepareView.this));
+
+        //ARRAY LIST
         producerWaitingOrdersList = new ArrayList<>();
-        CheforderdishesView();
+
+        producerPendingOrdersView();
     }
 
-    private void CheforderdishesView() {
+    //PENDING ORDERS DETAILS
+    private void producerPendingOrdersView() {
         RandomUID = getIntent().getStringExtra("RandomUID");
 
-        //ProducerWaitingOrders
+        //pending orders reference
         reference = FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 producerWaitingOrdersList.clear();
-
+                //list pending orders
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ProducerWaitingOrders producerWaitingOrders = snapshot.getValue(ProducerWaitingOrders.class);
                     producerWaitingOrdersList.add(producerWaitingOrders);
@@ -95,18 +112,19 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
 
                 } else {
                     l1.setVisibility(View.VISIBLE);
+                    //preparing clicked
                     Preparing.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             progressDialog.setMessage("Please wait...");
                             progressDialog.show();
 
-                            //ProducerWaitingOrders
+                            //pending orders reference
                             DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products");
                             databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    //get products included from pending orders
                                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                         final ProducerWaitingOrders producerWaitingOrders = dataSnapshot1.getValue(ProducerWaitingOrders.class);
                                         HashMap<String, String> hashMap = new HashMap<>();
@@ -120,14 +138,17 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
                                         hashMap.put("RandomUID", RandomUID);
                                         hashMap.put("TotalPrice", producerWaitingOrders.getTotalPrice());
                                         hashMap.put("UserId", producerWaitingOrders.getUserId());
-                                        //TODO this is the database for the ChefFinalOrders
+
+                                        //add to prepared orders (products)
                                         FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products").child(productid).setValue(hashMap);
                                     }
+
                                     //ProducerWaitingOrders
                                     DatabaseReference data = FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
                                     data.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            //get other info
                                             final ProducerWaitingOrders1 producerWaitingOrders1 = dataSnapshot.getValue(ProducerWaitingOrders1.class);
                                             HashMap<String, String> hashMap1 = new HashMap<>();
                                             hashMap1.put("Address", producerWaitingOrders1.getAddress());
@@ -136,27 +157,30 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
                                             hashMap1.put("Name", producerWaitingOrders1.getName());
                                             hashMap1.put("RandomUID", RandomUID);
                                             hashMap1.put("Status", "Producer is preparing your Order...");
-                                            //ProducerFinalOrders
+
+                                            //add to prepared orders (other info)
                                             FirebaseDatabase.getInstance().getReference("ProducerFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation").setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    //RetailerFinalOrders
+                                                    //change order status to preparing
                                                     FirebaseDatabase.getInstance().getReference("RetailerFinalOrders").child(userid).child(RandomUID).child("OtherInformation").child("Status").setValue("Producer is preparing your order...").addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
-                                                            //ProducerWaitingOrders
+                                                            //remove order from pending (products)
                                                             FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("Products").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                                    //ProducerWaitingOrders
+                                                                    //remove order from pending (other info)
                                                                     FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                         @Override
                                                                         public void onSuccess(Void aVoid) {
-                                                                            //Tokens
+                                                                            //retailer token
                                                                             FirebaseDatabase.getInstance().getReference().child("Tokens").child(userid).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
                                                                                 @Override
                                                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                    //get retailer token
                                                                                     String usertoken = dataSnapshot.getValue(String.class);
+                                                                                    //notify retailer
                                                                                     sendNotifications(usertoken, "Estimated Time", "Producer is Preparing your Order", "Preparing");
                                                                                     progressDialog.dismiss();
                                                                                     AlertDialog.Builder builder = new AlertDialog.Builder(ProducerOrdertobePrepareView.this);
@@ -165,10 +189,8 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
                                                                                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                                                         @Override
                                                                                         public void onClick(DialogInterface dialog, int which) {
-
                                                                                             dialog.dismiss();
                                                                                             finish();
-
                                                                                         }
                                                                                     });
                                                                                     AlertDialog alert = builder.create();
@@ -208,6 +230,7 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
                     });
 
                 }
+                //set adapter
                 adapter = new ProducerOrderToBePreparedViewAdapter(ProducerOrdertobePrepareView.this, producerWaitingOrdersList);
                 recyclerViewproduct.setAdapter(adapter);
 
@@ -218,7 +241,8 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
 
             }
         });
-        //TODO this is the database for the ChefWaitingOrders
+
+        //display order details
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ProducerWaitingOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID).child("OtherInformation");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -239,6 +263,7 @@ public class ProducerOrdertobePrepareView extends AppCompatActivity {
         });
     }
 
+    //SEND NOTIFICATIONS
     private void sendNotifications(String usertoken, String title, String message, String preparing) {
         Data data = new Data(title, message, preparing);
         NotificationSender sender = new NotificationSender(data, usertoken);

@@ -17,16 +17,19 @@ import com.AgriBuhayProj.app.R;
 
 import java.util.List;
 
+//CROP ADAPTER
 public class ProducerAddCropAdapter extends RecyclerView.Adapter<ProducerAddCropAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context context;
     private List<Crops>cropModel;
 
+    //ADAPTER
     public ProducerAddCropAdapter(Context context, List<Crops> cropModel) {
         this.context = context;
         this.cropModel = cropModel;
     }
 
+    //CREATE VIEW HOLDER
     @NonNull
     @Override
     public ProducerAddCropAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,25 +37,30 @@ public class ProducerAddCropAdapter extends RecyclerView.Adapter<ProducerAddCrop
         return new ProducerAddCropAdapter.ViewHolder(view);
     }
 
+    //SHOW PRODUCT NAME
     @Override
     public void onBindViewHolder(@NonNull ProducerAddCropAdapter.ViewHolder holder, int position) {
         final Crops updateCrop = cropModel.get(position);
         holder.cropName.setText(updateCrop.getCrop());
+        //product clicked
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,ProducerAddCropUpdate.class);
+                //direct to crop update
                 intent.putExtra("cropName",updateCrop.getCrop());
                 context.startActivity(intent);
             }
         });
     }
 
+    //GET ARRAY SIZE
     @Override
     public int getItemCount() {
         return cropModel.size();
     }
 
+    //XML CONNECT
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView cropName;

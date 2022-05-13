@@ -47,10 +47,14 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
-
+//PRINT ORDER
 public class ProducerPrintOrder extends Activity implements Runnable {
+    //VARIABLES
     protected static final String TAG = "TAG";
+
+    //pair device
     private static final int REQUEST_CONNECT_DEVICE = 1;
+    //enable bluetooth
     private static final int REQUEST_ENABLE_BT = 2;
 
     Button mSave,mScan,mPrint,mDisc;
@@ -58,16 +62,24 @@ public class ProducerPrintOrder extends Activity implements Runnable {
     Spinner spinProduct;
     ProgressDialog progressDialog;
 
+    //printer id
     private UUID applicationUUID = UUID
             .fromString("00001101-0000-1000-8000-00805F9B34FB");
     private ProgressDialog mBluetoothConnectProgressDialog;
+
+    //bluetooth socket
     private BluetoothSocket mBluetoothSocket;
+
+    //printer bluetooth
     BluetoothDevice mBluetoothDevice;
+
+    //tracking number
     private String randomUIID;
 
     private TextInputLayout prodName, totalWeight, totalTemp, totalHumid, totalCO2;
     private String prod, weight, temp, humid, co2;
     private Double dW,dT,dH,dC;
+    //decimal places
     private DecimalFormat df = new DecimalFormat("#.##");
 
     ArrayList<String> productList;
@@ -82,54 +94,63 @@ public class ProducerPrintOrder extends Activity implements Runnable {
     public void onCreate(Bundle mSavedInstanceState) {
         super.onCreate(mSavedInstanceState);
         setContentView(R.layout.main_printer);
-
-        prodName = (TextInputLayout) findViewById(R.id.edtNameProduct);
-        totalWeight = (TextInputLayout) findViewById(R.id.edtNetWt);
-        totalTemp = (TextInputLayout) findViewById(R.id.edtTemperature);
-        totalHumid = (TextInputLayout) findViewById(R.id.edtHumidity);
-        totalCO2 = (TextInputLayout) findViewById(R.id.edtCO2);
+        //CONNECT XML
+        prodName = findViewById(R.id.edtNameProduct);
+        totalWeight = findViewById(R.id.edtNetWt);
+        totalTemp = findViewById(R.id.edtTemperature);
+        totalHumid = findViewById(R.id.edtHumidity);
+        totalCO2 = findViewById(R.id.edtCO2);
         spinProduct = findViewById(R.id.spinPName);
 
+        //PROGRESS DIALOG
         progressDialog = new ProgressDialog(ProducerPrintOrder.this);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
 
-        //DATABASE
+        //INSTANCE
         fbAuth = FirebaseAuth.getInstance();
         dbRef = FirebaseDatabase.getInstance().getReference();
 
         //USER ID
         String uID = fbAuth.getCurrentUser().getUid();
-        //TRANSACTION ID
+        //TRACKING NUMBER
         randomUIID = getIntent().getStringExtra("RandomUIID");
 
+        //ARRAY LIST
         productList = new ArrayList<>();
+        //ADAPTER
         adapter = new ArrayAdapter<>(ProducerPrintOrder.this, android.R.layout.simple_spinner_dropdown_item,productList);
 
-        //DISPLAY PRODUCT NAME
+        //ORDERED PRODUCTS REFERENCE
         dbRef.child("ProducerFinalOrders").child(uID).child(randomUIID).child("Products").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //LIST ORDERED PRODUCTS
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     final ProducerFinalOrders productFinalOrders = dataSnapshot.getValue(ProducerFinalOrders.class);
 
                     productName = productFinalOrders.getProductName();
 
                     productList.add(productName);
+
                     spinProduct.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
+                    //SELECTED ORDERED PRODUCT
                     spinProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                             Object value = adapterView.getItemAtPosition(i);
                             String spinProduct = value.toString().trim();
+
+                            //set product name
                             prodName.getEditText().setText(spinProduct);
 
-                            //GET CROP DATA
+                            //crop referemce
                             dbRef.child("Crops").child(spinProduct).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    //GET VALUES
                                     Crops crops = snapshot.getValue(Crops.class);
                                     Double minT = Double.parseDouble(crops.getTempMin());
                                     Double maxT = Double.parseDouble(crops.getTempMax());
@@ -138,6 +159,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                                     Double minC = Double.parseDouble(crops.getCarbonMin());
                                     Double maxC = Double.parseDouble(crops.getCarbonMax());
 
+                                    //compare sensor measurements to reference
                                     compareData(minT,maxT,minH,maxH,minC,maxC);
                                 }
                                 @Override
@@ -159,6 +181,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
             }
         });
 
+        //save sensor measurement values
         mSave = findViewById(R.id.btnSave);
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,14 +189,17 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                 progressDialog.setMessage("Saving value..");
                 progressDialog.show();
 
+                //get string value
                 prod = prodName.getEditText().getText().toString();
                 weight = totalWeight.getEditText().getText().toString();
                 temp = totalTemp.getEditText().getText().toString();
                 humid = totalHumid.getEditText().getText().toString();
                 co2 = totalCO2.getEditText().getText().toString();
 
+                //set values
                 ProductData productData = new ProductData(prod,weight,temp,humid,co2);
 
+                //add product values to ProductData
                 dbRef.child("ProductData").child(randomUIID).child(prod).setValue(productData).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -184,10 +210,12 @@ public class ProducerPrintOrder extends Activity implements Runnable {
             }
         });
 
-        mScan = (Button) findViewById(R.id.Scan);
+        //scan device
+        mScan = findViewById(R.id.Scan);
         mScan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {
                 mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
                 if (mBluetoothAdapter == null) {
                     Toast.makeText(ProducerPrintOrder.this, "Message1", Toast.LENGTH_SHORT).show();
                 } else {
@@ -195,9 +223,12 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                         startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                     } else {
+                        //list paired devices
                         ListPairedDevices();
+                        //show paired devices
                         Intent connectIntent = new Intent(ProducerPrintOrder.this,
                                 DeviceListActivity.class);
+                        //request connection
                         startActivityForResult(connectIntent,
                                 REQUEST_CONNECT_DEVICE);
                     }
@@ -205,7 +236,8 @@ public class ProducerPrintOrder extends Activity implements Runnable {
             }
         });
 
-        mPrint = (Button) findViewById(R.id.mPrint);
+        //PRINT RECEIPT
+        mPrint = findViewById(R.id.mPrint);
         mPrint.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {
                 p2();
@@ -214,15 +246,17 @@ public class ProducerPrintOrder extends Activity implements Runnable {
             }
         });
 
-        mDisc = (Button) findViewById(R.id.dis);
+        //DISABLE CONNECTION
+        mDisc = findViewById(R.id.dis);
         mDisc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {
                 if (mBluetoothAdapter != null)
+                    //disable bluetooth
                     mBluetoothAdapter.disable();
             }
         });
 
-    }// onCreate
+    }
 
     @Override
     protected void onDestroy() {
@@ -248,18 +282,23 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         finish();
     }
 
+    //PAIR DEVICE
     public void onActivityResult(int mRequestCode, int mResultCode,
                                  Intent mDataIntent) {
         super.onActivityResult(mRequestCode, mResultCode, mDataIntent);
 
+        //check request
         switch (mRequestCode) {
             case REQUEST_CONNECT_DEVICE:
                 if (mResultCode == Activity.RESULT_OK) {
+                    //get device name + address
                     Bundle mExtra = mDataIntent.getExtras();
                     String mDeviceAddress = mExtra.getString("DeviceAddress");
                     Log.v(TAG, "Coming incoming address " + mDeviceAddress);
+                    //get device
                     mBluetoothDevice = mBluetoothAdapter
                             .getRemoteDevice(mDeviceAddress);
+                    //connect device
                     mBluetoothConnectProgressDialog = ProgressDialog.show(this,
                             "Connecting...", mBluetoothDevice.getName() + " : "
                                     + mBluetoothDevice.getAddress(), true, false);
@@ -272,9 +311,11 @@ public class ProducerPrintOrder extends Activity implements Runnable {
 
             case REQUEST_ENABLE_BT:
                 if (mResultCode == Activity.RESULT_OK) {
+                    //display paired devices
                     ListPairedDevices();
                     Intent connectIntent = new Intent(ProducerPrintOrder.this,
                             DeviceListActivity.class);
+                    //device connected
                     startActivityForResult(connectIntent, REQUEST_CONNECT_DEVICE);
                 } else {
                     Toast.makeText(ProducerPrintOrder.this, "Message", Toast.LENGTH_SHORT).show();
@@ -283,15 +324,18 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         }
     }
 
+    //LIST PAIRED DEVICES
     private void ListPairedDevices() {
         Set<BluetoothDevice> mPairedDevices = mBluetoothAdapter.getBondedDevices();
         if (mPairedDevices.size() > 0) {
+            //get device name + address
             for (BluetoothDevice mDevice : mPairedDevices) {
                 Log.v(TAG, "PairedDevices: " + mDevice.getName() + "  " + mDevice.getAddress());
             }
         }
     }
 
+    //FIND BLUETOOTH DEVICES
     public void run() {
         try {
             mBluetoothSocket = mBluetoothDevice.createRfcommSocketToServiceRecord(applicationUUID);
@@ -305,6 +349,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         }
     }
 
+    //DISABLE BLUETOOTH PRINTER
     private void closeSocket(BluetoothSocket nOpenSocket) {
         try {
             nOpenSocket.close();
@@ -314,6 +359,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         }
     }
 
+    //DEVICE CONNECTED TO PRINTER
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
@@ -323,6 +369,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         }
     };
 
+    //ARRAY VALUES TO BYTE
     public static byte intToByteArray(int value) {
         byte[] b = ByteBuffer.allocate(4).putInt(value).array();
 
@@ -334,6 +381,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         return b[3];
     }
 
+    //PRINTER BUFFER
     public byte[] sel(int val) {
         ByteBuffer buffer = ByteBuffer.allocate(2);
         buffer.putInt(val);
@@ -341,6 +389,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         return buffer.array();
     }
 
+    //RETAILER DETAILS RECEIPT LINE
     public void p1() {
         Thread t = new Thread() {
             public void run() {
@@ -406,6 +455,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         t.start();
     }
 
+    //PRODUCER DETAILS RECEIPT LINE
     public void p2() {
         Thread t = new Thread() {
             public void run() {
@@ -472,10 +522,13 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         t.start();
     }
 
+    //PRODUCT DETAILS
     public void p3(){
+        //product data reference
         dbRef.child("ProductData").child(randomUIID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //get values
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     final ProductData productData = dataSnapshot.getValue(ProductData.class);
                     prod = productData.getProductName();
@@ -484,6 +537,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     humid = productData.getHumidityPercentage();
                     co2 = productData.getCo2Level();
 
+                    //product details receipt line
                     p4(prod,weight,temp,humid,co2);
                 }
             }
@@ -493,6 +547,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         });
     }
 
+    //PRODUCT DETAILS RECEIPT LINE
     private void p4(String prod,String weight,String temp,String humid,String co2){
         Thread t = new Thread() {
             public void run() {
@@ -541,8 +596,8 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         t.start();
     }
 
+    //VALIDATION
     public boolean isValid(){
-
         prodName.setErrorEnabled(false);
         prodName.setError("");
         totalWeight.setErrorEnabled(false);
@@ -589,9 +644,9 @@ public class ProducerPrintOrder extends Activity implements Runnable {
         return isValid();
     }
 
-    //COMPARE DATA
+    //COMPARE SENSOR DATA TO PRODUCT REFERENCE
     public void compareData(Double minT,Double maxT,Double minH,Double maxH,Double minC, Double maxC){
-        //DISPLAY SENSOR DATA
+        //sensor data reference
         dbRef.child("Sensors").addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -618,6 +673,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     totalTemp.setErrorIconOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            //display preferred values
                             ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred Temperature Level","Minimum: "+df.format(minT)+"°C"+"\nMaximum: "+df.format(maxT)+"°C");
                         }
                     });
@@ -628,6 +684,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     totalTemp.setErrorIconOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            //display preferred values
                             ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred Temperature Level","Minimum: "+df.format(minT)+"°C"+"\nMaximum: "+df.format(maxT)+"°C");
                         }
                     });
@@ -636,6 +693,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     totalTemp.setErrorIconDrawable(null);
                     totalTemp.setError("");
                 }
+
                 //check humidity
                 if(dH<minH){
                     totalHumid.setErrorEnabled(true);
@@ -644,6 +702,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     totalHumid.setErrorIconOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            //display preferred values
                             ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred Humidity Percentage","Minimum: "+df.format(minH)+"%"+"\nMaximum: "+df.format(maxH)+"%");
                         }
                     });
@@ -654,6 +713,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     totalHumid.setErrorIconOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            //display preferred values
                             ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred Humidity Percentage","Minimum: "+df.format(minH)+"%"+"\nMaximum: "+df.format(maxH)+"%");
                         }
                     });
@@ -662,6 +722,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     totalHumid.setErrorIconDrawable(null);
                     totalHumid.setError("");
                 }
+
                 //check co2
                 if(dC<minC){
                     totalCO2.setErrorEnabled(true);
@@ -670,6 +731,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     totalCO2.setErrorIconOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            //display preferred values
                             ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred CO2 Level","Minimum: "+df.format(minC)+" ppm"+"\nMaximum: "+df.format(maxC)+" ppm");
                         }
                     });
@@ -680,6 +742,7 @@ public class ProducerPrintOrder extends Activity implements Runnable {
                     totalCO2.setErrorIconOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            //display preferred values
                             ReusableCodeForAll.ShowAlert(ProducerPrintOrder.this,"Preferred CO2 Level","Minimum: "+df.format(minC)+" ppm"+"\nMaximum: "+df.format(maxC)+" ppm");
                         }
                     });

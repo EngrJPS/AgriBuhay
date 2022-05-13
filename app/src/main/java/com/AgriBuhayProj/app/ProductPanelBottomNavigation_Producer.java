@@ -29,44 +29,70 @@ public class ProductPanelBottomNavigation_Producer extends AppCompatActivity imp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_panel_bottom_navigation_producer);
+
+        //CONNECT XML
         BottomNavigationView navigationView = findViewById(R.id.producer_bottom_navigation);
+
+        //NAVIGATION LISTENER
         navigationView.setOnNavigationItemSelectedListener(this);
+
+        //TOKEN
         UpdateToken();
+
+        //GET PAGE VALUE
         String name = getIntent().getStringExtra("PAGE");
+
+        //CHECK PAGE VALUE
         if (name != null) {
             if (name.equalsIgnoreCase("Orderpage")) {
+                //load producer pending orders
                 loadproducerfragment(new ProducerPendingOrdersFragment());
             } else if (name.equalsIgnoreCase("Confirmpage")) {
+                //load producer orders
                 loadproducerfragment(new ProducerOrderFragment());
             } else if (name.equalsIgnoreCase("AcceptOrderpage")) {
+                //load producer home
                 loadproducerfragment(new ProducerHomeFragment());
             } else if (name.equalsIgnoreCase("Deliveredpage")) {
+                //load producer home
                 loadproducerfragment(new ProducerHomeFragment());
             }
         } else {
+            //load producer home
             loadproducerfragment(new ProducerHomeFragment());
         }
     }
 
+    //GENERATE TOKEN
     private void UpdateToken() {
+        //get current user
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        //generate token
         String refreshToken = FirebaseInstanceId.getInstance().getToken();
         Token token = new Token(refreshToken);
-        FirebaseDatabase.getInstance().getReference("Tokens").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
+        //TODO (EDITED)
+        //save token to database
+        FirebaseDatabase.getInstance().getReference("Tokens").child(firebaseUser.getUid()).setValue(token);
     }
 
+    //LOAD FRAGMENT
     private boolean loadproducerfragment(Fragment fragment) {
+        //check fragment
         if (fragment != null) {
+            //set fragment
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             return true;
         }
-
         return false;
     }
 
+    //BOTTOM NAVIGATION SELECTION
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Fragment fragment = null;
+
+        //get current fragment id
         switch (menuItem.getItemId()) {
             case R.id.producerHome:
                 fragment = new ProducerHomeFragment();
@@ -83,21 +109,28 @@ public class ProductPanelBottomNavigation_Producer extends AppCompatActivity imp
                 fragment = new ProducerProfileFragment();
                 break;
         }
+
+        //return fragment
         return loadproducerfragment(fragment);
     }
 
+    //BACK PRESS
     private boolean pressedOnce = false;
     @Override
     public void onBackPressed() {
         BottomNavigationView navigationView = findViewById(R.id.producer_bottom_navigation);
+        //check if home view
         if(navigationView.getSelectedItemId()==R.id.producerHome){
+            //check if double pressed
             if(pressedOnce){
-                super.onBackPressed();
+                super.onBackPressed();//exit app
             }
 
+            //back pressed once
             this.pressedOnce = true;
             Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
 
+            //loop
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -105,7 +138,7 @@ public class ProductPanelBottomNavigation_Producer extends AppCompatActivity imp
                 }
             },2000);
         }else{
-            navigationView.setSelectedItemId(R.id.producerHome);
+            navigationView.setSelectedItemId(R.id.producerHome); //direct to home view
         }
     }
 }

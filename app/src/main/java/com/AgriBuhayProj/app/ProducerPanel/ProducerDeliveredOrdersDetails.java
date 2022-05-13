@@ -30,7 +30,9 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 
+//DELIVERY HISTORY
 public class ProducerDeliveredOrdersDetails extends AppCompatActivity {
+    //VARIABLES
     private TextView retailAddress,trackNum,date,total,logName,logMobile,retailName,retailMobile;
     private ImageView proof;
 

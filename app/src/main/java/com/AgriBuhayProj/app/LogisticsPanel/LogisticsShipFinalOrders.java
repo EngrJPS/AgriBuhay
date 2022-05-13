@@ -1,5 +1,5 @@
 package com.AgriBuhayProj.app.LogisticsPanel;
-
+//FINAL ORDER PRODUCTS MODEL
 public class LogisticsShipFinalOrders {
 
     private String ProducerId, ProductId, ProductName, ProductPrice, ProductQuantity,RandomUID,TotalPrice,UserId;

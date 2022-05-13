@@ -32,21 +32,24 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class VerifyPhoneRetailer extends AppCompatActivity {
-
-    String verificationId;
+    //DECLARE VARIABLES
+    //xml
     Button Resend;
-    TextView txt;
-    String phonenumber;
-    FirebaseAuth FAuth;
     Button verify;
     EditText entercode;
     ProgressDialog progress;
+    TextView txt;
+    //strings
+    String phonenumber;
+    String verificationId;
+    //firebase
+    FirebaseAuth FAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.verify_phone_retailer);
-
+        //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Verify Mobile Number");
@@ -56,13 +59,17 @@ public class VerifyPhoneRetailer extends AppCompatActivity {
         progress.setCancelable(false);
         progress.setCanceledOnTouchOutside(false);
 
+        //GET MOBILE STRING
         phonenumber = getIntent().getStringExtra("phonenumber").trim();
 
-        entercode = (EditText) findViewById(R.id.phoneno);
-        txt = (TextView) findViewById(R.id.text);
-        Resend = (Button) findViewById(R.id.Resendotp);
+        //CONNECT XML
+        entercode = findViewById(R.id.phoneno);
+        txt = findViewById(R.id.text);
+        Resend = findViewById(R.id.Resendotp);
+        verify = findViewById(R.id.Verify);
+
+        //FIREBASE INSTANCE
         FAuth = FirebaseAuth.getInstance();
-        verify = (Button) findViewById(R.id.Verify);
 
         //STARTUP (OTP)
         //send otp
@@ -76,33 +83,43 @@ public class VerifyPhoneRetailer extends AppCompatActivity {
                 Resend.setVisibility(View.INVISIBLE);
                 //show timer
                 txt.setVisibility(View.VISIBLE);
+                //counter
                 txt.setText("Resend Code within " + millisUntilFinished/1000 + " Seconds");
             }
             @Override
             public void onFinish() {
-                //hide
+                //hide timer
                 txt.setVisibility(View.INVISIBLE);
                 //show resend button
                 Resend.setVisibility(View.VISIBLE);
             }
         }.start();
 
+        //BUTTON EVENTS
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //hide keyboard
                 hideKeyboard();
+
+                //get string
                 String code = entercode.getText().toString().trim();
+
+                //hide resend button
                 Resend.setVisibility(View.INVISIBLE);
 
+                //check string validity
                 if (code.isEmpty() && code.length() < 6) {
                     entercode.setError("Enter code");
                     entercode.requestFocus();
                     return;
                 }
+
+                //verify code
                 verifyCode(code);
             }
         });
-
+        //resend clicked
         Resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,26 +143,31 @@ public class VerifyPhoneRetailer extends AppCompatActivity {
                 }.start();
             }
         });
-
     }
 
+    //RESEND OTP
     private void resendOTP(String phonenumber) {
         sendVerificationCode(phonenumber);
     }
 
-
+    //VERIFY CODE
     private void verifyCode(String code) {
+        //get credential
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         linkCredential(credential);
     }
 
+    //LINK MOBILE CREDENTIAL
     private void linkCredential(PhoneAuthCredential credential) {
         progress.setMessage("Verifying....");
         progress.show();
+
+        //link mobile number
         FAuth.getCurrentUser().linkWithCredential(credential)
                 .addOnCompleteListener(VerifyPhoneRetailer.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //check linked account
                         if (task.isSuccessful()) {
                             progress.dismiss();
                             AlertDialog.Builder builder = new AlertDialog.Builder(VerifyPhoneRetailer.this);
@@ -154,6 +176,7 @@ public class VerifyPhoneRetailer extends AppCompatActivity {
                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    //direct to main menu
                                     startActivity(new Intent(VerifyPhoneRetailer.this,MainMenu.class));
                                     finish();
                                 }
@@ -162,6 +185,7 @@ public class VerifyPhoneRetailer extends AppCompatActivity {
                             alertDialog.show();
                         } else {
                             progress.dismiss();
+                            //not linked
                             ReusableCodeForAll.ShowAlert(VerifyPhoneRetailer.this,"Error",task.getException().getMessage());
                         }
                     }
@@ -181,21 +205,23 @@ public class VerifyPhoneRetailer extends AppCompatActivity {
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
+    //PHONE CALLBACKS
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
             mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+            //resend-otp
             super.onCodeSent(s, forceResendingToken);
-
+            //otp
             verificationId = s;
-            //ResendToken=forceResendingToken;
         }
 
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
-
+            //get otp
             String code = phoneAuthCredential.getSmsCode();
+
+            //auto-fill
             if (code != null) {
                 entercode.setText(code);
             }
@@ -204,6 +230,7 @@ public class VerifyPhoneRetailer extends AppCompatActivity {
         @Override
         public void onVerificationFailed(FirebaseException e) {
             progress.dismiss();
+            //otp error
             Toast.makeText(VerifyPhoneRetailer.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };

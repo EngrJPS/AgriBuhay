@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.RetailerPanel;
 
+//RETAILER ORDER STATUS MODEL
 public class AlreadyOrdered {
 
    private String isOrdered;

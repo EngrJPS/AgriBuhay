@@ -1,10 +1,13 @@
 package com.AgriBuhayProj.app.Models;
 
 public class ProductData {
+    //VARIABLES
     private String productName,totalWeight,temperatureLevel,humidityPercentage,co2Level;
 
+    //OBJECT INSTANCE
     public ProductData() { }
 
+    //OBJECT CONSTRUCTOR
     public ProductData(String productName, String totalWeight, String temperatureLevel, String humidityPercentage, String co2Level) {
         this.productName = productName;
         this.totalWeight = totalWeight;
@@ -13,6 +16,7 @@ public class ProductData {
         this.co2Level = co2Level;
     }
 
+    //GETTER-SETTER
     public String getProductName() {
         return productName;
     }

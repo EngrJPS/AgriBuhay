@@ -12,16 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.AgriBuhayProj.app.R;
 import java.util.List;
 
+//TO BE PREPARED DETAILS ADAPTER
 public class ProducerOrderToBePreparedViewAdapter extends RecyclerView.Adapter<ProducerOrderToBePreparedViewAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context mcontext;
     private List<ProducerWaitingOrders> producerWaitingOrderslist;
 
+    //ADAPTER
     public ProducerOrderToBePreparedViewAdapter(Context context, List<ProducerWaitingOrders> producerWaitingOrderslist) {
         this.producerWaitingOrderslist = producerWaitingOrderslist;
         this.mcontext = context;
     }
 
+    //VIEW HOLDER
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,9 +32,9 @@ public class ProducerOrderToBePreparedViewAdapter extends RecyclerView.Adapter<P
         return new ProducerOrderToBePreparedViewAdapter.ViewHolder(view);
     }
 
+    //DISPLAY DETAILS
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         final ProducerWaitingOrders producerWaitingOrders = producerWaitingOrderslist.get(position);
         holder.productname.setText(producerWaitingOrders.getProductName());
         holder.price.setText("Price: ₱ " + producerWaitingOrders.getProductPrice());
@@ -39,11 +42,13 @@ public class ProducerOrderToBePreparedViewAdapter extends RecyclerView.Adapter<P
         holder.totalprice.setText("Total: ₱ " + producerWaitingOrders.getTotalPrice());
     }
 
+    //ARRAY LIST SIZE
     @Override
     public int getItemCount() {
         return producerWaitingOrderslist.size();
     }
 
+    //CONNECT XML
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView productname, price, totalprice, quantity;

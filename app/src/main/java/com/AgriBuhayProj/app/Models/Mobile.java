@@ -1,11 +1,14 @@
 package com.AgriBuhayProj.app.Models;
 
 public class Mobile {
+    //VARIABLES
     private String mobile,id,role;
 
+    //OBJECT INSTANCE
     public Mobile() {
     }
 
+    //GETTER-SETTER
     public String getMobile() {
         return mobile;
     }

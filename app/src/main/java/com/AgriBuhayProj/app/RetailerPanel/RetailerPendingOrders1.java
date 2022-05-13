@@ -1,5 +1,6 @@
 package com.AgriBuhayProj.app.RetailerPanel;
 
+//PENDING ORDERS OTHER INFO MODEL
 public class RetailerPendingOrders1 {
 
     private String Address,GrandTotalPrice,MobileNumber,Name,Note;

@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.AgriBuhayProj.app.R;
 import java.util.List;
 
+//TRACK ORDER ADAPTER
 public class RetailerTrackAdapter extends RecyclerView.Adapter<RetailerTrackAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context context;
     private List<RetailerFinalOrders> retailerFinalOrderslist;
 
+    //ADAPTER
     public RetailerTrackAdapter(Context context, List<RetailerFinalOrders> retailerFinalOrderslist) {
         this.retailerFinalOrderslist = retailerFinalOrderslist;
         this.context = context;
@@ -31,7 +33,7 @@ public class RetailerTrackAdapter extends RecyclerView.Adapter<RetailerTrackAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        //display order details
         final RetailerFinalOrders retailerFinalOrders = retailerFinalOrderslist.get(position);
         holder.Productname.setText(retailerFinalOrders.getProductName());
         holder.Quantity.setText(retailerFinalOrders.getProductQuantity() + "× ");

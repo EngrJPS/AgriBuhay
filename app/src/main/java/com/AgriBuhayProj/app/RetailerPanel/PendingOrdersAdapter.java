@@ -12,17 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.AgriBuhayProj.app.R;
 import java.util.List;
 
+//PENDING ORDERS ADAPTER
 public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.ViewHolder> {
-
+    //VARIABLES
     private Context context;
     private List<RetailerPendingOrders> retailerPendingOrderslist;
 
+    //ADAPTER
     public PendingOrdersAdapter(Context context, List<RetailerPendingOrders> retailerPendingOrderslist) {
         this.retailerPendingOrderslist = retailerPendingOrderslist;
         this.context = context;
     }
 
-
+    //VIEW HOLDER
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,7 +34,7 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        //DISPLAY PRODUCT INFO
         final RetailerPendingOrders retailerPendingOrders = retailerPendingOrderslist.get(position);
         holder.Productname.setText(retailerPendingOrders.getProductName());
         holder.Price.setText("Price: ₱ " + retailerPendingOrders.getPrice());
