@@ -1,6 +1,7 @@
 package com.AgriBuhayProj.app.RetailerPanel;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +19,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.AgriBuhayProj.app.Models.Retailer;
 import com.AgriBuhayProj.app.MainMenu;
 import com.AgriBuhayProj.app.R;
+import com.AgriBuhayProj.app.ReusableCode.ReusableCodeForAll;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,12 +43,14 @@ import java.util.HashMap;
 public class RetailerProfileFragment extends Fragment {
 
     //SPINNER
+    //PROVINCE
+    String [] Provinces = {"Davao de Oro", "Davao del Sur", "Davao del Norte", "Davao Oriental", "Davao Occidental"};
     //PROVINCE - CITY/MUNICIPALITY
     String [] Davao_de_Oro = {"Compostela", "Laak", "Mabini", "Maco", "Maragusan", "Mawab"
             , "Monkayo", "Montivista", "Nabunturan", "New Bataan", "Pantukan"};
     String [] Davao_del_Sur = {"Bansalan", "Davao City", "Digos", "Hagonoy", "Kiblawan"
             , "Magsaysay", "Malalag", "Matanao", "Padada", "Santa Cruz", "Sulop"};
-    String [] Davao_del_Norte = {"Asuncion", "Baraulio E. Dujali", "Carmen", "Kapalong", "New Corella"
+    String [] Davao_del_Norte = {"Asuncion", "Baraulio E Dujali", "Carmen", "Kapalong", "New Corella"
             , "Panabo", "Samal", "San Isidro", "Santo Tomas", "Tagum", "Talaingod"};
     String [] Davao_Oriental = {"Baganga", "Banaybanay", "Boston", "Caraga", "Cateel"
             , "Governor Generoso", "Lupon", "Manay", "Mati", "San Isidro (Oriental)"};
@@ -114,6 +121,7 @@ public class RetailerProfileFragment extends Fragment {
     TextView mobileno, Email;
     Button Update;
     LinearLayout password, LogOut;
+    SwipeRefreshLayout refreshLayout;
 
     DatabaseReference databaseReference, data;
     FirebaseDatabase firebaseDatabase;
@@ -138,6 +146,7 @@ public class RetailerProfileFragment extends Fragment {
         Update = v.findViewById(R.id.update);
         password = v.findViewById(R.id.passwordlayout);
         LogOut = v.findViewById(R.id.logout_layout);
+        refreshLayout = v.findViewById(R.id.refresh);
 
         //AUTHENTICATION
         firebaseAuth = FirebaseAuth.getInstance();
@@ -147,6 +156,9 @@ public class RetailerProfileFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //GET RETAILER PHONE NUMBER
         String mobile = user.getPhoneNumber();
+
+        //SET PROVINCE SPINNER ARRAY
+        final ArrayAdapter<String> provinceAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,Provinces);
 
         //RETAILER REFERENCE
         databaseReference = FirebaseDatabase.getInstance().getReference("Retailer").child(userid);
@@ -162,10 +174,11 @@ public class RetailerProfileFragment extends Fragment {
                 mobileno.setText(mobile);
                 Email.setText(retailer.getEmailID());
 
-                //set spinner values
+                //set adapter array
+                Province.setAdapter(provinceAdapter);
+
+                //set province spinner values
                 Province.setSelection(getIndexByString(Province, retailer.getProvince()));
-                City.setSelection(getIndexByString(City, retailer.getCity()));
-                Baranggay.setSelection(getIndexByString(Baranggay, retailer.getBaranggay()));
 
                 //province selected
                 Province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -200,11 +213,10 @@ public class RetailerProfileFragment extends Fragment {
                                 break;
                         }
 
-                        City.setSelection(getIndexByString(City, retailer.getCity()));
+                        City.setSelection(getIndexByString(City,retailer.getCity()));
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 });
 
@@ -314,7 +326,7 @@ public class RetailerProfileFragment extends Fragment {
                                 Collections.addAll(list, Asuncion);
                                 Baranggay.setAdapter(arrayAdapter);
                                 break;
-                            case "Baraulio E. Dujali":
+                            case "Baraulio E Dujali":
                                 Collections.addAll(list, Baraulio_E_Dujali);
                                 Baranggay.setAdapter(arrayAdapter);
                                 break;
@@ -417,12 +429,11 @@ public class RetailerProfileFragment extends Fragment {
                                 Baranggay.setAdapter(arrayAdapter);
                                 break;
                         }
-                        
-                        Baranggay.setSelection(getIndexByString(Baranggay, retailer.getBaranggay()));
+
+                        Baranggay.setSelection(getIndexByString(Baranggay,retailer.getBaranggay()));
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 });
                 //baranggay selected
@@ -434,7 +445,7 @@ public class RetailerProfileFragment extends Fragment {
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
+                        baranggay = retailer.getBaranggay();
                     }
                 });
             }
@@ -455,6 +466,12 @@ public class RetailerProfileFragment extends Fragment {
         Update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setCancelable(false);
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.setMessage("Updating Information...");
+                progressDialog.show();
+
                 //get retailer id
                 String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 data = FirebaseDatabase.getInstance().getReference("Retailer").child(useridd);
@@ -465,8 +482,7 @@ public class RetailerProfileFragment extends Fragment {
 
                         //get values
                         email = retailer.getEmailID();
-                        long mobilenoo = Long.parseLong(retailer.getMobile());
-
+                        /*long mobilenoo = Long.parseLong(retailer.getMobile());*/
                         String Fname = firstname.getText().toString().trim();
                         String Lname = lastname.getText().toString().trim();
                         String fullName = Fname+" "+Lname;
@@ -485,7 +501,15 @@ public class RetailerProfileFragment extends Fragment {
                         hashMappp.put("Baranggay", baranggay);
 
                         //add to retailer db
-                        firebaseDatabase.getInstance().getReference("Retailer").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(hashMappp);
+                        data.setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    progressDialog.dismiss();
+                                    ReusableCodeForAll.ShowAlert(getContext(),"","Update Successful");
+                                }
+                            }
+                        });
                     }
 
                     @Override

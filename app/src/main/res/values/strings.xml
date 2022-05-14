@@ -39,7 +39,7 @@
         <item>Sulop</item>
         //davao del norte
         <item>Asuncion</item>
-        <item>Baraulio E. Dujali</item>
+        <item>Baraulio E Dujali</item>
         <item>Carmen</item>
         <item>Kapalong</item>
         <item>New Corella</item>
@@ -66,12 +66,6 @@
         <item>Malita</item>
         <item>Santa Maria</item>
         <item>Sarangani</item>
-    </string-array>
-
-    <string-array name="shipper">
-        <item>Shipper 1</item>
-        <item>Shipper 2</item>
-        <item>Shipper 3</item>
     </string-array>
 
 </resources>

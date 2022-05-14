@@ -172,7 +172,7 @@ public class RetailerPhoneSendOTP extends AppCompatActivity {
         progressDialog.setMessage("Verifying");
         progressDialog.show();
 
-        //upadte phone number
+        //update phone number
         user.updatePhoneNumber(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

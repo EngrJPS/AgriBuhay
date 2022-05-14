@@ -130,7 +130,7 @@ public class LogisticsPendingOrderFragment extends Fragment {
                                 //show data
                                 recyclerView.setAdapter(adapter);
 
-                                //disable reference
+                                //disable refreshing
                                 swipeRefreshLayout.setRefreshing(false);
                             }
 
